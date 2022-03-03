@@ -251,7 +251,7 @@ export const updateUserData = async (props, changes) => {
   const {folderid, releaseid, instanceid} = props;
   const {rating, place, price, styles} = changes;
   const base = `users/${Settings.user}/collection/folders/${folderid}/releases/${releaseid}/instances/${instanceid}`;
-  const {placeId, priceId, stylesId} = getItem('discogsFields');
+  const {placeId, priceId, stylesId} = getItem('discogsFields') || {};
 
   // Rating
   if (rating !== undefined) {

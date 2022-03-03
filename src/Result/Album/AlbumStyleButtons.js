@@ -37,6 +37,7 @@ const AlbumStyleButtons = (props) => {
   const styles = useSelector((s) => s.styles.value);
   const [_] = useTranslation();
   const tags = useRef(null);
+  const discogsFields = getItem('discogsFields') || {};
 
   // EFFECT
   useEffect(() => {
@@ -63,7 +64,7 @@ const AlbumStyleButtons = (props) => {
     <>
       <input
         className="AlbumStyleButtons"
-        readOnly={getItem('discogsFields').stylesId === undefined}
+        readOnly={discogsFields.stylesId === undefined}
         placeholder={_('New style...')}
         defaultValue={JSON.stringify(items.map((item) => {
           return {value: item};

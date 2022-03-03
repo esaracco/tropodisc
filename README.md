@@ -3,8 +3,11 @@
 **TropoDisc** helps you manage your audio library from your  [Discogs](https://www.discogs.com) collection. It is developed mainly for his personal use by [Emmanuel Saracco](https://www.esaracco.fr), and made available under the GPL license.
 > :information_source: It can also be used to highlight the location of albums via LED :bulb: strips... but that's another story :smiley:
 
-#
-![1](https://user-images.githubusercontent.com/4351162/156552334-916137d6-0d66-4131-bd23-a05de1468590.png)
+# Screenshots
+<img width="500" src="https://user-images.githubusercontent.com/4351162/156552334-916137d6-0d66-4131-bd23-a05de1468590.png">
+<img width="500" src="https://user-images.githubusercontent.com/4351162/156573837-3de1d156-c956-46a3-8435-6b9d2a7ff474.png">
+<img width="500" src="https://user-images.githubusercontent.com/4351162/156573943-f4630099-be1f-41c1-b56e-870cf2c00126.png">
+<img width="500" src="https://user-images.githubusercontent.com/4351162/156573962-93f8c532-9ed4-4b65-be56-c408317a7274.png">
 
 # Quick start 
 

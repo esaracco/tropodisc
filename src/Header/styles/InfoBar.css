@@ -1,0 +1,19 @@
+.InfoBar {
+  transform: rotate(-90deg) translate(-100%, 0);
+  transform-origin: 0 0;
+  position: fixed;
+  font-size: .8rem;
+  line-height: .8rem;
+  background: #731d1d;
+  padding: 5px;
+  color: #ffc107;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 0 10px #353535;
+  opacity: .8;
+}
+
+.InfoBar.noresult {
+  background: #ff4545;
+  color: #fff;
+  font-weight: bold;
+}

@@ -1,0 +1,42 @@
+html, #root {
+  background: #313131;
+}
+
+::placeholder {
+  font-size: .8em;
+  font-style: italic;
+}
+
+:focus {
+  box-shadow: none !important;
+}
+
+input.form-control-xs {
+  height: calc(1em + .375rem + 2px);
+  padding: .125rem .25rem;
+  font-size: .75rem;
+  line-height: 1.5;
+  border-radius: .2rem;
+}
+
+.text-justify {
+  text-align: justify;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  -o-hyphens: auto;
+   hyphens: auto;
+}
+
+.modal .modal-header {
+  box-shadow: 1px 1px 5px #acacac;
+}
+
+.modal .modal-dialog {
+  max-width: 500px;
+}
+
+.Toastify__toast-container {
+  width: auto;
+  max-width: 500px;
+}

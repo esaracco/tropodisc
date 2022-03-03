@@ -1,0 +1,84 @@
+.AlbumModal a {
+  color: gray;
+}
+
+.AlbumModal .artist {
+    font-size: 1.2em;
+    line-height: 1.2em;
+}
+
+.AlbumModal .rating .r {
+  color: #ffc107;
+}
+
+.AlbumModal .rating .s {
+  color: #adb5bd;
+}
+
+.AlbumModal .modal-title {
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
+  padding-right: 5px;
+}
+
+.AlbumModal .modal-title span {
+    font-weight: normal;
+    font-style: italic;
+}
+
+.AlbumModal .modal-icon {
+  width: 150px;
+  height: 150px;
+  text-align: center;
+}
+
+.AlbumModal ul {
+  list-style-type: none;
+  padding-left: 10px;
+}
+
+.AlbumModal .album-tracks ul .heading {
+  margin: 10px;
+}
+
+.AlbumModal .modal-body {
+  font-size: .8rem;
+}
+
+.AlbumModal .modal-body .master,
+.AlbumModal .modal-body .release {
+    background: #f9f9f9;
+    border: 1px solid silver;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+.AlbumModal .modal-body .release {
+  margin-bottom: 10px;
+}
+
+.AlbumModal .tab-pane {
+  padding: 10px;
+}
+
+.AlbumModal th,
+.AlbumModal td {
+  vertical-align: middle;
+}
+
+.AlbumModal .place {
+  font-weight: bold;
+}
+
+.AlbumModal .price {
+  display: inline-block;
+  width: 50px;
+}
+
+.AlbumModal .reset {
+  cursor: pointer;
+  float: right;
+  margin-top: 3px;
+}

@@ -1,0 +1,8 @@
+.Result {
+  overflow: auto;
+}
+
+.Result .progress {
+  max-height: 3px;
+  transition: opacity 3s;
+}

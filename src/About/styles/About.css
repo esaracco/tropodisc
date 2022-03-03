@@ -1,0 +1,9 @@
+.About {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  cursor: pointer;
+  color: #ffc107;
+  font-size: 1.5rem;
+  padding: 5px 10px;
+}

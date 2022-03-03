@@ -1,0 +1,15 @@
+.Checkbox {
+  padding: 10px;
+}
+
+.Checkbox div {
+  font-size: 1.2rem;
+}
+
+.Checkbox label:hover {
+  cursor: pointer;
+}
+
+.Checkbox input {
+  margin-right: 10px;
+}

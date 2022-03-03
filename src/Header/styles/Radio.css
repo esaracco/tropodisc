@@ -1,0 +1,15 @@
+.Radio {
+  padding: 10px;
+}
+
+.Radio div {
+  font-size: 1.2rem;
+}
+
+.Radio label:hover {
+  cursor: pointer;
+}
+
+.Radio input {
+  margin-right: 10px;
+}

@@ -1,0 +1,25 @@
+.AlbumStyleButtons {
+  --tag-bg: #ffc107;
+  --tag-hover: orange;
+  --tag-remove-bg: var(--tag-hover);
+  --tag-remove-btn-bg--hover: #555;
+  --tags-focus-border-color: #dfdfdf;
+}
+
+.AlbumStyleButtons .tagify__tag:only-of-type .tagify__tag__removeBtn{
+  display: none;
+}
+
+.AlbumStyleButtons .tagify__tag,
+.AlbumStyleButtons .tagify__input {
+  margin: 1px 0 1px 1px;
+}
+
+.AlbumStyleButtons .tagify__tag__removeBtn {
+  margin-left: -6px;
+  margin-right: 0;
+}
+
+.tagify__tag > div > * {
+  white-space: nowrap;
+}

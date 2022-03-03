@@ -1,0 +1,15 @@
+.HeaderButton {
+  position: relative;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.HeaderButton .selected-mark {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  background: #731d1d;
+  height: 5px;
+  width: 5px;
+  border-radius: 5px;
+}

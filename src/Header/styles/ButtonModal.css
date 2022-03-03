@@ -1,0 +1,25 @@
+.ButtonModal .cancel-box {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -16px;
+  white-space: nowrap;
+  overflow-x: auto;
+  max-width: 90%;
+}
+
+.ButtonModal .cancel-box button {
+  margin-right: 1px;
+  font-size: .8rem;
+  padding: .10rem;
+}
+
+.ButtonModal .cancel-box button span {
+  margin-left: 3px;
+  font: 14px/1 Arial;
+}
+
+.ButtonModal .modal-body {
+  padding-top: 0;
+  padding-bottom: 0;
+}

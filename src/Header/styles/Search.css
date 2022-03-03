@@ -1,0 +1,9 @@
+.Search {
+  display: inline-block;
+  max-width: 250px;
+}
+
+.Search input,
+.Search button.clear {
+  margin: 0 5px 5px -5px !important;
+}

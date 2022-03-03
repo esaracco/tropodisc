@@ -1,0 +1,11 @@
+.ScrollButton {
+  position: fixed;
+  left: 50%;
+  bottom: 55px;
+  height: 20px;
+  font-size: 3rem;
+  margin-left: -2rem;
+  cursor: pointer;
+  color: var(--bs-yellow);
+  transition: opacity .3s;
+}

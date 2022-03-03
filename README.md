@@ -32,7 +32,7 @@ $ sudo npm i -g serve
 $ serve -s build
 ```
 Thats it :smiley:
-Tropodisc will be available on http://localhost:3000
+TropoDisc will be available on http://localhost:3000
 
 # To take full advantage of it
 TropoDisc has been designed to handle three custom Discogs user fields:

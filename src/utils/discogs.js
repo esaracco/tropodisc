@@ -297,7 +297,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
       args: `page=1&per_page=1`,
     });
 
-    const pages = Math.ceil(stats.pagination.items / 250);
+    const pages = Math.ceil(stats.pagination.items / 500);
     // const pages = 1;
     // console.log(stats);
 
@@ -309,7 +309,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
     for (let i = 1; i <= pages; i++) {
       const r = await get({
         service: `users/${user}/collection/folders/0/releases`,
-        args: `page=${i}&per_page=250`,
+        args: `page=${i}&per_page=500`,
         // args: `page=${i}&per_page=25`,
       });
 

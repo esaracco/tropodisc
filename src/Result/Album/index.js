@@ -320,6 +320,19 @@ const Album = (props) => {
         });
   };
 
+  const onError = () => {
+    toast.error(
+        <div>
+          <b>{_('Image loading error')}</b>
+          <br/>
+          {_('Either Discogs is overloaded or the image URLs have changed.')}
+          <br/>
+          <i>{_('If the problem persists, please re-sync your collection.')}</i>
+        </div>,
+        {autoClose: false, toastId: 'imageLoadingError'},
+    );
+  };
+
   // RENDER
   return (
     <div
@@ -329,7 +342,11 @@ const Album = (props) => {
       data-instanceid={instanceid}
     >
       <LazyLoad once height={thumbWidth}>
-        <img src={img} alt="" style={{width: thumbWidth, height: thumbWidth}} />
+        <img
+          alt=""
+          onError={onError}
+          src={img}
+          style={{width: thumbWidth, height: thumbWidth}} />
       </LazyLoad>
       {loader &&
         <div className="loader">

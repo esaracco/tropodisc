@@ -121,40 +121,41 @@ void handleSetLeds () {
   Serial.println(server.arg("noreset"));
 #endif
 
-  if (!ledsValues || !colorValues) {
-    clearStrips();
-    showStrips();
-    server.send(200);
-    return;
-  }
+  if (ledsValues && colorValues) {
+    const byte R = *colorValues;
+    const byte G = *(colorValues + 1);
+    const byte B = *(colorValues + 2);
 
-  const byte R = *colorValues;
-  const byte G = *(colorValues + 1);
-  const byte B = *(colorValues + 2);
-
-  if (!noReset) {
+    if (!noReset) {
 #ifdef WITH_SERIAL
-    Serial.println("RESET!");
+      Serial.println("RESET!");
 #endif
-    clearStrips();
-  }
+      clearStrips();
+    }
 
-  int *ptr = ledsValues;
-  while (*ptr >= 0) {
-    int position = *ptr - 1;
-    float f = (float) position / ADA_NUMPIXELS;
-    int etage = abs(f);
-    int col = position - (ADA_NUMPIXELS * etage);
+    int *ptr = ledsValues;
+    while (*ptr >= 0) {
+      int position = *ptr - 1;
+      float f = (float) position / ADA_NUMPIXELS;
+      int etage = abs(f);
+      int col = position - (ADA_NUMPIXELS * etage);
 
-    strips[etage].setPixelColor(col, strips[etage].Color(R, G, B));
+      strips[etage].setPixelColor(col, strips[etage].Color(R, G, B));
   
-    ++ptr;
+      ++ptr;
+    }
+  } else {
+    clearStrips();
   }
 
   showStrips();
 
-  free(colorValues);
-  free(ledsValues);
+  if (ledsValues) {
+    free(ledsValues);
+  }
+  if (colorValues) {
+    free(colorValues);
+  }
 
   server.send(200);
 }

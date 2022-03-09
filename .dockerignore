@@ -1,0 +1,10 @@
+node_modules
+build
+.dockerignore
+Dockerfile
+.git*
+.env.sample
+README.md
+LICENSE
+server
+arduino

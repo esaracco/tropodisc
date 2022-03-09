@@ -52,4 +52,20 @@ Once these fields are created, edit the `.env` file to set the following constan
 
 Then restart the app server and re-sync your collection by clicking the `Synchronize` :arrows_counterclockwise: button from the TropoDisc menu.
 
+# Docker
+
+To build and run the Docker, do the following:
+```bash
+$ cp .env.sample .env
+$ vim .env
+..
+```
+Customize `.env` as explained above, then:
+```bash
+..
+$ docker build -t tropodisc:prod .
+$ docker run -it --rm -p [yourlocalport]:3000 tropodisc:prod
+```
+Finally, connect to http://localhost:[yourlocalport] to use it.
+
 :tada: Have fun!

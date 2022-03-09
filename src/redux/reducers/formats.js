@@ -29,15 +29,12 @@ export const formatsSlice = createSlice({
     set: (state, action) => {
       state.value = action.payload;
     },
-    setV: (state, action) => {
-      state.value = action.payload;
-    },
     reset: (state) => {
       state.value = [];
     },
   },
 });
 
-export const {set, setV, reset} = formatsSlice.actions;
+export const {set, reset} = formatsSlice.actions;
 
 export default formatsSlice.reducer;

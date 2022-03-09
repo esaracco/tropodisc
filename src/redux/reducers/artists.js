@@ -29,15 +29,12 @@ export const artistsSlice = createSlice({
     set: (state, action) => {
       state.value = action.payload;
     },
-    setV: (state, action) => {
-      state.value = action.payload;
-    },
     reset: (state) => {
       state.value = [];
     },
   },
 });
 
-export const {set, setV, reset} = artistsSlice.actions;
+export const {set, reset} = artistsSlice.actions;
 
 export default artistsSlice.reducer;

@@ -21,14 +21,8 @@ import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {ProgressBar} from 'react-bootstrap';
 
-import {
-  set as setArtists,
-  setV as setVArtists,
-} from '../redux/reducers/artists';
-import {
-  set as setFormats,
-  setV as setVFormats,
-} from '../redux/reducers/formats';
+import {set as setArtists} from '../redux/reducers/artists';
+import {set as setFormats} from '../redux/reducers/formats';
 
 import * as Settings from '../utils/settings';
 
@@ -171,12 +165,10 @@ const Result = (props) => {
           res.push(r);
         });
 
-    dispatch((sStylesLen || sArtistsLen) ?
-      setVFormats(Object.keys(fformats).sort()) :
-      setFormats(Object.keys(formats).sort()));
-    dispatch(sStylesLen ?
-      setVArtists(Object.keys(fartists).sort()) :
-      setArtists(Object.keys(artists).sort()));
+    dispatch(setFormats(
+        Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort()));
+    dispatch(setArtists(
+        Object.keys(sStylesLen ? fartists : artists).sort()));
 
     setResult(res);
     setDisplayCount(res.length);

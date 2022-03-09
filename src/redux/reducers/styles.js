@@ -38,6 +38,6 @@ export const stylesSlice = createSlice({
   },
 });
 
-export const {set, setV, reset} = stylesSlice.actions;
+export const {set, reset} = stylesSlice.actions;
 
 export default stylesSlice.reducer;

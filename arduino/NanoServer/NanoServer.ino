@@ -21,7 +21,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "StringSplitter.h"
 
-#define WITH_SERIAL
+#undef WITH_SERIAL
 
 // PINs on the Arduino Nano 33 IoT
 const byte ADA_PIN1 = 9; // D9 1st floor (led strip 1)

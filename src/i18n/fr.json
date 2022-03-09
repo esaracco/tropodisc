@@ -3,6 +3,7 @@
   "keyAboutMessageAddon": "<0>Elle peut aussi être utilisée pour mettre en évidence l'emplacement des albums via des rubans de LED... mais ça, c'est une autre histoire <1/></0>",
   "About TropoDisc v{{version}}": "À propos de TropoDisc v{{version}}",
   "An app that allows you to manage your audio library from your Discogs collection": "Une application qui vous aide à gérer votre audiothèque à partir de votre collection Discogs",
+  "A Discogs audio library manager": "Un gestionnaire d'audiothèque Discogs",
   "An error occurred while using the Discogs API!": "Une erreur est survenue durant l'utilisation de l'API Discogs",
   "A new release available!": "Une nouvelle version est disponible!",
   "album": "album",

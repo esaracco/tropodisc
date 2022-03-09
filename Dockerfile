@@ -1,5 +1,5 @@
 #
-# PRODUCTION Docker file for TopoDisc app
+# PRODUCTION Docker file for TropoDisc app
 #
 FROM node:alpine
 

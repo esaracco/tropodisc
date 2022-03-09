@@ -11,7 +11,7 @@
 
 # Quick start 
 
-TopoDisc can be used as **a simple wrapper for your Discogs collection**, or do a little more by communicating with your audio library Arduino server to **highlight the location of your albums using leds**. That's how I use it, but it needs more work. We will focus here on the simplest way:
+TropoDisc can be used as **a simple wrapper for your Discogs collection**, or do a little more by communicating with your audio library Arduino server to **highlight the location of your albums using leds**. That's how I use it, but it needs more work. We will focus here on the simplest way:
 ```bash
 $ git clone https://github.com/esaracco/tropodisc.git
 $ cd tropodisc/

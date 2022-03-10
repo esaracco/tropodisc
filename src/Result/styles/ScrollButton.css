@@ -9,3 +9,7 @@
   color: var(--bs-yellow);
   transition: opacity .3s;
 }
+
+.ScrollButton .fa-circle-arrow-up {
+  filter: drop-shadow(0 0 5px #000);
+}

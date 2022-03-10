@@ -21,7 +21,11 @@ import {Trans, useTranslation} from 'react-i18next';
 import {Button} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faInfoCircle, faHouse, faUser} from '@fortawesome/free-solid-svg-icons';
+import {
+  faInfoCircle,
+  faHouse,
+  faUserEdit,
+} from '@fortawesome/free-solid-svg-icons';
 import {faSmile} from '@fortawesome/free-regular-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
@@ -82,7 +86,7 @@ const About = () => {
               size="sm"
               onClick={() => goTo('www.esaracco.fr')}
             >
-              <FontAwesomeIcon icon={faUser} fixedWidth size="xs" /> {_('Author')}
+              <FontAwesomeIcon icon={faUserEdit} fixedWidth size="xs" /> {_('Author')}
             </Button>
           </p>
           {setLeds !== 'yes' && addon}

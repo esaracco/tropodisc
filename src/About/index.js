@@ -18,10 +18,12 @@
 
 import React, {useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
+import {Button} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faInfoCircle} from '@fortawesome/free-solid-svg-icons';
+import {faInfoCircle, faHouse, faUser} from '@fortawesome/free-solid-svg-icons';
 import {faSmile} from '@fortawesome/free-regular-svg-icons';
+import {faGithub} from '@fortawesome/free-brands-svg-icons';
 
 import {setLeds} from '../utils/settings';
 
@@ -37,11 +39,14 @@ const About = () => {
   const [_] = useTranslation();
 
   const desc = <Trans i18nKey="keyAboutMessage">
-    <p>TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="external">Discogs</a> collection. It is developed mainly for his personal use by <a href="https://www.esaracco.fr" rel="external">Emmanuel Saracco</a>, and made available under the GPL license.</p>
+    TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="external">Discogs</a> collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
   </Trans>;
   const addon = <Trans i18nKey="keyAboutMessageAddon">
     <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>It can also be used to highlight the location of albums via LED strips... but that&apos;s another story <FontAwesomeIcon icon={faSmile} /></p>
   </Trans>;
+
+  // METHOD gotTo()
+  const goTo = (url) => window.location.href = `https://${url}`;
 
   // RENDER
   return (
@@ -54,7 +59,32 @@ const About = () => {
         setShow={setShowModal}
       >
         <>
-          {desc}
+          <p>{desc}</p>
+          <p className="text-center">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => goTo('tropodisc.esaracco.fr')}
+            >
+              <FontAwesomeIcon icon={faHouse} fixedWidth size="xs" /> {_('Project')}
+            </Button>
+            {' '}
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => goTo('github.com/esaracco/tropodisc')}
+            >
+              <FontAwesomeIcon icon={faGithub} fixedWidth /> GitHub
+            </Button>
+            {' '}
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => goTo('www.esaracco.fr')}
+            >
+              <FontAwesomeIcon icon={faUser} fixedWidth size="xs" /> {_('Author')}
+            </Button>
+          </p>
           {setLeds !== 'yes' && addon}
         </>
       </InfoModal>

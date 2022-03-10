@@ -1,5 +1,5 @@
 {
-  "keyAboutMessage": "<0>TropoDisc vous aide à gérer votre audiothèque à partir de votre collection <1>Discogs</1>. Elle est développée principalement pour son usage personnel par <3>Emmanuel Saracco</3>, et mise à disposition sous licence GPL.</0>",
+  "keyAboutMessage": "TropoDisc vous aide à gérer votre audiothèque à partir de votre collection <1>Discogs</1>. Elle a été développée principalement pour l'usage personnel de son auteur, et mise à disposition sous licence GPL.",
   "keyAboutMessageAddon": "<0>Elle peut aussi être utilisée pour mettre en évidence l'emplacement des albums via des rubans de LED... mais ça, c'est une autre histoire <1/></0>",
   "About TropoDisc v{{version}}": "À propos de TropoDisc v{{version}}",
   "An app that allows you to manage your audio library from your Discogs collection": "Une application qui vous aide à gérer votre audiothèque à partir de votre collection Discogs",
@@ -11,6 +11,7 @@
   "Artist": "Artiste",
   "artist, album...": "artiste, album...",
   "Artists": "Artistes",
+  "Author": "Auteur",
   "Bad Discogs custom field value for:": "Mauvaise valeur du champ personnalisé Discogs pour :", 
   "by": "par",
   "Cancel": "Annuler",
@@ -36,6 +37,7 @@
   "Origine": "Origine",
   "Purchasing price": "Prix d'achat",
   "price": "prix",
+  "Project": "Projet",
   "Reset": "Réinit",
   "Save changes?": "Enregistrer les modifications?",
   "Sort": "Tri",

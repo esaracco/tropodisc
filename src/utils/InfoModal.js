@@ -31,25 +31,23 @@ const InfoModal = (props) => {
 
   // RENDER
   return (
-    <>
-      <Modal
-        show={show}
-        onHide={onHide}
-        scrollable
-        size="lg"
-        centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{title || _('Information')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="text-justify">
-          {children}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={onHide}>{_('Close')}</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Modal
+      show={show}
+      onHide={onHide}
+      scrollable
+      size="lg"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{title || _('Information')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="text-justify">
+        {children}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={onHide}>{_('Close')}</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

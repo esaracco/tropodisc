@@ -33,27 +33,25 @@ const ConfirmModal = (props) => {
 
   // RENDER
   return (
-    <>
-      <Modal
-        show={show}
-        onHide={onHide}
-        scrollable
-        size="lg"
-        centered
-        contentClassName="ConfirmModal"
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{_('Confirmation')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          {children}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={action} variant="success">{_('Confirm')}</Button>
-          <Button onClick={onHide} variant="secondary">{_('Cancel')}</Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <Modal
+      show={show}
+      onHide={onHide}
+      scrollable
+      size="lg"
+      centered
+      contentClassName="ConfirmModal"
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>{_('Confirmation')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {children}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={action} variant="success">{_('Confirm')}</Button>
+        <Button onClick={onHide} variant="secondary">{_('Cancel')}</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

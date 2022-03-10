@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
-import {formats} from '../utils/settings';
+import {formats as sformats} from '../utils/settings';
 
 import ResetButton from './ResetButton';
 import HeaderButton from './HeaderButton';
@@ -31,13 +31,11 @@ import InfoBar from './InfoBar';
 
 import './styles/Header.css';
 
-const _displayFormats = !formats || (formats && formats.indexOf(',') > -1);
-
 // COMPONENT Header
 const Header = (props) => {
   const styles = useSelector((s) => s.styles.value);
   const artists = useSelector((s) => s.artists.value);
-  const formats= useSelector((s) => s.formats.value);
+  const formats = useSelector((s) => s.formats.value);
   const selected = useSelector((s) => s.selected);
   const [_] = useTranslation();
 
@@ -61,7 +59,7 @@ const Header = (props) => {
             selected={selected.artists}
             content={artists}
           />
-          {_displayFormats &&
+          {(!sformats || sformats.indexOf(',') > -1) &&
             <HeaderButton
               label={_('Formats')}
               type="checkbox"

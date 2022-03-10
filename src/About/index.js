@@ -18,7 +18,6 @@
 
 import React, {useState} from 'react';
 import {Trans, useTranslation} from 'react-i18next';
-import {Button} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
@@ -49,9 +48,6 @@ const About = () => {
     <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>It can also be used to highlight the location of albums via LED strips... but that&apos;s another story <FontAwesomeIcon icon={faSmile} /></p>
   </Trans>;
 
-  // METHOD gotTo()
-  const goTo = (url) => window.location.href = `https://${url}`;
-
   // RENDER
   return (
     <>
@@ -65,29 +61,32 @@ const About = () => {
         <>
           <p>{desc}</p>
           <p className="text-center">
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => goTo('tropodisc.esaracco.fr')}
+            <a
+              href="https://tropodisc.esaracco.fr"
+              rel="noopener"
+              className="btn btn-secondary btn-sm"
             >
-              <FontAwesomeIcon icon={faHouse} fixedWidth size="xs" /> {_('Project')}
-            </Button>
+              <FontAwesomeIcon icon={faHouse} size="xs" fixedWidth />
+              {' '+_('Project')}
+            </a>
             {' '}
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => goTo('github.com/esaracco/tropodisc')}
+            <a
+              href="https://github.com/esaracco/tropodisc"
+              rel="noopener"
+              className="btn btn-secondary btn-sm"
             >
-              <FontAwesomeIcon icon={faGithub} fixedWidth /> GitHub
-            </Button>
+              <FontAwesomeIcon icon={faGithub} fixedWidth />
+              {' GitHub'}
+            </a>
             {' '}
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => goTo('www.esaracco.fr')}
+            <a
+              href="https://www.esaracco.fr"
+              rel="noopener"
+              className="btn btn-secondary btn-sm"
             >
-              <FontAwesomeIcon icon={faUserEdit} fixedWidth size="xs" /> {_('Author')}
-            </Button>
+              <FontAwesomeIcon icon={faUserEdit} fixedWidth size="xs" />
+              {' '+_('Author')}
+            </a>
           </p>
           {setLeds !== 'yes' && addon}
         </>

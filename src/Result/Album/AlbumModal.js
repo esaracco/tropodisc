@@ -311,7 +311,7 @@ const AlbumModal = (props) => {
                 <td colSpan="3" align="center">
                   <a
                     href={`https://www.discogs.com/release/${releaseid}`}
-                    rel="noopener"
+                    rel="noopener noreferrer"
                   >
                     <img alt="" src={discogsLogo} />
                   </a>

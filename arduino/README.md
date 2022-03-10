@@ -9,11 +9,11 @@ You will need to install the following drivers & libraries:
 - Arduino SAMD Boards
 
 **Libraries**
+- Adafruit NeoPixel
 - Functional-Vlpp
+- StringSplitter
 - WiFiNINA_Generic
 - WiFiWebServer
-- Adafruit NeoPixel
-- StringSplitter
 
 You will need to fill in the following two constants to allow the card to connect to your wifi:
 

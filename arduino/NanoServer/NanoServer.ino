@@ -87,11 +87,7 @@ void handleRegle () {
 
    if (!reset) {
      for (byte etage = 0; etage < ADA_NUMSTRIPS; etage++) {
-       for (byte i = 0; i < ADA_NUMPIXELS; i++) {
-         if (!i) {
-           continue;
-         }
-    
+       for (byte i = 1; i < ADA_NUMPIXELS; i++) {
          if (i % 10 == 0) {
            strips[etage].setPixelColor(i - 1, strips[etage].Color(0, 0, 1));
          } else if (i % 5 == 0) {

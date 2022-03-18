@@ -11,7 +11,6 @@ You will need to install the following drivers & libraries:
 **Libraries**
 - Adafruit NeoPixel
 - Functional-Vlpp
-- StringSplitter
 - WiFiNINA_Generic
 - WiFiWebServer
 

@@ -19,7 +19,6 @@
 #include <Wire.h>
 #include <WiFiWebServer.h>
 #include <Adafruit_NeoPixel.h>
-#include "StringSplitter.h"
 
 #undef WITH_SERIAL
 

@@ -96,6 +96,7 @@ void handleRegle () {
        }
     }
   }
+
   showStrips();
 
   server.send(200);
@@ -111,20 +112,12 @@ void handleSetLeds () {
   int *colorValues = getValues(server.arg("color"));
   byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
 
-#ifdef WITH_SERIAL
-  Serial.println(noReset);
-  Serial.println(server.arg("noreset"));
-#endif
-
   if (ledsValues && colorValues) {
     const byte R = *colorValues;
     const byte G = *(colorValues + 1);
     const byte B = *(colorValues + 2);
 
     if (!noReset) {
-#ifdef WITH_SERIAL
-      Serial.println("RESET!");
-#endif
       clearStrips();
     }
 

@@ -28,13 +28,13 @@ const byte ADA_PIN2 = 8; // D8 2nd floor (led strip 2)
 const byte ADA_PIN3 = 7; // D7 3rd floor (led strip 3) 
 // const byte ADA_PIN4 = 6; // D6 4th floor (led strip 4)
 const int ADA_NUMPIXELS = 99; // Leds by floor
-const int ADA_NUMSTRIPS = 3; // Number of strip leds
 Adafruit_NeoPixel strips[] = {
   Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN1, NEO_GRB + NEO_KHZ800),
   Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN2, NEO_GRB + NEO_KHZ800),
   Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN3, NEO_GRB + NEO_KHZ800)
   // Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN4, NEO_GRB + NEO_KHZ800)
 };
+const int ADA_NUMSTRIPS = sizeof(strips) / sizeof(*strips);
 
 const char *ssid = "********";
 const char *password = "********";

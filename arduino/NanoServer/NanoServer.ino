@@ -45,19 +45,20 @@ WiFiWebServer server(80);
 
 // SETUP
 void setup () {
-#ifdef WITH_SERIAL
-  Serial.begin (9600);
-  delay (1000);
-#endif
+  #ifdef WITH_SERIAL
+    Serial.begin (9600);
+    delay (1000);
+  #endif
 
-  connectWiFi();
+  if (connectWiFi()) {
+    initStrips();
+    clearStrips();
+    showStrips();
 
-  initStrips();
-  showStrips();
-
-  server.on("/setLeds", HTTP_GET, handleSetLeds);
-  server.on("/regle", handleRegle);
-  server.begin();
+    server.on("/setLeds", HTTP_GET, handleSetLeds);
+    server.on("/regle", handleRegle);
+    server.begin();
+  }
 }
 
 // MAIN LOOP
@@ -68,15 +69,28 @@ void loop () {
 //////////////////////////////////////////////////////////////////////////////
 
 // FUNCTION connectWiFi()
-void connectWiFi () {
-  while (WiFi.begin(ssid, password) != WL_CONNECTED) {
+bool connectWiFi () {
+  int cnxStatus;
+
+  for (byte i = 0; i < 3 && (cnxStatus = WiFi.begin(ssid, password)) != WL_CONNECTED; i++) {
     delay(250);
   }
 
-#ifdef WITH_SERIAL
-  Serial.print("WiFi OK on ");
-  Serial.println(WiFi.localIP());
-#endif
+  if (cnxStatus != WL_CONNECTED) {
+    #ifdef WITH_SERIAL
+      Serial.println("WiFi KO!");
+    #endif
+    strips[0].begin();
+    strips[0].setPixelColor(0, strips[0].Color(1, 0, 0));
+    strips[0].show();
+    return false;
+  }
+
+  #ifdef WITH_SERIAL
+    Serial.print("WiFi OK on ");
+    Serial.println(WiFi.localIP());
+  #endif
+  return true;
 }
 
 // FUNCTION handleRegle()

@@ -26,7 +26,7 @@
 const byte ADA_PIN1 = 9; // D9 1st floor (led strip 1)
 const byte ADA_PIN2 = 8; // D8 2nd floor (led strip 2)
 const byte ADA_PIN3 = 7; // D7 3rd floor (led strip 3) 
-const int ADA_NUMPIXELS = 99; // Leds by floor
+const int ADA_NUMPIXELS = 99; // Leds by strip
 Adafruit_NeoPixel strips[] = {
   Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN1, NEO_GRB + NEO_KHZ800),
   Adafruit_NeoPixel(ADA_NUMPIXELS, ADA_PIN2, NEO_GRB + NEO_KHZ800),
@@ -48,15 +48,16 @@ void setup () {
     delay (1000);
   #endif
 
-  if (connectWiFi()) {
-    initStrips();
-    clearStrips();
-    showStrips();
+  initStrips();
+  clearStrips();
 
-    server.on("/setLeds", HTTP_GET, handleSetLeds);
-    server.on("/regle", handleRegle);
-    server.begin();
-  }
+  connectWiFi();
+
+  showStrips();
+
+  server.on("/setLeds", HTTP_GET, handleSetLeds);
+  server.on("/regle", HTTP_GET, handleRegle);
+  server.begin();
 }
 
 // MAIN LOOP
@@ -67,14 +68,14 @@ void loop () {
 //////////////////////////////////////////////////////////////////////////////
 
 // FUNCTION connectWiFi()
-bool connectWiFi () {
+void connectWiFi () {
   for (byte i = 0; i < 3; i++) {
     if (WiFi.begin(ssid, password) == WL_CONNECTED) {
       #ifdef WITH_SERIAL
         Serial.print("WiFi OK: ");
         Serial.println(WiFi.localIP());
       #endif
-      return true;
+      return;
     }
     delay(250);
   }
@@ -82,19 +83,14 @@ bool connectWiFi () {
   #ifdef WITH_SERIAL
     Serial.println("WiFi KO!");
   #endif
-  strips[0].begin();
   strips[0].setPixelColor(0, strips[0].Color(1, 0, 0));
-  strips[0].show();
-  return false;
 }
 
 // FUNCTION handleRegle()
 void handleRegle () {
-  byte reset = server.arg("reset") ? server.arg("reset") == "1" : 0;
-  
   clearStrips();
 
-   if (!reset) {
+   if (!server.arg("reset") || server.arg("reset") != "1") {
      for (byte etage = 0; etage < ADA_NUMSTRIPS; etage++) {
        for (byte i = 1; i < ADA_NUMPIXELS; i++) {
          if (i % 10 == 0) {
@@ -119,30 +115,23 @@ void handleSetLeds () {
   // ARG color=numR,numG,numB.
   // Example: color=15,50,45
   int *colorValues = getValues(server.arg("color"));
-  byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
+
+  if (!server.arg("noreset") || server.arg("noreset") != "1") {
+    clearStrips();
+  }
 
   if (ledsValues && colorValues) {
-    const byte R = *colorValues;
-    const byte G = *(colorValues + 1);
-    const byte B = *(colorValues + 2);
+    const byte R = colorValues[0];
+    const byte G = colorValues[1];
+    const byte B = colorValues[2];
 
-    if (!noReset) {
-      clearStrips();
-    }
-
-    int *ptr = ledsValues;
-    while (*ptr >= 0) {
+    for (int *ptr = ledsValues; *ptr >= 0; ptr++) {
       int position = *ptr - 1;
-      float f = (float) position / ADA_NUMPIXELS;
-      int etage = abs(f);
-      int col = position - (ADA_NUMPIXELS * etage);
+      int row = abs((float) position / ADA_NUMPIXELS);
+      int col = position - (ADA_NUMPIXELS * row);
 
-      strips[etage].setPixelColor(col, strips[etage].Color(R, G, B));
-  
-      ++ptr;
+      strips[row].setPixelColor(col, strips[row].Color(R, G, B));
     }
-  } else {
-    clearStrips();
   }
 
   showStrips();

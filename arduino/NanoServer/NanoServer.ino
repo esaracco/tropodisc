@@ -70,27 +70,24 @@ void loop () {
 
 // FUNCTION connectWiFi()
 bool connectWiFi () {
-  int cnxStatus;
-
-  for (byte i = 0; i < 3 && (cnxStatus = WiFi.begin(ssid, password)) != WL_CONNECTED; i++) {
+  for (byte i = 0; i < 3; i++) {
+    if (WiFi.begin(ssid, password) == WL_CONNECTED) {
+      #ifdef WITH_SERIAL
+        Serial.print("WiFi OK: ");
+        Serial.println(WiFi.localIP());
+      #endif
+      return true;
+    }
     delay(250);
   }
 
-  if (cnxStatus != WL_CONNECTED) {
-    #ifdef WITH_SERIAL
-      Serial.println("WiFi KO!");
-    #endif
-    strips[0].begin();
-    strips[0].setPixelColor(0, strips[0].Color(1, 0, 0));
-    strips[0].show();
-    return false;
-  }
-
   #ifdef WITH_SERIAL
-    Serial.print("WiFi OK on ");
-    Serial.println(WiFi.localIP());
+    Serial.println("WiFi KO!");
   #endif
-  return true;
+  strips[0].begin();
+  strips[0].setPixelColor(0, strips[0].Color(1, 0, 0));
+  strips[0].show();
+  return false;
 }
 
 // FUNCTION handleRegle()

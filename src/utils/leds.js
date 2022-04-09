@@ -32,7 +32,10 @@ export const setLeds = (props = {}) => {
           place}&color=${color}&noreset=${Number(noreset)}` : undefined,
   }).catch((e) => {
     console.error(e.message);
-    toast.warning(i18n.t('Unable to reach the audio library web server!'));
+    toast.warning(
+        i18n.t('Unable to reach the audio library web server!'),
+        {toastId: 'audioServerConnectionError'},
+    );
   });
 };
 

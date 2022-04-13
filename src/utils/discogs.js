@@ -165,6 +165,8 @@ const _extractUserData = async (release) => {
     styles = Object.keys(styles);
   }
 
+  styles.sort();
+
   return {haveFields, place, price, styles};
 };
 

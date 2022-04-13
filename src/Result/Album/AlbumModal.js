@@ -98,7 +98,7 @@ const AlbumModal = (props) => {
       const r = [];
       document.querySelectorAll('.AlbumStyleButtons tag')
           .forEach((t) => r.push(t.getAttribute('value')));
-      return r;
+      return r.slice().sort();
     })();
     const releases = getItem('releases');
     const release = releases[instanceid];

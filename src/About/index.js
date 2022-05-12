@@ -42,7 +42,7 @@ const About = () => {
   const [_] = useTranslation();
 
   const desc = <Trans i18nKey="keyAboutMessage">
-    TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="noopener noreferrer">Discogs</a> collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
+    TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="noopener noreferrer" target="_blank">Discogs</a> collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
   </Trans>;
   const addon = <Trans i18nKey="keyAboutMessageAddon">
     <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>It can also be used to highlight the location of albums via LED strips... but that&apos;s another story <FontAwesomeIcon icon={faSmile} /></p>
@@ -64,6 +64,7 @@ const About = () => {
             <a
               href="https://tropodisc.esaracco.fr"
               rel="noopener noreferrer"
+              target="_blank"
               className="btn btn-secondary btn-sm"
             >
               <FontAwesomeIcon icon={faHouse} size="xs" fixedWidth />
@@ -73,6 +74,7 @@ const About = () => {
             <a
               href="https://github.com/esaracco/tropodisc"
               rel="noopener noreferrer"
+              target="_blank"
               className="btn btn-secondary btn-sm"
             >
               <FontAwesomeIcon icon={faGithub} fixedWidth />
@@ -82,6 +84,7 @@ const About = () => {
             <a
               href="https://www.esaracco.fr"
               rel="noopener noreferrer"
+              target="_blank"
               className="btn btn-secondary btn-sm"
             >
               <FontAwesomeIcon icon={faUserEdit} fixedWidth size="xs" />

@@ -198,6 +198,7 @@ const Album = (props) => {
                   r[2]
                   }
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {r[2]}
                 </a>
@@ -210,6 +211,7 @@ const Album = (props) => {
                   key={k}
                   href={r[1]}
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   {r[2]}
                 </a>

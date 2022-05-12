@@ -312,6 +312,7 @@ const AlbumModal = (props) => {
                   <a
                     href={`https://www.discogs.com/release/${releaseid}`}
                     rel="noopener noreferrer"
+                    target="_blank"
                   >
                     <img alt="" src={discogsLogo} />
                   </a>

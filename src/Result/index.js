@@ -28,7 +28,7 @@ import * as Settings from '../utils/settings';
 
 import Album from './Album';
 import AlbumModal from './Album/AlbumModal';
-import {normalize, wakeLazyLoad} from '../utils/common';
+import {normalize, wakeLazyLoad, useScrollbarWidth} from '../utils/common';
 import {setLeds} from '../utils/leds';
 
 import './styles/Result.css';
@@ -37,6 +37,7 @@ const _setLeds = Settings.setLeds === 'yes';
 
 // COMPONENT Result
 const Result = (props) => {
+  const scrollbarWidth = useScrollbarWidth();
   const {searchStr, loading, progress, setDisplayCount} = props;
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
@@ -66,10 +67,6 @@ const Result = (props) => {
   // METHOD calculateThumbWidth()
   const calculateThumbWidth = () => {
     const wW = window.innerWidth;
-    // FIXME
-    // const scrollbarWidth = window.innerWidth -
-    //                        document.documentElement.clientWidth;
-    const scrollbarWidth = 20;
     let itemsByCol = 8;
 
     if (wW < 300) {
@@ -190,7 +187,7 @@ const Result = (props) => {
       }
     }
 
-    // FIXME Needed to load album image after searching or filtering
+    // Reload albums data after searching or filtering
     wakeLazyLoad();
   }, [
     searchStr,

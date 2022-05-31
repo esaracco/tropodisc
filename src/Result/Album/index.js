@@ -325,7 +325,7 @@ const Album = (props) => {
         <div>
           <b>{_('Image loading error')}</b>
           <br/>
-          {_('Either Discogs is overloaded or the image URLs have changed.')}
+          {_('Either there is a network problem, Discogs is overloaded or the image URLs have changed.')}
           <br/>
           <i>{_('If the problem persists, please re-sync your collection.')}</i>
         </div>,

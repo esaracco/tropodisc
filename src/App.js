@@ -29,12 +29,9 @@ import Header from './Header';
 import About from './About';
 import Result from './Result';
 import ScrollButton from './Result/ScrollButton';
-import InfoModal from './utils/InfoModal';
 
-import {getItem, setItem, wakeLazyLoad} from './utils/common';
+import {wakeLazyLoad} from './utils/common';
 import {getCollection, extractStyles} from './utils/discogs';
-
-import packageJson from '../package.json';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './styles/App.css';
@@ -43,32 +40,30 @@ import './styles/App.css';
 const App = () => {
   const dispatch = useDispatch();
   const [_] = useTranslation();
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [loading, setLoading] = useState(false);
   const [searchStr, setSearchStr] = useState('');
   const [progress, setProgress] = useState(0);
   const [displayCount, setDisplayCount] = useState(0);
-  const [showNewRelease, setShowNewRelease] = useState(false);
   const [, updateState] = useState();
   const forceUpdate = useCallback(() => updateState({}), []);
 
-  // METHOD reloadApp()
-  const reloadApp = () => {
-    localStorage.clear();
-    setItem('version', packageJson.version);
-    window.location.reload();
-  };
-
   // EFFECT 1
   useEffect(() => {
-    const version = getItem('version');
-    const meta = document.querySelector('meta[name="description"]');
+    const _setOnlineEvent = (e) => setIsOnline(e.type === 'online');
 
-    // Reload app if version has changed
-    if (version && version !== packageJson.version) {
-      setShowNewRelease(true);
-    } else if (!version) {
-      setItem('version', packageJson.version);
-    }
+    window.addEventListener('online', _setOnlineEvent);
+    window.addEventListener('offline', _setOnlineEvent);
+
+    return () => {
+      window.removeEventListener('online', _setOnlineEvent);
+      window.removeEventListener('offline', _setOnlineEvent);
+    };
+  }, []);
+
+  // EFFECT 2
+  useEffect(() => {
+    const meta = document.querySelector('meta[name="description"]');
 
     // Not for test mode
     if (process.env.NODE_ENV !== 'test') {
@@ -81,7 +76,7 @@ const App = () => {
     }
   }, [_]);
 
-  // EFFECT 2
+  // EFFECT 3
   useEffect(() => {
     let resizeTimeout = 0;
 
@@ -101,7 +96,7 @@ const App = () => {
     return () => window.removeEventListener('resize', _resize);
   }, [forceUpdate]);
 
-  // EFFECT 3
+  // EFFECT 4
   useEffect(() => {
     toast.dismiss();
     setLoading(true);
@@ -132,21 +127,15 @@ const App = () => {
         searchStr={searchStr}
         setSearchStr={setSearchStr}
         loading={loading}
-        displayCount={displayCount} />
-      <About />
+        displayCount={displayCount}
+        isOnline={isOnline} />
+      <About isOnline={isOnline} />
       <Result
         searchStr={searchStr}
         loading={loading}
         progress={progress}
         setDisplayCount={setDisplayCount} />
       <ScrollButton />
-      <InfoModal
-        title={_('A new release available!')}
-        show={showNewRelease}
-        setShow={reloadApp}
-      >
-        {_('The app will be reloaded and your local Discogs data will be rebuilt.')}
-      </InfoModal>
     </>
   );
 };

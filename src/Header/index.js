@@ -93,6 +93,7 @@ const Header = (props) => {
 Header.propTypes = {
   searchStr: PropTypes.string.isRequired,
   setSearchStr: PropTypes.func.isRequired,
+  isOnline: PropTypes.bool,
 };
 
 export default Header;

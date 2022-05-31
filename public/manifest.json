@@ -1,10 +1,11 @@
 {
   "short_name": "TropoDisc",
-  "name": "An app that helps you manage your audio library from your Discogs collection",
+  "name": "TropoDisc - A Discogs audio library manager",
+  "description": "An app that helps you manage your audio library from your Discogs collection",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "64x64",
       "type": "image/x-icon"
     },
     {
@@ -18,7 +19,8 @@
       "sizes": "300x300"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "id": "/",
   "display": "standalone",
   "theme_color": "#ffc107",
   "background_color": "#313131"

@@ -15,7 +15,7 @@ TropoDisc can be used as **a simple wrapper for your Discogs collection**, or do
 ```bash
 $ git clone https://github.com/esaracco/tropodisc.git
 $ cd tropodisc/
-$ npm i --production
+$ npm i --omit=dev
 $ cp .env.sample .env
 $ vim .env
 ..

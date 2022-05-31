@@ -39,4 +39,5 @@ input.form-control-xs {
 .Toastify__toast-container {
   width: auto;
   max-width: 500px;
+  margin: auto auto 50px 20px;
 }

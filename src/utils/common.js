@@ -16,6 +16,8 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+import React from 'react';
+
 // FUNCTION setItem()
 export const setItem = (name, value) =>
   localStorage.setItem(name, JSON.stringify(value));
@@ -42,12 +44,60 @@ export const normalize = (str) => {
       .toLowerCase();
 };
 
+// FUNCTION clearAllCaches()
+export const clearAllCaches = () => {
+  // Clear service worker caches
+  ['album-covers'].forEach((cname) => {
+    caches.open(cname).then((cache) => {
+      cache.keys().then((keys) => {
+        keys.forEach((request, index, array) => cache.delete(request));
+      });
+    });
+  });
+  // Clear local cache
+  localStorage.clear();
+};
+
+// HOOK useScrollbarWidth()
+export const useScrollbarWidth = () => {
+  const didCompute = React.useRef(false);
+  const widthRef = React.useRef(0);
+
+  if (didCompute.current) {
+    return widthRef.current;
+  }
+
+  // Creating invisible container
+  const outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+  outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+  document.body.appendChild(outer);
+
+  // Creating inner element and placing it in the container
+  const inner = document.createElement('div');
+  outer.appendChild(inner);
+
+  // Calculating difference between container's full width and the child width
+  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+  // Removing temporary elements from the DOM
+  outer.parentNode.removeChild(outer);
+
+  didCompute.current = true;
+  widthRef.current = scrollbarWidth;
+
+  return scrollbarWidth;
+};
+
 const common = {
   setItem,
   getItem,
   removeItem,
   wakeLazyLoad,
   normalize,
+  clearAllCaches,
+  useScrollbarWidth,
 };
 
 export default common;

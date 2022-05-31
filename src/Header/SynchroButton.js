@@ -26,17 +26,19 @@ import {faSync} from '@fortawesome/free-solid-svg-icons';
 
 import ConfirmModal from '../utils/ConfirmModal';
 
+import {clearAllCaches} from '../utils/common';
+
 import './styles/SynchroButton.css';
 
 // COMPONENT SynchroButton
 const SynchroButton = (props) => {
-  const {loading} = props;
+  const {loading, isOnline} = props;
   const [showModal, setShowModal] = useState(false);
   const [_] = useTranslation();
 
   // METHOD onConfirm()
   const onConfirm = () => {
-    localStorage.clear();
+    clearAllCaches();
     window.location.reload();
   };
 
@@ -54,7 +56,7 @@ const SynchroButton = (props) => {
         className="HeaderButton"
         variant="secondary"
         onClick={() => setShowModal(true)}
-        disabled={loading}
+        disabled={loading || !isOnline}
       >
         <FontAwesomeIcon icon={faSync} size="lg" spin={loading} />
       </Button>
@@ -64,6 +66,7 @@ const SynchroButton = (props) => {
 
 SynchroButton.propTypes = {
   loading: PropTypes.bool.isRequired,
+  isOnline: PropTypes.bool,
 };
 
 export default SynchroButton;

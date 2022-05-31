@@ -17,6 +17,7 @@
 */
 
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import {Trans, useTranslation} from 'react-i18next';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -37,7 +38,8 @@ import packageJson from '../../package.json';
 import './styles/About.css';
 
 // COMPONENT About
-const About = () => {
+const About = (props) => {
+  const {isOnline} = props;
   const [showModal, setShowModal] = useState(false);
   const [_] = useTranslation();
 
@@ -99,9 +101,14 @@ const About = () => {
         onClick={() => setShowModal(true)}
       >
         <FontAwesomeIcon icon={faInfoCircle} />
+        {!isOnline && <div className="offline">{_('Offline mode')}</div>}
       </div>
     </>
   );
+};
+
+About.propTypes = {
+  isOnline: PropTypes.bool,
 };
 
 export default About;

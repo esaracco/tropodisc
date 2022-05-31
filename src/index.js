@@ -21,7 +21,13 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './redux/store';
 
+import i18n from './i18n';
+import {toast} from 'react-toastify';
+
 import App from './App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+
+import {clearAllCaches} from './utils/common';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index.css';
@@ -34,3 +40,17 @@ render(
     </React.StrictMode>,
     document.getElementById('root'),
 );
+
+serviceWorkerRegistration.register({
+  onUpdate: (e) => {
+    e.waiting.postMessage({type: 'SKIP_WAITING'});
+    toast.info(i18n.t('Update available! The app will be reloaded and your local Discogs data will be rebuilt.'), {
+      toastId: 'appUpdateAvailable',
+      onClose: () => {
+        window.stop();
+        clearAllCaches();
+        window.location.reload();
+      },
+    });
+  },
+});

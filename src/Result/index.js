@@ -36,9 +36,8 @@ import './styles/Result.css';
 const _setLeds = Settings.setLeds === 'yes';
 
 // COMPONENT Result
-const Result = (props) => {
+const Result = ({searchStr, loading, progress, setDisplayCount}) => {
   const scrollbarWidth = useScrollbarWidth();
-  const {searchStr, loading, progress, setDisplayCount} = props;
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
   const [modalData, setModalData] = useState({

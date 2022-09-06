@@ -31,8 +31,7 @@ import '@yaireo/tagify/dist/tagify.css';
 import './styles/AlbumStyleButtons.css';
 
 // COMPONENT AlbumStyleButtons
-const AlbumStyleButtons = (props) => {
-  const {items, closeModal} = props;
+const AlbumStyleButtons = ({items, closeModal}) => {
   const dispatch = useDispatch();
   const styles = useSelector((s) => s.styles.value);
   const [_] = useTranslation();

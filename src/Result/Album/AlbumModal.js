@@ -54,8 +54,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/AlbumModal.css';
 
 // COMPONENT AlbumModal
-const AlbumModal = (props) => {
-  const {modalData, setModalData} = props;
+const AlbumModal = ({modalData, setModalData}) => {
   const dispatch = useDispatch();
   const [showConfirm, setShowConfirm] = useState(false);
   const selectedStyles = useSelector((s) => s.selected.styles);

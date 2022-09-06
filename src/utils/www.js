@@ -19,13 +19,12 @@
 import {token} from './settings';
 
 // FUNCTION _request()
-const _request = async (props) => {
-  const {
-    method = 'GET',
-    provider = 'https://api.discogs.com',
-    service,
-    args,
-  } = props;
+const _request = async ({
+  method = 'GET',
+  provider = 'https://api.discogs.com',
+  service,
+  args,
+}) => {
   const options = {
     method,
     headers: {

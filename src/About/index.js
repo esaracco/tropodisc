@@ -38,8 +38,7 @@ import packageJson from '../../package.json';
 import './styles/About.css';
 
 // COMPONENT About
-const About = (props) => {
-  const {isOnline} = props;
+const About = ({isOnline}) => {
   const [showModal, setShowModal] = useState(false);
   const [_] = useTranslation();
 

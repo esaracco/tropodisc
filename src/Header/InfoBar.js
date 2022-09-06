@@ -24,8 +24,7 @@ import {useTranslation} from 'react-i18next';
 import './styles/InfoBar.css';
 
 // COMPONENT InfoBar
-const InfoBar = (props) => {
-  const {loading, displayCount} = props;
+const InfoBar = ({loading, displayCount}) => {
   const [info, setInfo] = useState('');
   const [noResult, setNoResult] = useState(false);
   const sort = useSelector((s) => s.sort.value);

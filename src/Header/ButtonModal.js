@@ -30,8 +30,7 @@ import Radio from './Radio';
 import './styles/ButtonModal.css';
 
 // COMPONENT ButtonModal
-const ButtonModal = (props) => {
-  const {stype, label, type, content, onHide, show} = props;
+const ButtonModal = ({stype, label, type, content, onHide, show}) => {
   const dispatch = useDispatch();
   const [_] = useTranslation();
   const selected = useSelector((s) => s.selected) || [];

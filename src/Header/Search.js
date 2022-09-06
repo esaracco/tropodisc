@@ -27,8 +27,7 @@ import {faSearch, faBroom} from '@fortawesome/free-solid-svg-icons';
 import './styles/Search.css';
 
 // COMPONENT Search
-const Search = (props) => {
-  const {searchStr, setSearchStr} = props;
+const Search = ({searchStr, setSearchStr}) => {
   const [showSearch, setShowSearch] = useState(false);
   const [_] = useTranslation();
 

@@ -25,8 +25,7 @@ import {set as setSort} from '../redux/reducers/sort';
 import './styles/Radio.css';
 
 // COMPONENT Radio
-const Radio = (props) => {
-  const {items} = props;
+const Radio = ({items}) => {
   const dispatch = useDispatch();
   const sort = useSelector((s) => s.sort.value);
 

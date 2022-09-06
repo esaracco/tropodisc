@@ -25,8 +25,7 @@ import {add, remove} from '../redux/reducers/selected';
 import './styles/Checkbox.css';
 
 // COMPONENT CheckBox
-const Checkbox = (props) => {
-  const {stype, items, selected} = props;
+const Checkbox = ({stype, items, selected}) => {
   const dispatch = useDispatch();
 
   // METHOD onChange()

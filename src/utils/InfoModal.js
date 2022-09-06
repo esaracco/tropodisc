@@ -22,8 +22,7 @@ import {useTranslation} from 'react-i18next';
 import {Modal, Button} from 'react-bootstrap';
 
 // COMPONENT InfoModal
-const InfoModal = (props) => {
-  const {title, children, show, setShow} = props;
+const InfoModal = ({title, children, show, setShow}) => {
   const [_] = useTranslation();
 
   // METHOD onHide()

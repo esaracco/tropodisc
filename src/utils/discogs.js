@@ -249,8 +249,8 @@ export const getMaster = ({id}) => get({service: `masters/${id}`});
 export const getRelease = ({id}) => get({service: `releases/${id}`});
 
 // FUNCTION updateUserData()
-export const updateUserData = async (props, changes) => {
-  const {folderid, releaseid, instanceid} = props;
+export const updateUserData = async (
+    {folderid, releaseid, instanceid}, changes) => {
   const {rating, place, price, styles} = changes;
   const base = `users/${Settings.user}/collection/folders/${folderid}/releases/${releaseid}/instances/${instanceid}`;
   const {placeId, priceId, stylesId} = getItem('discogsFields') || {};

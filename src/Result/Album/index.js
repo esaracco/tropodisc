@@ -37,17 +37,16 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/Album.css';
 
 // COMPONENT Album
-const Album = (props) => {
-  const {
-    setModalData,
-    cls,
-    thumbWidth,
-    instanceid,
-    img,
-    artist,
-    year,
-    title,
-  } = props;
+const Album = ({
+  setModalData,
+  cls,
+  thumbWidth,
+  instanceid,
+  img,
+  artist,
+  year,
+  title,
+}) => {
   const dispatch = useDispatch();
   const [_] = useTranslation();
   const releases = useSelector((state) => state.releases.value);

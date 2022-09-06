@@ -24,8 +24,7 @@ import {Modal, Button} from 'react-bootstrap';
 import './styles/ConfirmModal.css';
 
 // COMPONENT ConfirmModal
-const ConfirmModal = (props) => {
-  const {children, action, show, setShow} = props;
+const ConfirmModal = ({children, action, show, setShow}) => {
   const [_] = useTranslation();
 
   // METHOD onHide()

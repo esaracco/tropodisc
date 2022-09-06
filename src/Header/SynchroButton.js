@@ -31,8 +31,7 @@ import {clearAllCaches} from '../utils/common';
 import './styles/SynchroButton.css';
 
 // COMPONENT SynchroButton
-const SynchroButton = (props) => {
-  const {loading, isOnline} = props;
+const SynchroButton = ({loading, isOnline}) => {
   const [showModal, setShowModal] = useState(false);
   const [_] = useTranslation();
 

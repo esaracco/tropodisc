@@ -31,8 +31,7 @@ import {normalize} from '../../utils/common.js';
 import './styles/AlbumButton.css';
 
 // COMPONENT AlbumButton
-const AlbumButton = (props) => {
-  const {artist, closeModal} = props;
+const AlbumButton = ({artist, closeModal}) => {
   const dispatch = useDispatch();
   const [count, setCount] = useState(0);
   const [_] = useTranslation();

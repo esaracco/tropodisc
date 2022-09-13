@@ -21,7 +21,7 @@ const path = require('path');
 const http = require('http');
 const https = require('https');
 const express = require('express');
-const unless = require('express-unless');
+const {unless} = require('express-unless');
 
 const front = express.static(path.resolve(__dirname+'/../build'));
 front.unless = unless;

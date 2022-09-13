@@ -8,11 +8,11 @@ WORKDIR /app
 COPY . ./
 
 # Install modules and build the app
-RUN npm ci --production --silent
-RUN npm run build
+RUN yarn --silent
+RUN yarn --silent build
 
 # Install "serve" to run the app
-RUN npm i serve -g --silent
+RUN yarn --silent global add serve
 
 # By default, serve listen to the port 3000
 EXPOSE 3000

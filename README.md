@@ -15,7 +15,7 @@ TropoDisc can be used as **a simple wrapper for your Discogs collection**, or do
 ```bash
 $ git clone https://github.com/esaracco/tropodisc.git
 $ cd tropodisc/
-$ npm i --omit=dev
+$ yarn
 $ cp .env.sample .env
 $ vim .env
 ..
@@ -27,8 +27,8 @@ There is a lot of settings constants, but only two are really required:
 More details [here](https://www.discogs.com/developers#page:authentication).
 ```bash
 ..
-$ npm run build
-$ sudo npm i -g serve
+$ yarn build
+$ sudo yarn global add serve
 $ serve -s build
 ```
 Thats it :smiley:

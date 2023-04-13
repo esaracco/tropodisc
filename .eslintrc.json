@@ -5,16 +5,12 @@
         "node": true
     },
     "extends": [
-        "eslint:recommended",
         "plugin:react/recommended",
-        "react-app",
-        "react-app/jest",
         "google"
     ],
+    "overrides": [
+    ],
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
         "ecmaVersion": "latest",
         "sourceType": "module"
     },

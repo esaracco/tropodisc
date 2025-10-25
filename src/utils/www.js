@@ -44,7 +44,8 @@ const _request = async ({
 
   if (r.ok) {
     const type = r.headers.get('content-type');
-    return type && type.indexOf('application/json') > -1 ? r.json() : r;
+    return type && r.status === 200 &&
+           type.indexOf('application/json') > -1 ? r.json() : r;
   }
 
   throw new Error();

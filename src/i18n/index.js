@@ -20,6 +20,7 @@ import i18n from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import {initReactI18next} from 'react-i18next';
 import FR from './fr.json';
+import EN from './en.json';
 
 i18n
     .use(LanguageDetector)
@@ -27,6 +28,7 @@ i18n
     .init({
       resources: {
         fr: {translations: FR},
+        en: {translations: EN},
       },
       fallbackLng: 'en',
       debug: false,

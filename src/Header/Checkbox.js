@@ -52,7 +52,7 @@ const Checkbox = ({stype, items, selected}) => {
             </label>
           </div>
         );
-      })}
+      }).sort((item) => selected.indexOf(item.key) === -1)}
     </div>
   );
 };

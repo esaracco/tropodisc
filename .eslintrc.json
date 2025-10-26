@@ -17,6 +17,9 @@
     "plugins": [
         "react"
     ],
+    "settings": {
+      "react": {"version":"detect"}
+    },
     "rules": {
       "max-len": "off"
     }

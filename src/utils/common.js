@@ -31,9 +31,14 @@ export const removeItem = (name) =>
   localStorage.removeItem(name);
 
 // FUNCTION wakeLazyLoad()
-export const wakeLazyLoad = () =>
-  window.requestAnimationFrame(() =>
-    window.dispatchEvent(new CustomEvent('scroll')));
+export const wakeLazyLoad = () => {
+  const cb = () => {
+    window.dispatchEvent(new CustomEvent('scroll'));
+    window.requestAnimationFrame(cb);
+  };
+
+  window.requestAnimationFrame(cb);
+};
 
 // FUNCTION normalize()
 export const normalize = (str) => {

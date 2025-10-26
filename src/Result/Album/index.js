@@ -340,11 +340,11 @@ const Album = ({
       style={{width: thumbWidth}}
       data-instanceid={instanceid}
     >
-      <LazyLoad once height={thumbWidth}>
+      <LazyLoad key={instanceid} once height={thumbWidth}>
         <img
           alt=""
           onError={onError}
-          src={img}
+          src={img || '/logo300.png'}
           style={{width: thumbWidth, height: thumbWidth}} />
       </LazyLoad>
       {loader &&

@@ -124,42 +124,41 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
       default:
     }
 
-    keys
-        .map((key) => releases[key])
-        .forEach((r) => {
-          artists[r.artist] = true;
-          formats[r.format] = true;
+    for (let i = 0; i < keys.length; i++) {
+      const r = releases[keys[i]];
+      artists[r.artist] = true;
+      formats[r.format] = true;
 
-          // Style
-          if (sStylesLen &&
-              !selected.styles.find((item) => r.styles.indexOf(item) > -1)) {
-            return;
-          }
+      // Style
+      if (sStylesLen &&
+          !selected.styles.find((item) => r.styles.indexOf(item) > -1)) {
+        continue;
+      }
 
-          fartists[r.artist] = true;
-          fformats[r.format] = true;
+      fartists[r.artist] = true;
+      fformats[r.format] = true;
 
-          // Artist
-          if (sArtistsLen && selected.artists.indexOf(r.artist) === -1) {
-            return;
-          }
+      // Artist
+      if (sArtistsLen && selected.artists.indexOf(r.artist) === -1) {
+        continue;
+      }
 
-          // Format
-          if (sFormatsLen && selected.formats.indexOf(r.format) === -1) {
-            return;
-          }
+      // Format
+      if (sFormatsLen && selected.formats.indexOf(r.format) === -1) {
+        continue;
+      }
 
-          // user search
-          if (search !== '' && r.cls.indexOf(search) === -1) {
-            return;
-          }
+      // user search
+      if (search !== '' && r.cls.indexOf(search) === -1) {
+        continue;
+      }
 
-          if (_setLeds && r.place && r.place.match(/^\d+$/)) {
-            places.push(r.place);
-          }
+      if (_setLeds && r.place && r.place.match(/^\d+$/)) {
+        places.push(r.place);
+      }
 
-          res.push(r);
-        });
+      res.push(r);
+    }
 
     dispatch(setFormats(
         Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort()));

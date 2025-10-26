@@ -81,8 +81,8 @@ const Header = (props) => {
           />
         </div>
         <div>
-          <Search {...props} />
           <SynchroButton {...props} />
+          <Search {...props} />
         </div>
       </div>
       <InfoBar {...props} />

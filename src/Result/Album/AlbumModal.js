@@ -64,7 +64,6 @@ const AlbumModal = ({modalData, setModalData}) => {
     maintitle,
     rating,
     cover,
-    thumb,
     format,
     artist,
     place,
@@ -255,7 +254,7 @@ const AlbumModal = ({modalData, setModalData}) => {
                     onClick={handleIGClick}
                     showPlayButton={false}
                     showThumbnails={false}
-                    items={[{original: cover, thumbnail: thumb}]}
+                    items={[{original: cover || '/logo300.png'}]}
                   />
                   <AlbumButton closeModal={onHide} artist={artist} />
                 </td>

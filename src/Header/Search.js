@@ -22,7 +22,7 @@ import {useTranslation} from 'react-i18next';
 import {Form, Button, InputGroup} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSearch, faBroom} from '@fortawesome/free-solid-svg-icons';
+import {faSearch, faBroom, faXmarkSquare} from '@fortawesome/free-solid-svg-icons';
 
 import './styles/Search.css';
 
@@ -60,7 +60,10 @@ const Search = ({searchStr, setSearchStr}) => {
           variant="secondary"
           className="HeaderButton"
         >
-          <FontAwesomeIcon icon={faSearch} size="lg" />
+          {showSearch ?
+            <FontAwesomeIcon icon={faXmarkSquare} size="lg" /> :
+            <FontAwesomeIcon icon={faSearch} size="lg" />
+          }
         </Button>
         {showSearch &&
             <>

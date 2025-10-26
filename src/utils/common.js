@@ -33,8 +33,11 @@ export const removeItem = (name) =>
 // FUNCTION wakeLazyLoad()
 export const wakeLazyLoad = () => {
   const cb = () => {
+    setTimeout(() => window.dispatchEvent(new CustomEvent('scroll')), 150);
+    /*
     window.dispatchEvent(new CustomEvent('scroll'));
     window.requestAnimationFrame(cb);
+    */
   };
 
   window.requestAnimationFrame(cb);

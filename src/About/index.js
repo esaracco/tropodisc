@@ -23,7 +23,6 @@ import {Trans, useTranslation} from 'react-i18next';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {
   faInfoCircle,
-  faHouse,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
 import {faSmile} from '@fortawesome/free-regular-svg-icons';
@@ -62,16 +61,6 @@ const About = ({isOnline}) => {
         <>
           <p>{desc}</p>
           <p className="text-center">
-            <a
-              href="https://tropodisc.esaracco.fr"
-              rel="noopener noreferrer"
-              target="_blank"
-              className="btn btn-secondary btn-sm"
-            >
-              <FontAwesomeIcon icon={faHouse} size="xs" fixedWidth />
-              {' '+_('Project')}
-            </a>
-            {' '}
             <a
               href="https://github.com/esaracco/tropodisc"
               rel="noopener noreferrer"

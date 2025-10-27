@@ -121,6 +121,14 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
       case 'year':
         keys.sort((a, b) => releases[a].year - releases[b].year);
         break;
+      case 'place':
+        keys.sort((a, b) => !releases[a].place || parseInt(releases[a].place) - parseInt(releases[b].place));
+        /*
+        keys.sort((a, b) =>
+          !releases[a].place || releases[a].place.localeCompare(releases[b].place),
+        );
+        */
+        break;
       default:
     }
 

@@ -77,6 +77,7 @@ const Header = (props) => {
               artist: _('Artist'),
               rating: _('Note'),
               year: _('Year'),
+              place: _('Location'),
             }}
           />
         </div>

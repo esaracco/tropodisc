@@ -48,6 +48,7 @@ const InfoBar = ({loading, displayCount}) => {
           case 'artist': return _('Artist');
           case 'rating': return _('Note');
           case 'year': return _('Year');
+          case 'place': return _('Location');
           default:
         }
       };

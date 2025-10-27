@@ -344,7 +344,7 @@ const Album = ({
         <img
           alt=""
           onError={onError}
-          src={img || '/logo300.png'}
+          src={img || '/logo-big.png'}
           style={{width: thumbWidth, height: thumbWidth}} />
       </LazyLoad>
       {loader &&

@@ -1,6 +1,6 @@
 {
   "keyAboutMessage": "TropoDisc vous aide à gérer votre audiothèque à partir de votre collection <1>Discogs</1>. Elle a été développée principalement pour l'usage personnel de son auteur, et mise à disposition sous licence GPL.",
-  "keyAboutMessageAddon": "<0>Elle peut aussi être utilisée pour mettre en évidence l'emplacement des albums via des rubans de LED... mais ça, c'est une autre histoire <1/></0>",
+  "keyAboutMessageIconsCopy": "<0>Icône vinyle & logo : <1>VeryIcon.com</1></0>",
   "About TropoDisc v{{version}}": "À propos de TropoDisc v{{version}}",
   "An app that allows you to manage your audio library from your Discogs collection": "Une application qui vous aide à gérer votre audiothèque à partir de votre collection Discogs",
   "A Discogs audio library manager": "Un gestionnaire d'audiothèque Discogs",

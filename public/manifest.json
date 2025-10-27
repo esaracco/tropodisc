@@ -9,12 +9,12 @@
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "logo-small.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo300.png",
+      "src": "logo-big.png",
       "type": "image/png",
       "sizes": "300x300"
     }

@@ -343,8 +343,8 @@ export const getCollection = async ({showMessage, setProgress}) => {
           // - Do not stress Discogs API in dev mode
           if (env !== 'production' ||
               info.cover_image.indexOf('spacer.gif') > -1) {
-            info.cover_image = '/logo300.png';
-            info.thumb = '/logo192.png';
+            info.cover_image = '/logo-big.png';
+            info.thumb = '/logo-small.png';
           }
 
           // Add release

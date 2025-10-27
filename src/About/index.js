@@ -25,10 +25,7 @@ import {
   faInfoCircle,
   faUserEdit,
 } from '@fortawesome/free-solid-svg-icons';
-import {faSmile} from '@fortawesome/free-regular-svg-icons';
 import {faGithub} from '@fortawesome/free-brands-svg-icons';
-
-import {setLeds} from '../utils/settings';
 
 import InfoModal from '../utils/InfoModal';
 
@@ -44,8 +41,8 @@ const About = ({isOnline}) => {
   const desc = <Trans i18nKey="keyAboutMessage">
     TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="noopener noreferrer" target="_blank">Discogs</a> collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
   </Trans>;
-  const addon = <Trans i18nKey="keyAboutMessageAddon">
-    <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>It can also be used to highlight the location of albums via LED strips... but that&apos;s another story <FontAwesomeIcon icon={faSmile} /></p>
+  const iconsCopy = <Trans i18nKey="keyAboutMessageIconsCopy">
+    <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>Default vinyl icons & logo picked from <a href="https://www.veryicon.com/icons/media/vinyl-record-icons/vinyl-orange-512.html" rel="noopener noreferrer" target="_blank">VeryIcon.com</a></p>
   </Trans>;
 
   // RENDER
@@ -81,7 +78,7 @@ const About = ({isOnline}) => {
               {' '+_('Author')}
             </a>
           </p>
-          {setLeds !== 'yes' && addon}
+          {iconsCopy}
         </>
       </InfoModal>
       <div

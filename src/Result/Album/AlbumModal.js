@@ -254,7 +254,7 @@ const AlbumModal = ({modalData, setModalData}) => {
                     onClick={handleIGClick}
                     showPlayButton={false}
                     showThumbnails={false}
-                    items={[{original: cover || '/logo300.png'}]}
+                    items={[{original: cover || '/logo-big.png'}]}
                   />
                   <AlbumButton closeModal={onHide} artist={artist} />
                 </td>

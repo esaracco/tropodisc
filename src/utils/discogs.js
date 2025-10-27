@@ -142,7 +142,7 @@ const _extractUserData = async (release) => {
       console.dir(info);
     }
     if (styles) {
-      styles = styles.split(',');
+      styles = styles.trim().replace(/,\s|\s,/g, ',').split(',');
     }
   }
 

@@ -23,8 +23,8 @@ import {useTranslation} from 'react-i18next';
 import {Modal, Button, Table, Tab, Tabs, Form} from 'react-bootstrap';
 import {toast} from 'react-toastify';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes} from '@fortawesome/free-solid-svg-icons';
+// FIXME Discogs API oddness | import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+// FIXME Discogs API oddness | import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import ImageGallery from 'react-image-gallery';
 import {Rating} from 'react-simple-star-rating';
@@ -192,7 +192,7 @@ const AlbumModal = ({modalData, setModalData}) => {
 
   // METHOD onRatingClick()
   const onRatingClick = (value) =>
-    setModalData({...modalData, rating: value / 20});
+    setModalData({...modalData, rating: value});
 
   // METHOD onChange()
   const onChange = (e) => {
@@ -201,7 +201,7 @@ const AlbumModal = ({modalData, setModalData}) => {
   };
 
   // METHOD onReset()
-  const onReset = () => setModalData({...modalData, rating: 0});
+  // FIXME Discogs API oddness | const onReset = () => setModalData({...modalData, rating: 0});
 
   // RENDER
   return (
@@ -230,6 +230,7 @@ const AlbumModal = ({modalData, setModalData}) => {
               <tr>
                 <th>
                   {_('Note')}{' '}
+                  {/* FIXME Discogs API oddness
                   {rating ? (
                   <FontAwesomeIcon
                     icon={faTimes}
@@ -239,13 +240,14 @@ const AlbumModal = ({modalData, setModalData}) => {
                   />
                 ) : (
                   ''
-                )}
+                )
+                */}
                 </th>
                 <td className="rating">
                   <Rating
                     size="20"
                     onClick={onRatingClick}
-                    ratingValue={rating * 20}
+                    initialValue={rating}
                   />{' '}
                 </td>
                 <td rowSpan={4 + discogsFieldsCount} className="modal-icon">

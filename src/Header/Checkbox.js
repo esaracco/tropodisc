@@ -52,7 +52,17 @@ const Checkbox = ({stype, items, selected}) => {
             </label>
           </div>
         );
-      }).sort((item) => selected.indexOf(item.key) === -1)}
+      }).sort((a, b) => {
+        if (!selected.length || (selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
+          return a.key.localeCompare(b.key);
+        } else if (selected.indexOf(a.key) !== -1 && selected.indexOf(b.key) !== -1) {
+          return 0;
+        } else if (selected.indexOf(a.key) !== -1) {
+          return -1;
+        } else if (selected.indexOf(b.key) !== -1) {
+          return 1;
+        }
+      })}
     </div>
   );
 };

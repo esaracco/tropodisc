@@ -22,7 +22,7 @@ import {useTranslation} from 'react-i18next';
 import {Form, Button, InputGroup} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBroom} from '@fortawesome/free-solid-svg-icons';
+import {faWindowClose} from '@fortawesome/free-solid-svg-icons';
 
 // COMPONENT Search
 const Search = ({searchStr, setSearchStr}) => {
@@ -55,7 +55,7 @@ const Search = ({searchStr, setSearchStr}) => {
             className="clear"
             disabled={searchStr.trim() === ''}
           >
-            <FontAwesomeIcon icon={faBroom} />
+            <FontAwesomeIcon icon={faWindowClose} />
           </Button>
         </>
       </InputGroup>

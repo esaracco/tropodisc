@@ -1,19 +1,15 @@
 .Album {
   float: left;
-  border: solid 1px black;
+  border: dashed 1px #2d2d2d;
   cursor: pointer;
-}
-
-.Album img {
-  width:100%;
 }
 
 .Album .artist {
   font-size: .8em;
   padding: 5px;
   font-weight: bold;
-  background: #000;
-  color: #fff;
+  background: #3d3737;
+  color: #a7a4a4;
 }
 
 .Album .loader {

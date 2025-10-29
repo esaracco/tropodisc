@@ -43,14 +43,23 @@ const Header = (props) => {
   // RENDER
   return (
     <>
-      <Navbar sticky="top" expand="sm" className="bg-body-tertiary shadow-lg" data-bs-theme="dark">
+      <Navbar
+        sticky="top"
+        expand="sm"
+        className="shadow-sm bg-dark Header"
+        data-bs-theme="dark"
+      >
         <Container className="d-flex justify-content-center">
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`}>
+            <span className="navbar-toggler-icon"></span>
+            {(selected.styles.length || selected.artists.length || selected.formats.length) ? <span className="badge"><span className="selected-mark"></span></span> : ''}
+          </Navbar.Toggle>
           <div className="d-flex justify-content-center">
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-sm`}
               aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
               placement="end"
+              data-bs-theme="dark"
             >
               <Offcanvas.Header closeButton />
               <Offcanvas.Body>

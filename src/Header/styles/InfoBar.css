@@ -2,7 +2,8 @@
   transform: rotate(-90deg) translate(-100%, 0);
   transform-origin: 0 0;
   position: fixed;
-  top: 65px;
+  top: 68px;
+  z-index: 1020;
   font-size: .8rem;
   line-height: .8rem;
   background: #731d1d;

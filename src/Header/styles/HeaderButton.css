@@ -2,14 +2,13 @@
   position: relative;
   margin-right: 5px;
   margin-bottom: 5px;
-  box-shadow: 1px 1px 5px #555;
 }
 
 .HeaderButton .selected-mark {
   position: absolute;
   right: 5px;
   top: 5px;
-  background: #731d1d;
+  background: #cd1d1d;
   height: 5px;
   width: 5px;
   border-radius: 5px;

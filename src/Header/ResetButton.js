@@ -25,8 +25,6 @@ import {faBroom} from '@fortawesome/free-solid-svg-icons';
 
 import {reset as resetSelected} from '../redux/reducers/selected';
 
-import './styles/ResetButton.css';
-
 // COMPONENT ResetButton
 const ResetButton = () => {
   const dispatch = useDispatch();

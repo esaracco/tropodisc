@@ -1,6 +1,6 @@
 {
   "name": "tropodisc",
-  "version": "0.2.10",
+  "version": "0.3.10",
   "description": "An app that helps you manage your audio library from your Discogs collection",
   "author": "Emmanuel Saracco",
   "license": "GPL-3.0-or-later",
@@ -55,7 +55,7 @@
     "webpack": "5.102.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",

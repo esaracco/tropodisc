@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
+import {Container, Nav, Navbar, Offcanvas} from 'react-bootstrap';
 import {formats as sformats} from '../utils/settings';
 
 import ResetButton from './ResetButton';
@@ -42,24 +43,34 @@ const Header = (props) => {
   // RENDER
   return (
     <>
-      <div className="Header">
-        <div>
-          <ResetButton />
-          <HeaderButton
-            label={_('Styles')}
-            type="checkbox"
-            stype="styles"
-            selected={selected.styles}
-            content={styles}
-          />
-          <HeaderButton
-            label={_('Artists')}
-            type="checkbox"
-            stype="artists"
-            selected={selected.artists}
-            content={artists}
-          />
-          {(!sformats || sformats.indexOf(',') > -1) &&
+      <Navbar sticky="top" expand="sm" className="bg-body-tertiary shadow-lg" data-bs-theme="dark">
+        <Container className="d-flex justify-content-center">
+          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-sm`} />
+          <div className="d-flex justify-content-center">
+            <Navbar.Offcanvas
+              id={`offcanvasNavbar-expand-sm`}
+              aria-labelledby={`offcanvasNavbarLabel-expand-sm`}
+              placement="end"
+            >
+              <Offcanvas.Header closeButton />
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1">
+                  <ResetButton />
+                  <HeaderButton
+                    label={_('Styles')}
+                    type="checkbox"
+                    stype="styles"
+                    selected={selected.styles}
+                    content={styles}
+                  />
+                  <HeaderButton
+                    label={_('Artists')}
+                    type="checkbox"
+                    stype="artists"
+                    selected={selected.artists}
+                    content={artists}
+                  />
+                  {(!sformats || sformats.indexOf(',') > -1) &&
             <HeaderButton
               label={_('Formats')}
               type="checkbox"
@@ -67,25 +78,27 @@ const Header = (props) => {
               selected={selected.formats}
               content={formats}
             />
-          }
-          <HeaderButton
-            label={_('Sort')}
-            type="radio"
-            mark={false}
-            content={{
-              added: _('Date added'),
-              artist: _('Artist'),
-              rating: _('Note'),
-              year: _('Year'),
-              place: _('Location'),
-            }}
-          />
-        </div>
-        <div>
-          <SynchroButton {...props} />
+                  }
+                  <HeaderButton
+                    label={_('Sort')}
+                    type="radio"
+                    mark={false}
+                    content={{
+                      added: _('Date added'),
+                      artist: _('Artist'),
+                      rating: _('Note'),
+                      year: _('Year'),
+                      place: _('Location'),
+                    }}
+                  />
+                  <SynchroButton {...props} />
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </div>
           <Search {...props} />
-        </div>
-      </div>
+        </Container>
+      </Navbar>
       <InfoBar {...props} />
     </>
   );

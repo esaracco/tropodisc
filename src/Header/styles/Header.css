@@ -1,10 +1,15 @@
-.Header {
-  position: fixed;
-  top: 0;
-  padding: 5px 5px 0 5px;
-  display: table;
+.navbar {
+  flex-wrap: unset !important;
 }
 
-.Header > * {
-  float: left;
+.offcanvas.show, .offcanvas-toggling {
+  width: 150px !important;
+}
+
+.offcanvas-body {
+  padding-top: 5px !important;
+}
+
+.navbar-toggler {
+  margin-right: 3px !important;
 }

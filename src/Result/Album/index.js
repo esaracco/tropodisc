@@ -25,7 +25,7 @@ import {useTranslation} from 'react-i18next';
 import PropTypes from 'prop-types';
 
 import processString from 'react-process-string';
-import LazyLoad from 'react-lazyload';
+import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 import {update as updateReleases} from '../../redux/reducers/releases';
 import {setLeds} from '../../utils/leds';
@@ -333,36 +333,33 @@ const Album = ({
   };
 
   // RENDER
-  return (
-    <div
-      className={`Album ${cls}`}
-      onClick={onClick}
-      style={{width: thumbWidth}}
-      data-instanceid={instanceid}
-    >
-      <LazyLoad key={instanceid} once height={thumbWidth}>
-        <img
-          alt=""
-          onError={onError}
-          src={img || '/logo-big.png'}
-          style={{width: thumbWidth, height: thumbWidth}} />
-      </LazyLoad>
-      {loader &&
-        <div className="loader">
-          <FontAwesomeIcon icon={faSync} spin />
-        </div>
-      }
-      <div
-        className="artist text-truncate"
-        style={{width: thumbWidth}}
-      >
-        {artist}
-        <br />
-        {year ? `${year} - ` : ''}
-        {title}
+  return <div
+    className={`Album ${cls}`}
+    onClick={onClick}
+    style={{width: thumbWidth}}
+    data-instanceid={instanceid}
+  >
+    <LazyLoadImage
+      onError={onError}
+      placeholderSrc={'/logo-big.png'}
+      src={img}
+      height={thumbWidth}
+      width={thumbWidth} />
+    {loader &&
+      <div className="loader">
+        <FontAwesomeIcon icon={faSync} spin />
       </div>
+    }
+    <div
+      className="artist text-truncate"
+      style={{width: thumbWidth}}
+    >
+      {artist}
+      <br />
+      {year ? `${year} - ` : ''}
+      {title}
     </div>
-  );
+  </div>;
 };
 
 Album.propTypes = {

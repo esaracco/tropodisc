@@ -30,19 +30,6 @@ export const getItem = (name) =>
 export const removeItem = (name) =>
   localStorage.removeItem(name);
 
-// FUNCTION wakeLazyLoad()
-export const wakeLazyLoad = () => {
-  const cb = () => {
-    setTimeout(() => window.dispatchEvent(new CustomEvent('scroll')), 150);
-    /*
-    window.dispatchEvent(new CustomEvent('scroll'));
-    window.requestAnimationFrame(cb);
-    */
-  };
-
-  window.requestAnimationFrame(cb);
-};
-
 // FUNCTION normalize()
 export const normalize = (str) => {
   return str
@@ -102,7 +89,6 @@ const common = {
   setItem,
   getItem,
   removeItem,
-  wakeLazyLoad,
   normalize,
   clearAllCaches,
   useScrollbarWidth,

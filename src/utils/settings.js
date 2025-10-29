@@ -28,16 +28,19 @@ export const {
   REACT_APP_DISCOGS_USER: user,
   REACT_APP_DISCOGS_TOKEN: token,
 
-  REACT_APP_DISCOGS_FORMATS: formats,
+  REACT_APP_DISCOGS_API_ITEMS_PER_REQUEST: itemsPerRequest = 250,
+  REACT_APP_DISCOGS_API_REQUEST_DELAY: requestDelay = 2,
+
+  REACT_APP_DISCOGS_FORMATS: formats = 'all',
   REACT_APP_DISCOGS_FIELD_PLACE: placeField,
   REACT_APP_DISCOGS_FIELD_PRICE: priceField,
   REACT_APP_DISCOGS_FIELD_STYLES: stylesField,
-  REACT_APP_DISCOGS_FIELDS_REQUIRED: fieldsRequired,
+  REACT_APP_DISCOGS_FIELDS_REQUIRED: fieldsRequired = 'no',
 
-  REACT_APP_SET_LEDS: setLeds,
-  REACT_APP_LEDS_ARTISTS_COLOR: ledsArtistsColor = '0,0,1',
-  REACT_APP_LEDS_STYLES_COLOR: ledsStylesColor = '0,1,0',
-  REACT_APP_LEDS_ALBUM_COLOR: ledsAlbumColor = '1,0,0',
+  REACT_APP_SET_LEDS: setLeds = 'no',
+  REACT_APP_LEDS_ARTISTS_COLOR: ledsArtistsColor = '0,0,25',
+  REACT_APP_LEDS_STYLES_COLOR: ledsStylesColor = '0,25,0',
+  REACT_APP_LEDS_ALBUM_COLOR: ledsAlbumColor = '25,0,0',
 } = process.env;
 
 const requiredFields = [];

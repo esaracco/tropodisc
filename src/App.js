@@ -24,13 +24,13 @@ import {ToastContainer, toast} from 'react-toastify';
 
 import {set as setReleases} from './redux/reducers/releases';
 import {set as setStyles} from './redux/reducers/styles';
+import {env} from './utils/settings';
 
 import Header from './Header';
 import About from './About';
 import Result from './Result';
 import ScrollButton from './Result/ScrollButton';
 
-import {wakeLazyLoad} from './utils/common';
 import {getCollection, extractStyles} from './utils/discogs';
 
 import 'react-toastify/dist/ReactToastify.css';
@@ -66,7 +66,7 @@ const App = () => {
     const meta = document.querySelector('meta[name="description"]');
 
     // Not for test mode
-    if (process.env.NODE_ENV !== 'test') {
+    if (env !== 'test') {
       // Update html tag lang attribute
       document.documentElement.lang = i18n.language;
       // Update meta content tag
@@ -78,22 +78,9 @@ const App = () => {
 
   // EFFECT 3
   useEffect(() => {
-    let resizeTimeout = 0;
+    window.addEventListener('resize', forceUpdate);
 
-    // Method _resize()
-    const _resize = () => {
-      clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
-        forceUpdate();
-
-        // FIXME Needed to load album image after resizing screen
-        wakeLazyLoad();
-      }, 250);
-    };
-
-    window.addEventListener('resize', _resize);
-
-    return () => window.removeEventListener('resize', _resize);
+    return () => window.removeEventListener('resize', forceUpdate);
   }, [forceUpdate]);
 
   // EFFECT 4

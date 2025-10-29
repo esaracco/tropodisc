@@ -18,6 +18,7 @@
 
 import i18n from '../i18n';
 import {toast} from 'react-toastify';
+import sleep from 'sleep-promise';
 
 import * as Settings from './settings';
 
@@ -276,7 +277,7 @@ export const updateUserData = async (
 
 // FUNCTION getCollection()
 export const getCollection = async ({showMessage, setProgress}) => {
-  const {formats, user, fieldsRequired, env} = Settings;
+  const {formats, user, fieldsRequired} = Settings;
   const _formats = formats && formats !== 'all' ?
           formats
               .replace(/(\s*)?,(\s*)?/g, ',')
@@ -299,9 +300,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
       args: `page=1&per_page=1`,
     });
 
-    const pages = Math.ceil(stats.pagination.items / 500);
-    // const pages = 1;
-    // console.log(stats);
+    const pages = Math.ceil(stats.pagination.items / Settings.itemsPerRequest);
 
     progressVal += 5;
     setProgress(progressVal);
@@ -311,8 +310,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
     for (let i = 1; i <= pages; i++) {
       const r = await get({
         service: `users/${user}/collection/folders/0/releases`,
-        args: `page=${i}&per_page=500`,
-        // args: `page=${i}&per_page=25`,
+        args: `page=${i}&per_page=${Settings.itemsPerRequest}`,
       });
 
       progressVal += inc;
@@ -341,8 +339,8 @@ export const getCollection = async ({showMessage, setProgress}) => {
 
           // - Set default picture if none
           // - Do not stress Discogs API in dev mode
-          if (env !== 'production' ||
-              info.cover_image.indexOf('spacer.gif') > -1) {
+          if (info.cover_image.indexOf('spacer.gif') !== -1 ||
+              Settings.env !== 'production') {
             info.cover_image = '/logo-big.png';
             info.thumb = '/logo-small.png';
           }
@@ -368,6 +366,9 @@ export const getCollection = async ({showMessage, setProgress}) => {
             lpcount: parseInt(info.formats[0].qty),
           };
         }
+      }
+      if (i < pages) {
+        await sleep(Settings.requestDelay * 1000);
       }
     }
   }

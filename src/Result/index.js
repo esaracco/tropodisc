@@ -28,7 +28,7 @@ import * as Settings from '../utils/settings';
 
 import Album from './Album';
 import AlbumModal from './Album/AlbumModal';
-import {normalize, wakeLazyLoad, useScrollbarWidth} from '../utils/common';
+import {normalize, useScrollbarWidth} from '../utils/common';
 import {setLeds} from '../utils/leds';
 
 import './styles/Result.css';
@@ -139,7 +139,7 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
 
       // Style
       if (sStylesLen &&
-          !selected.styles.find((item) => r.styles.indexOf(item) > -1)) {
+      !selected.styles.find((item) => r.styles.indexOf(item) > -1)) {
         continue;
       }
 
@@ -166,7 +166,7 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
       }
 
       res.push(r);
-    }
+    };
 
     dispatch(setFormats(
         Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort()));
@@ -192,9 +192,6 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
         setLeds();
       }
     }
-
-    // Reload albums data after searching or filtering
-    wakeLazyLoad();
   }, [
     searchStr,
     releases,

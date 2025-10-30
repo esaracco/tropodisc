@@ -6,6 +6,10 @@
   padding-top: 5px !important;
 }
 
+.navbar.bg-dark {
+  background-color: #3d3737 !important;
+}
+
 .navbar-toggler {
   margin-right: 3px !important;
 }

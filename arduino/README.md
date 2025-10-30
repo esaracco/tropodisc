@@ -1,6 +1,6 @@
 This is the code to upload to your **Arduino Nano 33 IoT device**.
 
-Once uploaded, it will connect to your wifi and listen on the port 80 for request to controls LED strips connected to its circuit.
+Once uploaded, it will connect to your wifi and listen on the port 80 for requests to controls LED strips connected to its circuit.
 
 You will need to install the following drivers & libraries:
 
@@ -9,12 +9,30 @@ You will need to install the following drivers & libraries:
 - Arduino SAMD Boards
 
 **Libraries**
-- Adafruit NeoPixel
-- Functional-Vlpp
-- WiFiNINA_Generic
+- FastLED
 - WiFiWebServer
 
 You will need to fill in the following two constants to allow the card to connect to your wifi:
 
 - ssid
 - password
+
+**API**
+
+***GET - setLeds***
+`/setLeds?leds=[leds]&color=[R, V, B]&noreset=[0|1]`
+> `Example: /setLeds?leds=1,30,500&color=50,25,200`
+
+*Required:*
+ 1. `leds` - LEDs number to switch on, separated by comma. 
+ 2. `color` - LEDs color. 3 RVB decimal values, separated by comma.
+
+ *Optional:*
+ 1. `noreset` - `1` to **not** turn-off LEDs before applying the new rule.
+
+***GET - regle***
+`regle?reset=[0|1]`
+>`Example: /regle`
+
+*Optional:*
+1. `reset` -  Turn off LEDs.

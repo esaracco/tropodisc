@@ -24,12 +24,14 @@ import {ToastContainer, toast} from 'react-toastify';
 
 import {set as setReleases} from './redux/reducers/releases';
 import {set as setStyles} from './redux/reducers/styles';
-import {env} from './utils/settings';
+import * as Settings from './utils/settings';
 
 import Header from './Header';
 import About from './About';
 import Result from './Result';
 import ScrollButton from './Result/ScrollButton';
+import {setLeds} from './utils/leds';
+import {reset as resetSelected} from './redux/reducers/selected';
 
 import {getCollection, extractStyles} from './utils/discogs';
 
@@ -52,6 +54,18 @@ const App = () => {
   useEffect(() => {
     const _setOnlineEvent = (e) => setIsOnline(e.type === 'online');
 
+    if (Settings.setLeds === 'yes') {
+      const _unloadEvent = (e) => {
+        dispatch(resetSelected());
+        setLeds();
+        e.returnValue = _('Exit TropoDisc?');
+        return _('Exit TropoDisc?');
+      };
+
+      window.addEventListener('pagehide', _unloadEvent);
+      window.addEventListener('beforeunloadevent', _unloadEvent);
+    }
+
     window.addEventListener('online', _setOnlineEvent);
     window.addEventListener('offline', _setOnlineEvent);
 
@@ -66,7 +80,7 @@ const App = () => {
     const meta = document.querySelector('meta[name="description"]');
 
     // Not for test mode
-    if (env !== 'test') {
+    if (Settings.env !== 'test') {
       // Update html tag lang attribute
       document.documentElement.lang = i18n.language;
       // Update meta content tag

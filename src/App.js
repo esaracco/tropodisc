@@ -52,7 +52,7 @@ const App = () => {
 
   // EFFECT 1
   useEffect(() => {
-    const _setOnlineEvent = (e) => setIsOnline(e.type === 'online');
+    const _onlineEvent = (e) => setIsOnline(e.type === 'online');
 
     if (Settings.setLeds === 'yes') {
       const _unloadEvent = (e) => {
@@ -66,12 +66,12 @@ const App = () => {
       window.addEventListener('beforeunloadevent', _unloadEvent);
     }
 
-    window.addEventListener('online', _setOnlineEvent);
-    window.addEventListener('offline', _setOnlineEvent);
+    window.addEventListener('online', _onlineEvent);
+    window.addEventListener('offline', _onlineEvent);
 
     return () => {
-      window.removeEventListener('online', _setOnlineEvent);
-      window.removeEventListener('offline', _setOnlineEvent);
+      window.removeEventListener('online', _onlineEvent);
+      window.removeEventListener('offline', _onlineEvent);
     };
   }, []);
 

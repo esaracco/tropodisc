@@ -22,12 +22,13 @@ import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
 import {Container, Nav, Navbar, Offcanvas} from 'react-bootstrap';
-import {formats as sformats} from '../utils/settings';
+import * as Settings from '../utils/settings';
 
 import ResetButton from './ResetButton';
 import HeaderButton from './HeaderButton';
 import Search from './Search';
 import SynchroButton from './SynchroButton';
+import LedsButton from './LedsButton';
 import InfoBar from './InfoBar';
 
 import './styles/Header.css';
@@ -79,14 +80,14 @@ const Header = (props) => {
                     selected={selected.artists}
                     content={artists}
                   />
-                  {(!sformats || sformats.indexOf(',') > -1) &&
-            <HeaderButton
-              label={_('Formats')}
-              type="checkbox"
-              stype="formats"
-              selected={selected.formats}
-              content={formats}
-            />
+                  {(!Settings.formats || Settings.formats.indexOf(',') > -1) &&
+                    <HeaderButton
+                      label={_('Formats')}
+                      type="checkbox"
+                      stype="formats"
+                      selected={selected.formats}
+                      content={formats}
+                    />
                   }
                   <HeaderButton
                     label={_('Sort')}
@@ -101,6 +102,7 @@ const Header = (props) => {
                     }}
                   />
                   <SynchroButton {...props} />
+                  {(Settings.setLeds === 'yes') && <LedsButton {...props} />}
                 </Nav>
               </Offcanvas.Body>
             </Navbar.Offcanvas>

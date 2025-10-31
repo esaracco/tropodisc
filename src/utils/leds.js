@@ -39,8 +39,25 @@ export const setLeds = (props = {}) => {
   });
 };
 
+// FUNCTION ruler()
+export const ruler = (props = {}) => {
+  const {show = true} = props;
+  get({
+    provider: '',
+    service: 'api/regle',
+    args: `reset=${Number(!show)}`,
+  }).catch((e) => {
+    console.error(e.message);
+    toast.warning(
+        i18n.t('Unable to reach the audio library web server!'),
+        {toastId: 'audioServerConnectionError'},
+    );
+  });
+};
+
 const leds = {
   setLeds,
+  ruler,
 };
 
 export default leds;

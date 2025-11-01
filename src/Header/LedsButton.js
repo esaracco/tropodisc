@@ -30,10 +30,10 @@ const LedsButton = () => {
   const [_] = useTranslation();
   const dispatch = useDispatch();
 
-  const handleRuler = () => {
+  const setRulerState = (state) => {
     dispatch(resetSelected());
-    ruler({show: !rulerShown});
-    setRulerShown(!rulerShown);
+    ruler({show: state});
+    setRulerShown(state);
   };
 
   const handleReset = () => {
@@ -59,6 +59,7 @@ const LedsButton = () => {
       <Modal
         show={modalShow}
         onHide={() => setModalShow(false)}
+        onExited={() => setRulerState(false)}
         scrollable
         size="lg"
         centered
@@ -68,7 +69,7 @@ const LedsButton = () => {
         </Modal.Header>
         <Modal.Body>
           <Container className="d-flex justify-content-center">
-            <Button variant="success" onClick={handleRuler}>
+            <Button variant="success" onClick={() => setRulerState(!rulerShown)}>
               {rulerShown ? _('Turn off the ruler') : _('Turn on the ruler')}
             </Button>
             &nbsp;

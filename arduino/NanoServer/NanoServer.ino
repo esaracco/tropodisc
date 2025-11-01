@@ -3,32 +3,34 @@
 
 #undef WITH_SERIAL
 
-#define LED_PIN1 2  //D2 Etage 1
-#define LED_PIN2 3  //D3 Etage 2
-#define LED_PIN3 4  //D4 Etage 3
-#define LED_PIN4 5  //D5 Etage 4
-
-#define NUM_LEDS 144
-#define NUM_STRIPS 2
 #define LED_TYPE WS2812B
-#define COLOR_ORDER GRB
+#define COLOR_ORDER RGB
+#define LED_PIN1 2    // D2 strip 1
+#define LED_PIN2 3    // D3 strip 2
+#define NUM_LEDS 144  // Leds per strip
+#define NUM_STRIPS 2  // Number of strips
+#define TIMEOUT 5     // in minute
 
 CRGB leds[NUM_STRIPS][NUM_LEDS];
 
-const char *ssid = "********";
-const char *password = "********";
+const char *ssid = "********";      // wifi SSID
+const char *password = "********";  // wifi password
+
+uint32_t startTime = 0;
 
 WiFiWebServer server(80);
 
 void setup() {
 #ifdef WITH_SERIAL
   Serial.begin(9600);
-  delay(1000);
+  while (!Serial) {
+    delay(250);
+  }
 #endif
 
+  //createAccessPoint();
   connectWiFi();
   initStrips();
-
   server.on("/setLeds", HTTP_GET, handleSetLeds);
   server.on("/regle", handleRegle);
   server.begin();
@@ -36,6 +38,10 @@ void setup() {
 
 void loop() {
   server.handleClient();
+  if (startTime && (millis() - startTime >= TIMEOUT * 60 * 1000)) {
+    startTime = 0;
+    FastLED.clear(true);
+  }
 }
 
 void connectWiFi() {
@@ -52,19 +58,20 @@ void connectWiFi() {
 void handleRegle() {
   byte reset = server.arg("reset") ? server.arg("reset") == "1" : 0;
 
+  startTime = 0;
   FastLED.clear();
-
   if (!reset) {
-    for (byte etage = 0; etage < NUM_STRIPS; etage++) {
+    for (byte strip = 0; strip < NUM_STRIPS; strip++) {
       for (byte i = 0; i < NUM_LEDS; i++) {
         if (!i) continue;
         if (i % 10 == 0) {
-          leds[etage][i - 1] = CRGB::Blue;
+          leds[strip][i - 1] = CRGB::Blue;
         } else if (i % 5 == 0) {
-          leds[etage][i - 1] = CRGB::White;
+          leds[strip][i - 1] = CRGB::White;
         }
       }
     }
+    startTime = millis();
   }
   FastLED.show();
 
@@ -74,79 +81,57 @@ void handleRegle() {
 void handleSetLeds() {
   int *ledsValues = getValues(server.arg("leds"));
   int *colorValues = getValues(server.arg("color"));
-  byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
-
-#ifdef WITH_SERIAL
-  Serial.println(noReset);
-  Serial.println(server.arg("noreset"));
-#endif
+  const byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
 
   if (!ledsValues || !colorValues) {
-    FastLED.clear();
-    FastLED.show();
+    startTime = 0;
+    FastLED.clear(true);
     server.send(200);
     return;
   }
 
-  /*
+#ifdef WITH_SERIAL
   String remoteIP = server.client().remoteIP().toString();
-  String response = server.arg ("leds")+"|"+server.arg ("color");
-  response += " "+remoteIP;
-  */
+  String response = server.arg("leds") + "|" + server.arg("color");
+  response += " " + remoteIP;
+  Serial.println(response);
+#endif
 
   const byte R = *colorValues;
   const byte G = *(colorValues + 1);
   const byte B = *(colorValues + 2);
-
   if (!noReset) {
-#ifdef WITH_SERIAL
-    Serial.println("RESET!");
-#endif
+    startTime = 0;
     FastLED.clear();
   }
-
   int *ptr = ledsValues;
   while (*ptr >= 0) {
-    int position = *ptr - 1;
-    int etage = abs((float)position / NUM_LEDS);
-    int col = position - (NUM_LEDS * etage);
-
-    leds[etage][col].setRGB(R, G, B);
-
+    const int position = *ptr - 1;
+    const byte strip = abs((float)position / NUM_LEDS);
+    leds[strip][position - (NUM_LEDS * strip)].setRGB(R, G, B);
     ++ptr;
   }
-
   FastLED.show();
-
+  startTime = millis();
   free(colorValues);
   free(ledsValues);
-
   server.send(200);
 }
 
 void initStrips() {
   FastLED.addLeds<LED_TYPE, LED_PIN1, COLOR_ORDER>(leds[0], NUM_LEDS);
   FastLED.addLeds<LED_TYPE, LED_PIN2, COLOR_ORDER>(leds[1], NUM_LEDS);
-  // FastLED.addLeds<LED_TYPE, LED_PIN3, COLOR_ORDER>(leds[2], NUM_LEDS),
-  // FastLED.addLeds<LED_TYPE, LED_PIN4, COLOR_ORDER>(leds[3], NUM_LEDS),
-
   FastLED.setBrightness(10);
-  FastLED.show();
 }
 
 int *getValues(String _buf) {
   if (!_buf || !_buf.length()) return NULL;
-
   char buf[_buf.length() + 2] = { 0 };
   int *ret = NULL;
-
   _buf.toCharArray(buf, _buf.length() + 1);
-
   char *token = strtok(buf, ",");
-
   if (token != NULL) {
     ret = (int *)malloc(sizeof(int));
-
     byte i = 0;
     while (token != NULL) {
       ret[i++] = atoi(token);
@@ -155,6 +140,5 @@ int *getValues(String _buf) {
     }
     memset(&ret[i], -1, sizeof(int));
   }
-
   return ret;
 }

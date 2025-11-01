@@ -35,22 +35,20 @@ const Radio = ({items}) => {
   // RENDER
   return (
     <div className="Radio">
-      {Object.keys(items).map((item) => {
-        return (
-          <div key={item}>
-            <label>
-              <input
-                type="radio"
-                name="sort"
-                defaultChecked={item === sort}
-                value={item}
-                onClick={onClick}
-              />
-              {items[item]}
-            </label>
-          </div>
-        );
-      })}
+      {Object.keys(items).map((item) =>
+        <div key={item}>
+          <label>
+            <input
+              type="radio"
+              name="sort"
+              defaultChecked={item === sort}
+              value={item}
+              onClick={onClick}
+            />
+            {items[item]}
+          </label>
+        </div>,
+      )}
     </div>
   );
 };

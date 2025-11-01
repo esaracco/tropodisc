@@ -38,21 +38,19 @@ const Checkbox = ({stype, items, selected}) => {
   // RENDER
   return (
     <div className="Checkbox">
-      {items.map((item) => {
-        return (
-          <div key={item}>
-            <label>
-              <input
-                type="checkbox"
-                defaultChecked={selected.indexOf(item) > -1}
-                value={item}
-                onChange={onChange}
-              />
-              {item}
-            </label>
-          </div>
-        );
-      }).sort((a, b) => {
+      {items.map((item) =>
+        <div key={item}>
+          <label>
+            <input
+              type="checkbox"
+              defaultChecked={selected.indexOf(item) > -1}
+              value={item}
+              onChange={onChange}
+            />
+            {item}
+          </label>
+        </div>,
+      ).sort((a, b) => {
         if (!selected.length || (selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
           return a.key.localeCompare(b.key);
         } else if (selected.indexOf(a.key) !== -1 && selected.indexOf(b.key) !== -1) {

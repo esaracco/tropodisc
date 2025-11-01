@@ -216,10 +216,9 @@ const AlbumModal = ({modalData, setModalData}) => {
       <Modal
         show={show}
         onHide={onHide}
-        scrollable
         className="AlbumModal"
-        size="lg"
         centered
+        scrollable
       >
         <Modal.Header closeButton>
           <Modal.Title>{maintitle}</Modal.Title>

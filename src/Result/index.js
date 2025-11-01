@@ -216,20 +216,18 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
           now={progress}
           style={{opacity: loading && !result.length ? 1 : 0}}
         />
-        {result.map((item) => {
-          return (
-            <Album
-              key={item.instanceid}
-              setModalData={setModalData}
-              instanceid={item.instanceid}
-              cls={item.cls}
-              img={item[img]}
-              thumbWidth={thumbWidth}
-              artist={item.artist}
-              year={item.year}
-              title={item.title} />
-          );
-        })}
+        {result.map((item) =>
+          <Album
+            key={item.instanceid}
+            setModalData={setModalData}
+            instanceid={item.instanceid}
+            cls={item.cls}
+            img={item[img]}
+            thumbWidth={thumbWidth}
+            artist={item.artist}
+            year={item.year}
+            title={item.title} />,
+        )}
       </div>
     </>
   );

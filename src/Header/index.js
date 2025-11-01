@@ -107,7 +107,11 @@ const Header = (props) => {
               </Offcanvas.Body>
             </Navbar.Offcanvas>
           </div>
-          <Search {...props} />
+          <Search
+            {...props}
+            placeholder={('artist, album...')}
+            style={{color: '#fff'}}
+          />
         </Container>
       </Navbar>
       <InfoBar {...props} />

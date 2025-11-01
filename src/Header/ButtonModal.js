@@ -74,7 +74,6 @@ const ButtonModal = ({stype, label, type, content, onHide, show}) => {
       scrollable
       size="lg"
       className="ButtonModal"
-      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>{label}</Modal.Title>

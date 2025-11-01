@@ -18,16 +18,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import {useTranslation} from 'react-i18next';
 import {Form, InputGroup} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 
 // COMPONENT Search
-const Search = ({searchStr, setSearchStr}) => {
-  const [_] = useTranslation();
-
+const Search = ({placeholder, searchStr, setSearchStr, style}) => {
   // METHOD onChange()
   const onChange = (e) => setSearchStr(e.target.value);
 
@@ -46,15 +43,14 @@ const Search = ({searchStr, setSearchStr}) => {
             type="text"
             onChange={onChange}
             value={searchStr}
-            placeholder={_('artist, album...')}
+            placeholder={placeholder}
             autoFocus
             style={{borderRadius: '5px'}}
           />
           <FontAwesomeIcon icon={faClose} size="sm" onClick={onReset}
             style={{
-              marginLeft: '-20px',
+              ...style,
               marginTop: '11px',
-              color: '#fff',
               zIndex: 5,
               cursor: 'pointer',
               visibility: searchStr !== '' ? 'visible' : 'hidden'}}
@@ -66,8 +62,10 @@ const Search = ({searchStr, setSearchStr}) => {
 };
 
 Search.propTypes = {
+  placeholder: PropTypes.string,
   searchStr: PropTypes.string.isRequired,
   setSearchStr: PropTypes.func.isRequired,
+  style: PropTypes.object,
 };
 
 export default Search;

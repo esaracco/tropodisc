@@ -16,17 +16,20 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
 import {add, remove} from '../redux/reducers/selected';
+import {normalize} from '../utils/common';
+import Search from './Search';
 
 import './styles/Checkbox.css';
 
 // COMPONENT CheckBox
 const Checkbox = ({stype, items, selected}) => {
   const dispatch = useDispatch();
+  const [searchStr, setSearchStr] = useState('');
 
   // METHOD onChange()
   const onChange = (e) => {
@@ -38,6 +41,11 @@ const Checkbox = ({stype, items, selected}) => {
   // RENDER
   return (
     <div className="Checkbox">
+      <Search
+        searchStr={searchStr}
+        setSearchStr={setSearchStr}
+        style={{color: '#000'}}
+      />
       {items.map((item) =>
         <div key={item}>
           <label>
@@ -50,17 +58,18 @@ const Checkbox = ({stype, items, selected}) => {
             {item}
           </label>
         </div>,
-      ).sort((a, b) => {
-        if (!selected.length || (selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
-          return a.key.localeCompare(b.key);
-        } else if (selected.indexOf(a.key) !== -1 && selected.indexOf(b.key) !== -1) {
-          return 0;
-        } else if (selected.indexOf(a.key) !== -1) {
-          return -1;
-        } else if (selected.indexOf(b.key) !== -1) {
-          return 1;
-        }
-      })}
+      ).filter((item) => normalize(item.key).match(normalize(searchStr)))
+          .sort((a, b) => {
+            if (!selected.length || (selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
+              return a.key.localeCompare(b.key);
+            } else if (selected.indexOf(a.key) !== -1 && selected.indexOf(b.key) !== -1) {
+              return 0;
+            } else if (selected.indexOf(a.key) !== -1) {
+              return -1;
+            } else if (selected.indexOf(b.key) !== -1) {
+              return 1;
+            }
+          })}
     </div>
   );
 };

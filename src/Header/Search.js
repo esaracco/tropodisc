@@ -23,6 +23,8 @@ import {Form, InputGroup} from 'react-bootstrap';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faClose} from '@fortawesome/free-solid-svg-icons';
 
+import './styles/Search.css';
+
 // COMPONENT Search
 const Search = ({placeholder, searchStr, setSearchStr, style}) => {
   // METHOD onChange()

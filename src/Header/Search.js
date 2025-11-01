@@ -19,10 +19,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
-import {Form, Button, InputGroup} from 'react-bootstrap';
+import {Form, InputGroup} from 'react-bootstrap';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faWindowClose} from '@fortawesome/free-solid-svg-icons';
+import {faClose} from '@fortawesome/free-solid-svg-icons';
 
 // COMPONENT Search
 const Search = ({searchStr, setSearchStr}) => {
@@ -48,15 +48,17 @@ const Search = ({searchStr, setSearchStr}) => {
             value={searchStr}
             placeholder={_('artist, album...')}
             autoFocus
+            style={{borderRadius: '5px'}}
           />
-          <Button
-            variant="secondary"
-            onClick={onReset}
-            className="clear"
-            disabled={searchStr.trim() === ''}
-          >
-            <FontAwesomeIcon icon={faWindowClose} />
-          </Button>
+          <FontAwesomeIcon icon={faClose} size="sm" onClick={onReset}
+            style={{
+              marginLeft: '-20px',
+              marginTop: '11px',
+              color: '#fff',
+              zIndex: 5,
+              cursor: 'pointer',
+              visibility: searchStr !== '' ? 'visible' : 'hidden'}}
+          />
         </>
       </InputGroup>
     </div>

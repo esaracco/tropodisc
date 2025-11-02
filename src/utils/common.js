@@ -31,13 +31,13 @@ export const removeItem = (name) =>
   localStorage.removeItem(name);
 
 // FUNCTION normalize()
-export const normalize = (str) => {
-  return str
-      .replace(/[\s,\-"'()<>./?!+*=\\&]+/g, '')
+export const normalize = (str) =>
+  str
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z]/ig, '')
+      .replace(/([a-z])\1+/ig, '$1')
       .toLowerCase();
-};
 
 // FUNCTION clearAllCaches()
 export const clearAllCaches = () => {

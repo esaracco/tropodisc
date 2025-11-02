@@ -58,9 +58,10 @@ const Checkbox = ({stype, items, selected}) => {
             {item}
           </label>
         </div>,
-      ).filter((item) => normalize(item.key).match(normalize(searchStr)))
+      ).filter((item) =>
+        !searchStr || normalize(item.key).match(normalize(searchStr)))
           .sort((a, b) => {
-            if (!selected.length || (selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
+            if (!selected.length ||(selected.indexOf(a.key) === -1 && selected.indexOf(b.key) === -1)) {
               return a.key.localeCompare(b.key);
             } else if (selected.indexOf(a.key) !== -1 && selected.indexOf(b.key) !== -1) {
               return 0;

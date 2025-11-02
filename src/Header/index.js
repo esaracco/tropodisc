@@ -108,7 +108,7 @@ const Header = (props) => {
           </div>
           <Search
             {...props}
-            placeholder={('artist, album...')}
+            placeholder={_('artist, album...')}
             style={{color: '#fff'}}
           />
         </Container>

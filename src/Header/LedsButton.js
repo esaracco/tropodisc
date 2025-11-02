@@ -31,17 +31,20 @@ const LedsButton = () => {
   const dispatch = useDispatch();
 
   const setRulerState = (state) => {
-    dispatch(resetSelected());
+    if (state === rulerShown) return;
+    if (!rulerShown) {
+      dispatch(resetSelected());
+    }
     ruler({show: state});
     setRulerShown(state);
   };
 
   const handleReset = () => {
-    if (rulerShown) {
+    if (!rulerShown) {
+      dispatch(resetSelected());
+    } else {
       ruler({show: false});
       setRulerShown(false);
-    } else {
-      dispatch(resetSelected());
     }
   };
 

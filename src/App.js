@@ -45,6 +45,7 @@ const App = () => {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
   const [loading, setLoading] = useState(false);
   const [searchStr, setSearchStr] = useState('');
+  const [fromRuler, setFromRuler] = useState(false);
   const [progress, setProgress] = useState(0);
   const [displayCount, setDisplayCount] = useState(0);
   const [, updateState] = useState();
@@ -125,6 +126,7 @@ const App = () => {
     <>
       <ToastContainer position="bottom-right" />
       <Header
+        setFromRuler={setFromRuler}
         searchStr={searchStr}
         setSearchStr={setSearchStr}
         loading={loading}
@@ -132,6 +134,8 @@ const App = () => {
         isOnline={isOnline} />
       <About isOnline={isOnline} />
       <Result
+        fromRuler={fromRuler}
+        setFromRuler={setFromRuler}
         searchStr={searchStr}
         loading={loading}
         progress={progress}

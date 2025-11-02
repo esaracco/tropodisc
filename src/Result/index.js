@@ -36,7 +36,7 @@ import './styles/Result.css';
 const _setLeds = Settings.setLeds === 'yes';
 
 // COMPONENT Result
-const Result = ({searchStr, loading, progress, setDisplayCount}) => {
+const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDisplayCount}) => {
   const scrollbarWidth = useScrollbarWidth();
   const dispatch = useDispatch();
   const [result, setResult] = useState([]);
@@ -189,7 +189,11 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
       // Turn off the light...
       } else if (turnOffLeds.current) {
         turnOffLeds.current = false;
-        setLeds();
+        if (!fromRuler) {
+          setLeds();
+        } else {
+          setFromRuler(false);
+        }
       }
     }
   }, [
@@ -234,6 +238,8 @@ const Result = ({searchStr, loading, progress, setDisplayCount}) => {
 };
 
 Result.propTypes = {
+  fromRuler: PropTypes.bool.isRequired,
+  setFromRuler: PropTypes.func.isRequired,
   searchStr: PropTypes.string.isRequired,
   loading: PropTypes.bool.isRequired,
   progress: PropTypes.number.isRequired,

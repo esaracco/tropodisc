@@ -19,20 +19,24 @@
 import React, {useState} from 'react';
 import {Button, Container, Modal} from 'react-bootstrap';
 import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
+import PropTypes from 'prop-types';
+
 import {reset as resetSelected} from '../redux/reducers/selected';
 import {ruler} from '../utils/leds';
 
 // COMPONENT LedsButton
-const LedsButton = () => {
+const LedsButton = ({setFromRuler}) => {
   const [modalShow, setModalShow] = useState(false);
   const [rulerShown, setRulerShown] = useState(false);
-  const [_] = useTranslation();
   const dispatch = useDispatch();
+  const selected = useSelector((s) => s.selected);
+  const [_] = useTranslation();
 
   const setRulerState = (state) => {
     if (state === rulerShown) return;
-    if (!rulerShown) {
+    if (!rulerShown && (selected.styles.length || selected.artists.length)) {
+      setFromRuler(true);
       dispatch(resetSelected());
     }
     ruler({show: state});
@@ -40,7 +44,7 @@ const LedsButton = () => {
   };
 
   const handleReset = () => {
-    if (!rulerShown) {
+    if (!rulerShown && (selected.styles.length || selected.artists.length)) {
       dispatch(resetSelected());
     } else {
       ruler({show: false});
@@ -88,6 +92,10 @@ const LedsButton = () => {
       </Modal>
     </>
   );
+};
+
+LedsButton.propTypes = {
+  setFromRuler: PropTypes.func.isRequired,
 };
 
 export default LedsButton;

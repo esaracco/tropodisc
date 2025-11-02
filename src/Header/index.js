@@ -17,7 +17,6 @@
 */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
@@ -117,12 +116,6 @@ const Header = (props) => {
       <InfoBar {...props} />
     </>
   );
-};
-
-Header.propTypes = {
-  searchStr: PropTypes.string.isRequired,
-  setSearchStr: PropTypes.func.isRequired,
-  isOnline: PropTypes.bool,
 };
 
 export default Header;

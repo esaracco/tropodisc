@@ -35,7 +35,6 @@ const InfoModal = ({title, children, show, setShow}) => {
       onHide={onHide}
       scrollable
       size="lg"
-      centered
     >
       <Modal.Header closeButton>
         <Modal.Title>{title || _('Information')}</Modal.Title>

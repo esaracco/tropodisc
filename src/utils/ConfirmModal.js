@@ -37,7 +37,6 @@ const ConfirmModal = ({children, action, show, setShow}) => {
       onHide={onHide}
       scrollable
       size="lg"
-      centered
       contentClassName="ConfirmModal"
     >
       <Modal.Header closeButton>

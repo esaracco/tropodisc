@@ -69,7 +69,6 @@ const LedsButton = ({setFromRuler}) => {
         onExited={() => setRulerState(false)}
         scrollable
         size="lg"
-        centered
       >
         <Modal.Header closeButton>
           <Modal.Title>{_('Leds control')}</Modal.Title>

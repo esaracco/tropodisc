@@ -4,6 +4,15 @@ import store from './redux/store';
 import {Provider} from 'react-redux';
 import App from './App';
 
+Object.defineProperty(window, 'matchMedia', {
+  writable: true,
+  value: (query) => ({
+    addListener: () => {},
+    media: query,
+    removeListener: () => {},
+  }),
+});
+
 it('Main components must be here', () => {
   render(<Provider store={store}><App /></Provider>);
 

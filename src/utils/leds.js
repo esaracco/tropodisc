@@ -25,7 +25,7 @@ export const setLeds = (props = {}) => {
   const {place, color, noreset = false} = props;
   get({
     provider: '',
-    service: 'api/setLeds',
+    service: 'api/leds',
     args: (place && color) ?
       `leds=${Array.isArray(place) ?
         place.join(',') :
@@ -39,12 +39,12 @@ export const setLeds = (props = {}) => {
   });
 };
 
-// FUNCTION ruler()
-export const ruler = (props = {}) => {
+// FUNCTION setRuler()
+export const setRuler = (props = {}) => {
   const {show = true} = props;
   get({
     provider: '',
-    service: 'api/regle',
+    service: 'api/ruler',
     args: `reset=${Number(!show)}`,
   }).catch((e) => {
     console.error(e.message);
@@ -57,7 +57,7 @@ export const ruler = (props = {}) => {
 
 const leds = {
   setLeds,
-  ruler,
+  setRuler,
 };
 
 export default leds;

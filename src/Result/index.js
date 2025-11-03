@@ -25,11 +25,11 @@ import {set as setArtists} from '../redux/reducers/artists';
 import {set as setFormats} from '../redux/reducers/formats';
 
 import * as Settings from '../utils/settings';
+import * as Leds from '../utils/leds';
 
 import Album from './Album';
 import AlbumModal from './Album/AlbumModal';
 import {normalize, useScrollbarWidth} from '../utils/common';
-import {setLeds} from '../utils/leds';
 
 import './styles/Result.css';
 
@@ -180,7 +180,7 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
       // Let there be light!
       if (sStylesLen || sArtistsLen || sFormatsLen) {
         turnOffLeds.current = true;
-        setLeds({
+        Leds.setLeds({
           place: places,
           color: sStylesLen ?
                    Settings.ledsStylesColor :
@@ -190,7 +190,7 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
       } else if (turnOffLeds.current) {
         turnOffLeds.current = false;
         if (!fromRuler) {
-          setLeds();
+          Leds.setLeds();
         } else {
           setFromRuler(false);
         }

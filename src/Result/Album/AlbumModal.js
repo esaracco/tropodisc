@@ -33,13 +33,6 @@ import {set as setReleases} from '../../redux/reducers/releases';
 import {set as setStyles} from '../../redux/reducers/styles';
 import {set as setSelected} from '../../redux/reducers/selected';
 
-import {
-  currency,
-  setLeds as confSetLeds,
-  ledsStylesColor,
-  ledsArtistsColor,
-} from '../../utils/settings';
-
 import discogsLogo from '../../assets/discogsLogo.png';
 
 import ConfirmModal from '../../utils/ConfirmModal';
@@ -48,7 +41,8 @@ import AlbumButton from './AlbumButton';
 
 import {getItem} from '../../utils/common';
 import {updateUserData, extractStyles} from '../../utils/discogs';
-import {setLeds} from '../../utils/leds';
+import * as Leds from '../../utils/leds';
+import * as Settings from '../../utils/settings';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/AlbumModal.css';
@@ -161,17 +155,17 @@ const AlbumModal = ({modalData, setModalData}) => {
 
   // METHOD turnOffLed()
   const turnOffLed = () => {
-    if (confSetLeds === 'yes') {
+    if (Settings.setLeds === 'yes') {
       const sStylesLen = selectedStyles.length;
       const sArtistsLen = selectedArtists.length;
 
       // Turn off the lights
-      setLeds({
+      Leds.setLeds({
         place,
         noreset: !!(sStylesLen || sArtistsLen),
         color: sStylesLen ?
-                 ledsStylesColor :
-                 sArtistsLen ? ledsArtistsColor : '0,0,0'});
+                 Settings.ledsStylesColor :
+                 sArtistsLen ? Settings.ledsArtistsColor : '0,0,0'});
     }
   };
 
@@ -288,7 +282,7 @@ const AlbumModal = ({modalData, setModalData}) => {
                       data-field="price"
                       onChange={onChange}
                     />{' '}
-                    {currency || '€'}
+                    {Settings.currency || '€'}
                   </td>
                 </tr> : null
               }

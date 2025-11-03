@@ -28,10 +28,10 @@ import processString from 'react-process-string';
 import {LazyLoadImage} from 'react-lazy-load-image-component';
 
 import {update as updateReleases} from '../../redux/reducers/releases';
-import {setLeds} from '../../utils/leds';
 import {getMaster, getRelease} from '../../utils/discogs';
 
 import * as Settings from '../../utils/settings';
+import * as Leds from '../../utils/leds';
 
 import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/Album.css';
@@ -304,7 +304,7 @@ const Album = ({
 
           // Let there be light!
           if (Settings.setLeds === 'yes') {
-            setLeds({
+            Leds.setLeds({
               place: r.place,
               color: Settings.ledsAlbumColor,
               noreset: !!(selectedStyles.length || selectedArtists.length),

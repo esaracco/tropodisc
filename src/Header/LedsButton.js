@@ -23,7 +23,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import PropTypes from 'prop-types';
 
 import {reset as resetSelected} from '../redux/reducers/selected';
-import {ruler} from '../utils/leds';
+import * as Leds from '../utils/leds';
 
 // COMPONENT LedsButton
 const LedsButton = ({setFromRuler}) => {
@@ -39,7 +39,7 @@ const LedsButton = ({setFromRuler}) => {
       setFromRuler(true);
       dispatch(resetSelected());
     }
-    ruler({show: state});
+    Leds.setRuler({show: state});
     setRulerShown(state);
   };
 
@@ -47,7 +47,7 @@ const LedsButton = ({setFromRuler}) => {
     if (!rulerShown && (selected.styles.length || selected.artists.length)) {
       dispatch(resetSelected());
     } else {
-      ruler({show: false});
+      Leds.setRuler({show: false});
       setRulerShown(false);
     }
   };

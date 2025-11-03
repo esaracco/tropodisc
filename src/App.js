@@ -25,12 +25,12 @@ import {ToastContainer, toast} from 'react-toastify';
 import {set as setReleases} from './redux/reducers/releases';
 import {set as setStyles} from './redux/reducers/styles';
 import * as Settings from './utils/settings';
+import * as Leds from './utils/leds';
 
 import Header from './Header';
 import About from './About';
 import Result from './Result';
 import ScrollButton from './Result/ScrollButton';
-import {setLeds} from './utils/leds';
 import {reset as resetSelected} from './redux/reducers/selected';
 
 import {getCollection, extractStyles} from './utils/discogs';
@@ -58,7 +58,7 @@ const App = () => {
     if (Settings.setLeds === 'yes') {
       const _unloadEvent = (e) => {
         dispatch(resetSelected());
-        setLeds();
+        Leds.setLeds();
         e.returnValue = _('Exit TropoDisc?');
         return _('Exit TropoDisc?');
       };

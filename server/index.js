@@ -33,7 +33,7 @@ const port = process.env.REACT_APP_LEDS_API_PORT || 10000;
 app.use('/', front.unless((req) => req.originalUrl.indexOf('/api/') > -1));
 
 // ROUTE /setLeds
-app.get(['/api/setLeds', '/api/regle'], (req, res) => {
+app.get(['/api/leds', '/api/ruler'], (req, res) => {
   const url = process.env.REACT_APP_AUDIOLIBRARY_URL +
                 req.originalUrl.substr(4);
 

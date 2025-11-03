@@ -4,7 +4,7 @@
 #undef WITH_SERIAL
 
 #define LED_TYPE WS2812B
-#define COLOR_ORDER RGB
+#define COLOR_ORDER GRB
 #define LED_PIN1 2    // D2 strip 1
 #define LED_PIN2 3    // D3 strip 2
 #define NUM_LEDS 144  // Leds per strip
@@ -31,8 +31,10 @@ void setup() {
   //createAccessPoint();
   connectWiFi();
   initStrips();
-  server.on("/setLeds", HTTP_GET, handleSetLeds);
-  server.on("/regle", handleRegle);
+
+  server.on("/leds", HTTP_GET, handleLeds);
+  server.on("/ruler", HTTP_GET, handleRuler);
+
   server.begin();
 }
 
@@ -55,39 +57,29 @@ void connectWiFi() {
 #endif
 }
 
-void handleRegle() {
-  byte reset = server.arg("reset") ? server.arg("reset") == "1" : 0;
-
-  startTime = 0;
-  FastLED.clear();
-  if (!reset) {
-    for (byte strip = 0; strip < NUM_STRIPS; strip++) {
-      for (byte i = 0; i < NUM_LEDS; i++) {
-        if (!i) continue;
-        if (i % 10 == 0) {
-          leds[strip][i - 1] = CRGB::Blue;
-        } else if (i % 5 == 0) {
-          leds[strip][i - 1] = CRGB::White;
-        }
-      }
-    }
-    startTime = millis();
-  }
-  FastLED.show();
-
-  server.send(200);
+void initStrips() {
+  FastLED.addLeds<LED_TYPE, LED_PIN1, COLOR_ORDER>(leds[0], NUM_LEDS);
+  FastLED.addLeds<LED_TYPE, LED_PIN2, COLOR_ORDER>(leds[1], NUM_LEDS);
+  FastLED.setBrightness(10);
 }
 
-void handleSetLeds() {
+void handleLeds() {
+  const byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
   int *ledsValues = getValues(server.arg("leds"));
   int *colorValues = getValues(server.arg("color"));
-  const byte noReset = server.arg("noreset") ? server.arg("noreset") == "1" : 0;
 
-  if (!ledsValues || !colorValues) {
+  if (!ledsValues) {
     startTime = 0;
     FastLED.clear(true);
     server.send(200);
     return;
+  }
+
+  if (!colorValues) {
+    const int defaultColorValues[] = { 25, 25, 25, 0 };
+    const int length = 4 * sizeof(int);
+    colorValues = (int *)malloc(length);
+    memcpy(colorValues, defaultColorValues, length);
   }
 
 #ifdef WITH_SERIAL
@@ -105,7 +97,7 @@ void handleSetLeds() {
     FastLED.clear();
   }
   int *ptr = ledsValues;
-  while (*ptr >= 0) {
+  while (*ptr > 0) {
     const int position = *ptr - 1;
     const byte strip = abs((float)position / NUM_LEDS);
     leds[strip][position - (NUM_LEDS * strip)].setRGB(R, G, B);
@@ -117,11 +109,25 @@ void handleSetLeds() {
   free(ledsValues);
   server.send(200);
 }
-
-void initStrips() {
-  FastLED.addLeds<LED_TYPE, LED_PIN1, COLOR_ORDER>(leds[0], NUM_LEDS);
-  FastLED.addLeds<LED_TYPE, LED_PIN2, COLOR_ORDER>(leds[1], NUM_LEDS);
-  FastLED.setBrightness(10);
+void handleRuler() {
+  byte reset = server.arg("reset") ? server.arg("reset") == "1" : 0;
+  startTime = 0;
+  FastLED.clear();
+  if (!reset) {
+    for (byte strip = 0; strip < NUM_STRIPS; strip++) {
+      for (byte i = 0; i < NUM_LEDS; i++) {
+        if (!i) continue;
+        if (i % 10 == 0) {
+          leds[strip][i - 1] = CRGB::Blue;
+        } else if (i % 5 == 0) {
+          leds[strip][i - 1] = CRGB::White;
+        }
+      }
+    }
+    startTime = millis();
+  }
+  FastLED.show();
+  server.send(200);
 }
 
 int *getValues(String _buf) {

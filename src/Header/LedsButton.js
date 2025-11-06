@@ -26,7 +26,7 @@ import {reset as resetSelected} from '../redux/reducers/selected';
 import * as Leds from '../utils/leds';
 
 // COMPONENT LedsButton
-const LedsButton = ({setFromRuler}) => {
+const LedsButton = ({setFromRuler, ledsAnimation, setLedsAnimation}) => {
   const [modalShow, setModalShow] = useState(false);
   const [rulerShown, setRulerShown] = useState(false);
   const dispatch = useDispatch();
@@ -52,6 +52,11 @@ const LedsButton = ({setFromRuler}) => {
     }
   };
 
+  const handleAnimation = () => {
+    Leds.setMotion({disable: ledsAnimation});
+    setLedsAnimation(!ledsAnimation);
+  };
+
   // RENDER
   return (
     <>
@@ -75,14 +80,17 @@ const LedsButton = ({setFromRuler}) => {
         </Modal.Header>
         <Modal.Body>
           <Container className="d-flex justify-content-center">
-            <Button variant="success" onClick={() => setRulerState(!rulerShown)}>
-              {rulerShown ? _('Turn off the ruler') : _('Turn on the ruler')}
-            </Button>
-            &nbsp;
-            <Button variant="success" onClick={handleReset}>
-              {_('Reset')}
-            </Button>
-            {/* <Button variant="danger">{_("Disable leds")}</Button> */}
+            <div className="d-grid gap-2">
+              <Button variant="success" onClick={() => setRulerState(!rulerShown)}>
+                {rulerShown ? _('Turn off the ruler') : _('Turn on the ruler')}
+              </Button>
+              <Button variant="success" onClick={handleReset}>
+                {_('Reset')}
+              </Button>
+              <Button variant="success" onClick={handleAnimation}>
+                {ledsAnimation ? _('Disable animation') : _('Enable animation')}
+              </Button>
+            </div>
           </Container>
         </Modal.Body>
         <Modal.Footer>
@@ -95,6 +103,8 @@ const LedsButton = ({setFromRuler}) => {
 
 LedsButton.propTypes = {
   setFromRuler: PropTypes.func.isRequired,
+  ledsAnimation: PropTypes.bool.isRequired,
+  setLedsAnimation: PropTypes.func.isRequired,
 };
 
 export default LedsButton;

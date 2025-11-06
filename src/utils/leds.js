@@ -39,6 +39,22 @@ export const setLeds = (props = {}) => {
   });
 };
 
+// FUNCTION setMotion()
+export const setMotion = (props = {}) => {
+  const {disable = true} = props;
+  get({
+    provider: '',
+    service: 'api/motion',
+    args: `disable=${Number(disable)}`,
+  }).catch((e) => {
+    console.error(e.message);
+    toast.warning(
+        i18n.t('Unable to reach the audio library web server!'),
+        {toastId: 'audioServerConnectionError'},
+    );
+  });
+};
+
 // FUNCTION setRuler()
 export const setRuler = (props = {}) => {
   const {show = true} = props;
@@ -57,6 +73,7 @@ export const setRuler = (props = {}) => {
 
 const leds = {
   setLeds,
+  setMotion,
   setRuler,
 };
 

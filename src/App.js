@@ -46,6 +46,7 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [searchStr, setSearchStr] = useState('');
   const [fromRuler, setFromRuler] = useState(false);
+  const [ledsAnimation, setLedsAnimation] = useState(true);
   const [progress, setProgress] = useState(0);
   const [displayCount, setDisplayCount] = useState(0);
   const [, updateState] = useState();
@@ -129,6 +130,8 @@ const App = () => {
         setFromRuler={setFromRuler}
         searchStr={searchStr}
         setSearchStr={setSearchStr}
+        ledsAnimation={ledsAnimation}
+        setLedsAnimation={setLedsAnimation}
         loading={loading}
         displayCount={displayCount}
         isOnline={isOnline} />

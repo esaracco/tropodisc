@@ -32,8 +32,11 @@ const port = process.env.REACT_APP_LEDS_API_PORT || 10000;
 // Serve all files as static, except for for "/api/*"
 app.use('/', front.unless((req) => req.originalUrl.indexOf('/api/') > -1));
 
-// ROUTE /setLeds
-app.get(['/api/leds', '/api/ruler'], (req, res) => {
+// ROUTES leds, motion, ruler
+app.get([
+  '/api/leds',
+  '/api/motion',
+  '/api/ruler'], (req, res) => {
   const url = process.env.REACT_APP_AUDIOLIBRARY_URL +
                 req.originalUrl.substr(4);
 

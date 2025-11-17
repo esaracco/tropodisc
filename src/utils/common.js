@@ -17,6 +17,8 @@
 */
 
 import React from 'react';
+import removeAccents from 'remove-accents';
+
 
 // FUNCTION setItem()
 export const setItem = (name, value) =>
@@ -32,9 +34,9 @@ export const removeItem = (name) =>
 
 // FUNCTION normalize()
 export const normalize = (str) =>
-  str
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+  removeAccents(str)
+  //      .normalize('NFD')
+  //      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z]/ig, '')
       .replace(/([a-z])\1+/ig, '$1')
       .toLowerCase();

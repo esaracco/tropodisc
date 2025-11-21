@@ -26,7 +26,7 @@ import {reset as resetSelected} from '../redux/reducers/selected';
 import * as Leds from '../utils/leds';
 
 // COMPONENT LedsButton
-const LedsButton = ({setFromRuler, ledsAnimation, setLedsAnimation}) => {
+const LedsButton = ({setFromRuler, ledsTracker, setLedsTracker}) => {
   const [modalShow, setModalShow] = useState(false);
   const [rulerShown, setRulerShown] = useState(false);
   const dispatch = useDispatch();
@@ -52,9 +52,9 @@ const LedsButton = ({setFromRuler, ledsAnimation, setLedsAnimation}) => {
     }
   };
 
-  const handleAnimation = () => {
-    Leds.setMotion({disable: ledsAnimation});
-    setLedsAnimation(!ledsAnimation);
+  const handleTracker = () => {
+    Leds.setTracker({disable: ledsTracker});
+    setLedsTracker(!ledsTracker);
   };
 
   // RENDER
@@ -87,8 +87,8 @@ const LedsButton = ({setFromRuler, ledsAnimation, setLedsAnimation}) => {
               <Button variant="success" onClick={handleReset}>
                 {_('Reset')}
               </Button>
-              <Button variant="success" onClick={handleAnimation}>
-                {ledsAnimation ? _('Disable animation') : _('Enable animation')}
+              <Button variant="success" onClick={handleTracker}>
+                {ledsTracker ? _('Disable tracker') : _('Enable tracker')}
               </Button>
             </div>
           </Container>
@@ -103,8 +103,8 @@ const LedsButton = ({setFromRuler, ledsAnimation, setLedsAnimation}) => {
 
 LedsButton.propTypes = {
   setFromRuler: PropTypes.func.isRequired,
-  ledsAnimation: PropTypes.bool.isRequired,
-  setLedsAnimation: PropTypes.func.isRequired,
+  ledsTracker: PropTypes.bool.isRequired,
+  setLedsTracker: PropTypes.func.isRequired,
 };
 
 export default LedsButton;

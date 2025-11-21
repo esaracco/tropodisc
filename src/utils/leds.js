@@ -20,6 +20,14 @@ import i18n from '../i18n';
 import {toast} from 'react-toastify';
 import {get} from './www';
 
+const handleError = (e) => {
+  console.error(e.message);
+  toast.warning(
+      i18n.t('Unable to reach the audio library web server!'),
+      {toastId: 'audioServerConnectionError'},
+  );
+};
+
 // FUNCTION setLeds()
 export const setLeds = (props = {}) => {
   const {place, color, noreset = false} = props;
@@ -30,29 +38,17 @@ export const setLeds = (props = {}) => {
       `leds=${Array.isArray(place) ?
         place.join(',') :
           place}&color=${color}&noreset=${Number(noreset)}` : undefined,
-  }).catch((e) => {
-    console.error(e.message);
-    toast.warning(
-        i18n.t('Unable to reach the audio library web server!'),
-        {toastId: 'audioServerConnectionError'},
-    );
-  });
+  }).catch(handleError);
 };
 
-// FUNCTION setMotion()
-export const setMotion = (props = {}) => {
+// FUNCTION setTracker()
+export const setTracker = (props = {}) => {
   const {disable = true} = props;
   get({
     provider: '',
-    service: 'api/motion',
+    service: 'api/tracker',
     args: `disable=${Number(disable)}`,
-  }).catch((e) => {
-    console.error(e.message);
-    toast.warning(
-        i18n.t('Unable to reach the audio library web server!'),
-        {toastId: 'audioServerConnectionError'},
-    );
-  });
+  }).catch(handleError);
 };
 
 // FUNCTION setRuler()
@@ -62,18 +58,12 @@ export const setRuler = (props = {}) => {
     provider: '',
     service: 'api/ruler',
     args: `reset=${Number(!show)}`,
-  }).catch((e) => {
-    console.error(e.message);
-    toast.warning(
-        i18n.t('Unable to reach the audio library web server!'),
-        {toastId: 'audioServerConnectionError'},
-    );
-  });
+  }).catch(handleError);
 };
 
 const leds = {
   setLeds,
-  setMotion,
+  setTracker,
   setRuler,
 };
 

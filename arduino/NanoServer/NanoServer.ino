@@ -5,24 +5,67 @@
 
 #define LED_TYPE WS2812B
 #define COLOR_ORDER GRB
-#define LED_PIN1 2    // D2 strip 1
-#define LED_PIN2 3    // D3 strip 2
-#define MOTION_PIN 9  // D9 motion sensor (interrupt)
-#define NUM_LEDS 200  // Leds per strip
-#define NUM_STRIPS 2  // Number of strips
-#define TIMEOUT 5     // in minute
+#define LED_PIN1 2  // D2 strip 1
+#define LED_PIN2 3  // D3 strip 2
+
+#define TRIGGER_PIN 10     // D10 ultrasonic sensor Trigger pin (output)
+#define ECHO_PIN 11        // D11 ultrasonic sensor Echo pin (input)
+#define NUM_LEDS 200       // Leds per strip
+#define NUM_STRIPS 2       // Number of strips
+#define LEDS_TIMEOUT 5     // in minutes
+#define TRACKER_TIMEOUT 2  // in seconds
 
 CRGB leds[NUM_STRIPS][NUM_LEDS];
 
 const char *ssid = "********";      // wifi SSID
 const char *password = "********";  // wifi password
 
-uint32_t startTime = 0;               // for timeout management
-volatile byte motionState = LOW;      // for motion sensor
-bool disableMotionDetection = false;  // disable/enable permanently motion detection
-bool blockMotionAction = false;       // block/unblock temporarily motion detection
+uint32_t startLedsTimeout = 0;     // for leds timeout
+uint32_t startTrackerTimeout = 0;  // for tracker timeout
+bool currentAnimation = false;     // enabled when animation is running
+bool currentTracker = false;       // enabled when ultrasonic sensor is active
+bool disableTracker = false;       // disable/enable tracker
 
 WiFiWebServer server(80);
+
+/*
+* Run animation if ultrasonic sensor is high
+*/
+void handleTracker(float distanceOrig = 0) {
+  static bool started = false;
+  float duration, distance;
+
+  if (distanceOrig != 0) {
+    distance = distanceOrig;
+  }
+
+  currentTracker = true;
+  if (distanceOrig == 0) {
+    digitalWrite(TRIGGER_PIN, HIGH);
+    delayMicroseconds(10);
+    digitalWrite(TRIGGER_PIN, LOW);
+    duration = pulseIn(ECHO_PIN, HIGH);
+    distance = duration / 58;  // ~ duration * .0343 / 2
+  }
+  if (distance <= NUM_LEDS) {
+    started = true;
+    if (distanceOrig == 0) {
+      distance = NUM_LEDS - distance;
+    }
+    byte start = (byte)((NUM_LEDS - distance) / 2);
+    byte end = NUM_LEDS - start;
+    for (byte i = 0; i < NUM_LEDS; i++) {
+      leds[0][i] = (i >= start && i < end) ? CRGB::Gold1 : 0;
+    }
+    FastLED.show();
+  } else {
+    if (started) {
+      startTrackerTimeout = millis();
+      started = false;
+    }
+    currentTracker = false;
+  }
+}
 
 /**
 * Setup
@@ -37,11 +80,12 @@ void setup() {
 
   initWiFi();
   initStrips();
-  initMotion();
+  initTracker();
+  //initMic();
 
   server.on("/leds", HTTP_GET, onServerEventLeds);
   server.on("/ruler", HTTP_GET, onServerEventRuler);
-  server.on("/motion", HTTP_GET, onServerEventMotion);
+  server.on("/tracker", HTTP_GET, onServerEventTracker);
   server.begin();
 }
 
@@ -50,8 +94,12 @@ void setup() {
 */
 void loop() {
   server.handleClient();
-  handleTimeout();
-  handleMotion();
+
+  handleTimeouts();
+
+  if (!disableTracker && !startLedsTimeout && !currentAnimation) {
+    handleTracker();
+  }
 }
 
 ///////////////////////////////// SETUP INIT /////////////////////////////////
@@ -82,20 +130,12 @@ void initStrips() {
 }
 
 /**
-* Motion sensor initialization
+* Ultrasonic sensor initialization
 */
-void initMotion() {
-  pinMode(MOTION_PIN, INPUT);
-  attachInterrupt(digitalPinToInterrupt(MOTION_PIN), onInterruptEventMotion, RISING);
-}
-
-///////////////////////////////// INTERRUPTS EVENTS /////////////////////////////////
-
-/*
-* Interrupt event triggered by motion sensor
-*/
-void onInterruptEventMotion() {
-  motionState = HIGH;
+void initTracker() {
+  pinMode(TRIGGER_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  digitalWrite(TRIGGER_PIN, LOW);
 }
 
 ///////////////////////////////// LOOP CHECKS /////////////////////////////////
@@ -103,30 +143,21 @@ void onInterruptEventMotion() {
 /**
 * Turn off all leds after TIMEOUT seconds
 */
-void handleTimeout() {
-  if (startTime && (millis() - startTime >= TIMEOUT * 60 * 1000)) {
-    startTime = 0;
+void handleTimeouts() {
+  if (startLedsTimeout && (millis() - startLedsTimeout >= LEDS_TIMEOUT * 60 * 1000)) {
     FastLED.clear(true);
-    blockMotionAction = false;
+    startLedsTimeout = 0;
   }
-}
 
-/*
-* Run animation if motion has been detected
-*/
-void handleMotion() {
-  if (motionState == HIGH) {
-#ifdef DEBUG
-    Serial.println("HIGH");
-#endif
-    motionState = LOW;
-    if (!disableMotionDetection && !blockMotionAction) {
-      runAnimation();
+  if (startTrackerTimeout && (millis() - startTrackerTimeout >= TRACKER_TIMEOUT * 1000)) {
+    startTrackerTimeout = 0;
+    if (!currentTracker && !currentAnimation && !startLedsTimeout) {
+      FastLED.clear(true);
     }
   }
 }
 
-///////////////////////////////// WEB SERVER EVENTS /////////////////////////////////
+//////////////////////////// WEB SERVER EVENTS ////////////////////////////////
 
 /**
 * Server Event to turn on leds.
@@ -145,15 +176,13 @@ void onServerEventLeds() {
     free(colorValues);
     free(ledsValues);
 
-    startTime = 0;
     FastLED.clear(true);
-    blockMotionAction = false;
+    startLedsTimeout = 0;
   } else {
-    blockMotionAction = true;
+    startLedsTimeout = millis();
 #ifdef DEBUG
     String remoteIP = server.client().remoteIP().toString();
     String response = server.arg("leds") + "|" + server.arg("color");
-
     response += " " + remoteIP;
     Serial.println(response);
 #endif
@@ -168,7 +197,6 @@ void onServerEventLeds() {
     }
 
     if (!noReset) {
-      startTime = 0;
       FastLED.clear();
     }
 
@@ -185,7 +213,6 @@ void onServerEventLeds() {
     free(ledsValues);
 
     FastLED.show();
-    startTime = millis();
   }
   server.send(200);
 }
@@ -197,15 +224,13 @@ void onServerEventLeds() {
 */
 void onServerEventRuler() {
   byte reset = server.arg("reset") ? server.arg("reset") == "1" : 0;
-  startTime = 0;
 
   if (reset) {
     FastLED.clear(true);
-    blockMotionAction = false;
+    startLedsTimeout = 0;
   } else {
-    blockMotionAction = true;
+    startLedsTimeout = millis();
     FastLED.clear();
-
     for (byte strip = 0; strip < NUM_STRIPS; strip++) {
       for (byte i = 0; i < NUM_LEDS; i++) {
         if (!i) continue;
@@ -216,30 +241,28 @@ void onServerEventRuler() {
         }
       }
     }
-
-    startTime = millis();
     FastLED.show();
   }
   server.send(200);
 }
 
 /**
-* Server event to disable/enable motion detection.
+* Server event to disable/enable tracker.
 *
 * @param disable int 1/0 to disable/enable
 */
-void onServerEventMotion() {
-  disableMotionDetection = (bool)server.arg("disable").equals("1");
+void onServerEventTracker() {
+  disableTracker = (bool)server.arg("disable").equals("1");
   server.send(200);
 }
 
-///////////////////////////////// UTILS /////////////////////////////////
+////////////////////////////////// UTILS //////////////////////////////////////
 
 /**
 * Little leds animation
 */
 void runAnimation() {
-  FastLED.setBrightness(255);
+  currentAnimation = true;
   for (int i = 0; i < 2; i++) {
     for (int strip = 0; strip < NUM_STRIPS; strip++) {
       const int stripIndex = i ? (NUM_STRIPS - 1) - strip : strip;
@@ -252,8 +275,8 @@ void runAnimation() {
       }
     }
   }
-  FastLED.setBrightness(10);
   FastLED.clear(true);
+  currentAnimation = false;
 }
 
 /**

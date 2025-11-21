@@ -30,9 +30,9 @@ You will need to fill in the following two constants to allow the card to connec
  *Optional:*
  1. `noreset` - `1` to **not** turn-off LEDs before applying the new rule.
 
-***GET - motion***
-`motion?disable=[0|1]`
->`Example: /motion`
+***GET - tracker***
+`tracker?disable=[0|1]`
+>`Example: /tracker`
 
 *Required:*
 1. `disable` -  Disable animation triggered by motion sensor.

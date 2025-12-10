@@ -108,7 +108,6 @@ const Header = (props) => {
           </div>
           <Search
             {...props}
-            autoFocus
             placeholder={_('artist, album...')}
             style={{color: '#fff'}}
           />

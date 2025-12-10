@@ -27,7 +27,6 @@ import './styles/Search.css';
 
 // COMPONENT Search
 const Search = ({
-  autoFocus = false,
   placeholder,
   searchStr,
   setSearchStr,
@@ -51,7 +50,6 @@ const Search = ({
             onChange={onChange}
             value={searchStr}
             placeholder={placeholder}
-            autoFocus={autoFocus}
             style={{borderRadius: '5px'}}
           />
           <FontAwesomeIcon icon={faClose} size="sm" onClick={onReset}
@@ -69,7 +67,6 @@ const Search = ({
 };
 
 Search.propTypes = {
-  autoFocus: PropTypes.bool.isRequired,
   placeholder: PropTypes.string,
   searchStr: PropTypes.string.isRequired,
   setSearchStr: PropTypes.func.isRequired,

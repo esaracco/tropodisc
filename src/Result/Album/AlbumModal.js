@@ -44,7 +44,6 @@ import {updateUserData, extractStyles} from '../../utils/discogs';
 import * as Leds from '../../utils/leds';
 import * as Settings from '../../utils/settings';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/AlbumModal.css';
 
 // COMPONENT AlbumModal

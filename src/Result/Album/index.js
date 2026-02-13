@@ -33,7 +33,6 @@ import {getMaster, getRelease} from '../../utils/discogs';
 import * as Settings from '../../utils/settings';
 import * as Leds from '../../utils/leds';
 
-import 'react-image-gallery/styles/css/image-gallery.css';
 import './styles/Album.css';
 
 // COMPONENT Album

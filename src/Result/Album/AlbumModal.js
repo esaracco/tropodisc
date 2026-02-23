@@ -27,6 +27,7 @@ import {toast} from 'react-toastify';
 // FIXME Discogs API oddness | import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import ImageGallery from 'react-image-gallery';
+import "react-image-gallery/styles/image-gallery.css";
 import {Rating} from 'react-simple-star-rating';
 
 import {set as setReleases} from '../../redux/reducers/releases';

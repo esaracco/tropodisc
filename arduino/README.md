@@ -1,4 +1,4 @@
-This is the code to upload to your **Arduino Nano 33 IoT device**.
+This is the code to upload to your **ESP32i-S3 Mini**.
 
 Once uploaded, it will connect to your wifi and listen on the port 80 for requests to controls LED strips connected to its circuit.
 
@@ -10,7 +10,8 @@ You will need to install the following drivers & libraries:
 
 **Libraries**
 - FastLED
-- WiFiWebServer
+- WiFi
+- WebServer
 
 You will need to fill in the following two constants to allow the card to connect to your wifi:
 
@@ -29,13 +30,6 @@ You will need to fill in the following two constants to allow the card to connec
 
  *Optional:*
  1. `noreset` - `1` to **not** turn-off LEDs before applying the new rule.
-
-***GET - tracker***
-`tracker?disable=[0|1]`
->`Example: /tracker`
-
-*Required:*
-1. `disable` -  Disable animation triggered by motion sensor.
 
 ***GET - ruler***
 `ruler?reset=[0|1]`

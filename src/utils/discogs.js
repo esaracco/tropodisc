@@ -306,71 +306,79 @@ export const getCollection = async ({showMessage, setProgress}) => {
     setProgress(progressVal);
 
     const inc = (100 - progressVal) / pages;
+    const pagePromises = [];
 
     for (let i = 1; i <= pages; i++) {
-      const r = await get({
-        service: `users/${user}/collection/folders/0/releases`,
-        args: `page=${i}&per_page=${Settings.itemsPerRequest}`,
-      });
-
-      progressVal += inc;
-      setProgress(progressVal);
-
-      // Extract info from discogs result
-      for (let j = 0; j < r.releases.length; j++) {
-        const release = r.releases[j];
-        const info = release.basic_information;
-        const format = info.formats[0].name;
-
-        if (!_formats || _formats.indexOf(format.toLowerCase()) > -1) {
-          // Get user discogs custom data
-          const userData = await _extractUserData(release);
-
-          if (fieldsRequired === 'yes' && !userData.haveFields) {
-            continue;
-          }
-
-          // Get artist name (we take only the first)
-          const artist = info.artists[0].name.replace(/\(.*/, '');
-          // Build main class, with artist name variation if available
-          const mainCls = `${normalize(artist)} ${normalize(
-              info.title,
-          )} ${normalize(info.artists[0].anv)}`;
-
-          // - Set default picture if none
-          // - Do not stress Discogs API in dev mode
-          if (info.cover_image.indexOf('spacer.gif') !== -1 ||
-              Settings.env !== 'production') {
-            info.cover_image = '/logo-big.png';
-            info.thumb = '/logo-small.png';
-          }
-
-          // Add release
-          releases[release.instance_id] = {
-            folderid: release.folder_id,
-            masterid: info.master_id,
-            releaseid: info.id,
-            instanceid: release.instance_id,
-            format: info.formats[0].name,
-            added: release.date_added,
-            artist: artist,
-            cls: mainCls,
-            year: info.year,
-            title: info.title,
-            cover: info.cover_image,
-            thumb: info.thumb,
-            place: userData.place,
-            price: userData.price,
-            styles: userData.styles,
-            rating: release.rating,
-            lpcount: parseInt(info.formats[0].qty),
-          };
+      pagePromises.push((async () => {
+        // Décaler chaque démarrage de requête de 'requestDelay' pour respecter
+        // les quotas stricts de Discogs, sans attendre la fin de la précédente.
+        if (i > 1) {
+          await sleep((i - 1) * Settings.requestDelay * 1000);
         }
-      }
-      if (i < pages) {
-        await sleep(Settings.requestDelay * 1000);
-      }
+
+        const r = await get({
+          service: `users/${user}/collection/folders/0/releases`,
+          args: `page=${i}&per_page=${Settings.itemsPerRequest}`,
+        });
+
+        // Extract info from discogs result
+        for (let j = 0; j < r.releases.length; j++) {
+          const release = r.releases[j];
+          const info = release.basic_information;
+          const format = info.formats[0].name;
+
+          if (!_formats || _formats.indexOf(format.toLowerCase()) > -1) {
+            // Get user discogs custom data
+            const userData = await _extractUserData(release);
+
+            if (fieldsRequired === 'yes' && !userData.haveFields) {
+              continue;
+            }
+
+            // Get artist name (we take only the first)
+            const artist = info.artists[0].name.replace(/\(.*/, '');
+            // Build main class, with artist name variation if available
+            const mainCls = `${normalize(artist)} ${normalize(
+                info.title,
+            )} ${normalize(info.artists[0].anv)}`;
+
+            // - Set default picture if none
+            // - Do not stress Discogs API in dev mode
+            if (info.cover_image.indexOf('spacer.gif') !== -1 ||
+                Settings.env !== 'production') {
+              info.cover_image = '/logo-big.png';
+              info.thumb = '/logo-small.png';
+            }
+
+            // Add release
+            releases[release.instance_id] = {
+              folderid: release.folder_id,
+              masterid: info.master_id,
+              releaseid: info.id,
+              instanceid: release.instance_id,
+              format: info.formats[0].name,
+              added: release.date_added,
+              artist: artist,
+              cls: mainCls,
+              year: info.year,
+              title: info.title,
+              cover: info.cover_image,
+              thumb: info.thumb,
+              place: userData.place,
+              price: userData.price,
+              styles: userData.styles,
+              rating: release.rating,
+              lpcount: parseInt(info.formats[0].qty),
+            };
+          }
+        }
+
+        progressVal += inc;
+        setProgress(progressVal);
+      })());
     }
+
+    await Promise.all(pagePromises);
   }
 
   return releases;

@@ -36,6 +36,14 @@ import './styles/Result.css';
 
 const _setLeds = Settings.setLeds === 'yes';
 
+const GridList = React.forwardRef(({style, ...props}, ref) => (
+  <div {...props} ref={ref} style={{...style, display: 'flex', flexWrap: 'wrap'}} />
+));
+GridList.displayName = 'GridList';
+GridList.propTypes = {
+  style: PropTypes.object,
+};
+
 // COMPONENT Result
 const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDisplayCount}) => {
   const scrollbarWidth = useScrollbarWidth();
@@ -86,7 +94,7 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
   };
 
   // MEMOIZED FILTERING
-  const { result, places, availableFormats, availableArtists } = useMemo(() => {
+  const {result, places, availableFormats, availableArtists} = useMemo(() => {
     const keys = Object.keys(releases);
     const res = [];
     const artists = {};
@@ -172,7 +180,7 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
       result: res,
       places,
       availableFormats: Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort(),
-      availableArtists: Object.keys(sStylesLen ? fartists : artists).sort()
+      availableArtists: Object.keys(sStylesLen ? fartists : artists).sort(),
     };
   }, [searchStr, releases, selected, sort]);
 
@@ -238,9 +246,7 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
           totalCount={result.length}
           overscan={200}
           components={{
-            List: React.forwardRef(({ style, ...props }, ref) => (
-              <div {...props} ref={ref} style={{ ...style, display: 'flex', flexWrap: 'wrap' }} />
-            )),
+            List: GridList,
           }}
           itemContent={(index) => {
             const item = result[index];
@@ -271,6 +277,7 @@ Result.propTypes = {
   loading: PropTypes.bool.isRequired,
   progress: PropTypes.number.isRequired,
   setDisplayCount: PropTypes.func.isRequired,
+  styles: PropTypes.Array.isRequired,
 };
 
 export default Result;

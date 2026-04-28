@@ -16,7 +16,7 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef, useMemo} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {ProgressBar} from 'react-bootstrap';
@@ -40,7 +40,6 @@ const _setLeds = Settings.setLeds === 'yes';
 const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDisplayCount}) => {
   const scrollbarWidth = useScrollbarWidth();
   const dispatch = useDispatch();
-  const [result, setResult] = useState([]);
   const [modalData, setModalData] = useState({
     show: false,
     releaseid: 0,
@@ -86,8 +85,8 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
     return (wW - scrollbarWidth - 1) / itemsByCol;
   };
 
-  // EFFECT
-  useEffect(() => {
+  // MEMOIZED FILTERING
+  const { result, places, availableFormats, availableArtists } = useMemo(() => {
     const keys = Object.keys(releases);
     const res = [];
     const artists = {};
@@ -169,15 +168,25 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
       res.push(r);
     };
 
-    dispatch(setFormats(
-        Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort()));
-    dispatch(setArtists(
-        Object.keys(sStylesLen ? fartists : artists).sort()));
+    return {
+      result: res,
+      places,
+      availableFormats: Object.keys((sStylesLen || sArtistsLen) ? fformats : formats).sort(),
+      availableArtists: Object.keys(sStylesLen ? fartists : artists).sort()
+    };
+  }, [searchStr, releases, selected, sort]);
 
-    setResult(res);
-    setDisplayCount(res.length);
+  // EFFECT
+  useEffect(() => {
+    dispatch(setFormats(availableFormats));
+    dispatch(setArtists(availableArtists));
+    setDisplayCount(result.length);
 
     if (_setLeds) {
+      const sStylesLen = selected.styles.length;
+      const sArtistsLen = selected.artists.length;
+      const sFormatsLen = selected.formats.length;
+
       // Let there be light!
       if (sStylesLen || sArtistsLen || sFormatsLen) {
         turnOffLeds.current = true;
@@ -198,12 +207,15 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
       }
     }
   }, [
-    searchStr,
-    releases,
+    result.length,
+    places,
+    availableFormats,
+    availableArtists,
     selected,
-    sort,
+    fromRuler,
     dispatch,
     setDisplayCount,
+    setFromRuler,
   ]);
 
   const thumbWidth = calculateThumbWidth();

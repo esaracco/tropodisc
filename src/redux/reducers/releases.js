@@ -17,7 +17,7 @@
 */
 
 import {createSlice} from '@reduxjs/toolkit';
-import {setItem, removeItem} from '../../utils/common';
+import {setLargeItem, removeLargeItem} from '../../utils/common';
 
 const initialState = {
   value: {},
@@ -29,15 +29,15 @@ export const releasesSlice = createSlice({
   reducers: {
     set: (state, action) => {
       state.value = action.payload;
-      setItem('releases', state.value);
+      setLargeItem('releases', state.value);
     },
     reset: (state) => {
-      removeItem('releases');
+      removeLargeItem('releases');
       state.value = {};
     },
     update: (state, action) => {
       state.value[action.payload.instanceId] = action.payload.album;
-      setItem('releases', state.value);
+      setLargeItem('releases', state.value);
     },
   },
 });

@@ -53,6 +53,7 @@ const AlbumModal = ({modalData, setModalData}) => {
   const [showConfirm, setShowConfirm] = useState(false);
   const selectedStyles = useSelector((s) => s.selected.styles);
   const selectedArtists = useSelector((s) => s.selected.artists);
+  const releases = useSelector((s) => s.releases.value);
   const {
     show,
     maintitle,
@@ -92,8 +93,8 @@ const AlbumModal = ({modalData, setModalData}) => {
           .forEach((t) => r.push(t.getAttribute('value')));
       return r.slice().sort();
     })();
-    const releases = getItem('releases');
-    const release = releases[instanceid];
+    const releasesClone = {...releases};
+    const release = {...releasesClone[instanceid]};
     const changes = {};
 
     if (rating !== release.rating) {
@@ -115,21 +116,21 @@ const AlbumModal = ({modalData, setModalData}) => {
 
   // METHOD onSave()
   const onSave = async () => {
-    const {releases, release, changes} = getSaveActionInfo();
+    const {releases: releasesClone, release, changes} = getSaveActionInfo();
 
     onHideConfirm();
 
     try {
       await updateUserData(modalData, changes);
       if (changes.styles) {
-        releases[instanceid].styles = changes.styles;
+        releasesClone[instanceid].styles = changes.styles;
       }
-      releases[instanceid] = {...release, place, price, rating};
-      dispatch(setReleases(releases));
+      releasesClone[instanceid] = {...release, place, price, rating};
+      dispatch(setReleases(releasesClone));
 
       if (changes.styles) {
         // Rebuild global styles list
-        const allStyles = extractStyles(releases);
+        const allStyles = extractStyles(releasesClone);
         dispatch(setStyles(allStyles));
         // Remove non-existent styles if previously selected
         dispatch(setSelected({

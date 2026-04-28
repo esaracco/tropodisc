@@ -18,7 +18,36 @@
 
 import React from 'react';
 import removeAccents from 'remove-accents';
+import localforage from 'localforage';
 
+// FUNCTION setLargeItem()
+export const setLargeItem = async (name, value) => {
+  try {
+    await localforage.setItem(name, value);
+  } catch (err) {
+    console.error(`Error saving ${name} to IndexedDB:`, err);
+  }
+};
+
+// FUNCTION getLargeItem()
+export const getLargeItem = async (name) => {
+  try {
+    const value = await localforage.getItem(name);
+    return value;
+  } catch (err) {
+    console.error(`Error reading ${name} from IndexedDB:`, err);
+    return null;
+  }
+};
+
+// FUNCTION removeLargeItem()
+export const removeLargeItem = async (name) => {
+  try {
+    await localforage.removeItem(name);
+  } catch (err) {
+    console.error(`Error removing ${name} from IndexedDB:`, err);
+  }
+};
 
 // FUNCTION setItem()
 export const setItem = (name, value) =>
@@ -53,6 +82,7 @@ export const clearAllCaches = () => {
   });
   // Clear local cache
   localStorage.clear();
+  localforage.clear().catch((e) => console.error('Error clearing localforage', e));
 };
 
 // HOOK useScrollbarWidth()
@@ -91,6 +121,9 @@ const common = {
   setItem,
   getItem,
   removeItem,
+  setLargeItem,
+  getLargeItem,
+  removeLargeItem,
   normalize,
   clearAllCaches,
   useScrollbarWidth,

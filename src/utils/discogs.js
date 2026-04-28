@@ -22,7 +22,7 @@ import sleep from 'sleep-promise';
 
 import * as Settings from './settings';
 
-import {normalize, getItem, setItem} from './common';
+import {normalize, getItem, setItem, getLargeItem} from './common';
 import {get, post} from './www';
 
 // FUNCTION _normalizeStyle()
@@ -282,7 +282,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
           formats
               .replace(/(\s*)?,(\s*)?/g, ',')
               .split(',') : null;
-  const releases = getItem('releases') || {};
+  const releases = await getLargeItem('releases') || {};
   const styles = getItem('styles') || [];
 
   // Fetch discogs collection if not alread in browser local cache
@@ -385,7 +385,7 @@ export const getCollection = async ({showMessage, setProgress}) => {
 };
 
 // FUNCTION extractStyles()
-export const extractStyles = (releases = getItem('releases')) => {
+export const extractStyles = (releases) => {
   const styles = {};
 
   Object.values(releases).forEach((r) =>

@@ -20,6 +20,7 @@ import React, {useEffect, useState, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 import {ProgressBar} from 'react-bootstrap';
+import {VirtuosoGrid} from 'react-virtuoso';
 
 import {set as setArtists} from '../redux/reducers/artists';
 import {set as setFormats} from '../redux/reducers/formats';
@@ -220,18 +221,32 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
           now={progress}
           style={{opacity: loading && !result.length ? 1 : 0}}
         />
-        {result.map((item) =>
-          <Album
-            key={item.instanceid}
-            setModalData={setModalData}
-            instanceid={item.instanceid}
-            cls={item.cls}
-            img={item[img]}
-            thumbWidth={thumbWidth}
-            artist={item.artist}
-            year={item.year}
-            title={item.title} />,
-        )}
+        <VirtuosoGrid
+          useWindowScroll
+          totalCount={result.length}
+          overscan={200}
+          components={{
+            List: React.forwardRef(({ style, ...props }, ref) => (
+              <div {...props} ref={ref} style={{ ...style, display: 'flex', flexWrap: 'wrap' }} />
+            )),
+          }}
+          itemContent={(index) => {
+            const item = result[index];
+            return (
+              <Album
+                key={item.instanceid}
+                setModalData={setModalData}
+                instanceid={item.instanceid}
+                cls={item.cls}
+                img={item[img]}
+                thumbWidth={thumbWidth}
+                artist={item.artist}
+                year={item.year}
+                title={item.title}
+              />
+            );
+          }}
+        />
       </div>
     </>
   );

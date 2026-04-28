@@ -21,8 +21,8 @@ const {createProxyMiddleware} = require('http-proxy-middleware');
 module.exports = (app) => {
   if (process.env.REACT_APP_SET_LEDS === 'yes' ) {
     app.use(
-        '/api',
         createProxyMiddleware({
+          pathFilter: '/api',
           target:
           `http://localhost:${process.env.REACT_APP_LEDS_API_PORT || 10000}`,
           changeOrigin: true,

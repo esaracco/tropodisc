@@ -277,7 +277,7 @@ Result.propTypes = {
   loading: PropTypes.bool.isRequired,
   progress: PropTypes.number.isRequired,
   setDisplayCount: PropTypes.func.isRequired,
-  styles: PropTypes.Array.isRequired,
+  styles: PropTypes.array.isRequired,
 };
 
 export default Result;

@@ -190,30 +190,41 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
     dispatch(setArtists(availableArtists));
     setDisplayCount(result.length);
 
+    let ledsTimeout;
+
     if (_setLeds) {
       const sStylesLen = selected.styles.length;
       const sArtistsLen = selected.artists.length;
       const sFormatsLen = selected.formats.length;
 
-      // Let there be light!
-      if (sStylesLen || sArtistsLen || sFormatsLen) {
-        turnOffLeds.current = true;
-        Leds.setLeds({
-          place: places,
-          color: sStylesLen ?
-                   Settings.ledsStylesColor :
-                   sArtistsLen ? Settings.ledsArtistsColor : null,
-        });
-      // Turn off the light...
-      } else if (turnOffLeds.current) {
-        turnOffLeds.current = false;
-        if (!fromRuler) {
-          Leds.setLeds();
-        } else {
-          setFromRuler(false);
+      // Debounce LED API calls to prevent flooding the IoT server
+      ledsTimeout = setTimeout(() => {
+        // Let there be light!
+        if (sStylesLen || sArtistsLen || sFormatsLen) {
+          turnOffLeds.current = true;
+          Leds.setLeds({
+            place: places,
+            color: sStylesLen ?
+                     Settings.ledsStylesColor :
+                     sArtistsLen ? Settings.ledsArtistsColor : null,
+          });
+        // Turn off the light...
+        } else if (turnOffLeds.current) {
+          turnOffLeds.current = false;
+          if (!fromRuler) {
+            Leds.setLeds();
+          } else {
+            setFromRuler(false);
+          }
         }
-      }
+      }, 400); // 400ms debounce
     }
+
+    return () => {
+      if (ledsTimeout) {
+        clearTimeout(ledsTimeout);
+      }
+    };
   }, [
     result.length,
     places,

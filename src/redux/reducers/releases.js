@@ -16,7 +16,7 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, current} from '@reduxjs/toolkit';
 import {setLargeItem, removeLargeItem} from '../../utils/common';
 
 const initialState = {
@@ -29,7 +29,7 @@ export const releasesSlice = createSlice({
   reducers: {
     set: (state, action) => {
       state.value = action.payload;
-      setLargeItem('releases', state.value);
+      setLargeItem('releases', current(state).value);
     },
     reset: (state) => {
       removeLargeItem('releases');
@@ -37,7 +37,7 @@ export const releasesSlice = createSlice({
     },
     update: (state, action) => {
       state.value[action.payload.instanceId] = action.payload.album;
-      setLargeItem('releases', state.value);
+      setLargeItem('releases', current(state).value);
     },
   },
 });

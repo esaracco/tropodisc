@@ -111,19 +111,19 @@ const AlbumModal = ({modalData, setModalData}) => {
       changes.styles = modalData.styles;
     }
 
-    return {releases, release, changes};
+    return {releasesClone, release, changes};
   };
 
   // METHOD onSave()
   const onSave = async () => {
-    const {releases: releasesClone, release, changes} = getSaveActionInfo();
+    const {releasesClone, release, changes} = getSaveActionInfo();
 
     onHideConfirm();
 
     try {
       await updateUserData(modalData, changes);
       if (changes.styles) {
-        releasesClone[instanceid].styles = changes.styles;
+        release.styles = changes.styles;
       }
       releasesClone[instanceid] = {...release, place, price, rating};
       dispatch(setReleases(releasesClone));

@@ -1,6 +1,6 @@
 {
   "name": "tropodisc",
-  "version": "0.9.4",
+  "version": "0.10.0",
   "description": "An app that helps you manage your audio library from your Discogs collection",
   "author": "Emmanuel Saracco",
   "license": "GPL-3.0-or-later",

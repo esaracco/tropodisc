@@ -16,7 +16,7 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {toast} from 'react-toastify';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -34,6 +34,36 @@ import * as Settings from '../../utils/settings';
 import * as Leds from '../../utils/leds';
 
 import './styles/Album.css';
+import store from '../../redux/store';
+
+// Queue to fetch missing years progressively in the background (max 1 req / 2s)
+const backgroundQueue = {
+  queue: [],
+  processing: false,
+  add(instanceId, fetchFn) {
+    if (!this.queue.some((i) => i.instanceId === instanceId)) {
+      this.queue.push({instanceId, fetchFn});
+      this.process();
+    }
+  },
+  async process() {
+    if (this.processing || this.queue.length === 0) return;
+    this.processing = true;
+
+    while (this.queue.length > 0) {
+      const {fetchFn} = this.queue.shift();
+      try {
+        await fetchFn();
+      } catch (e) {
+        console.error('Background fetch error:', e.message);
+      }
+      // Wait 1.5 seconds between requests to avoid Discogs API limits
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+
+    this.processing = false;
+  },
+};
 
 // COMPONENT Album
 const Album = ({
@@ -48,15 +78,30 @@ const Album = ({
 }) => {
   const dispatch = useDispatch();
   const [_] = useTranslation();
-  const releases = useSelector((state) => state.releases.value);
   const [loader, setLoader] = useState(false);
   const selectedStyles = useSelector((s) => s.selected.styles);
   const selectedArtists = useSelector((s) => s.selected.artists);
 
+  // EFFECT: Queue fetching missing year in background
+  useEffect(() => {
+    if (!year || year === 0) {
+      backgroundQueue.add(instanceid, async () => {
+        // Fetch only if still missing
+        const currentAlbum = store.getState().releases.value[instanceid];
+        if (currentAlbum && currentAlbum.master === undefined && (!currentAlbum.year || currentAlbum.year === 0)) {
+          // Unmount safe state update inside getReleaseData isn't strictly guaranteed,
+          // but state updates on unmounted components don't throw warnings in React 18
+          // and we only care about the redux dispatch anyway.
+          await getReleaseData(instanceid);
+        }
+      });
+    }
+  }, [year, instanceid]);
+
   // METHOD getReleaseData()
   const getReleaseData = async (e) => {
-    const instanceId = e.currentTarget.dataset.instanceid;
-    let album = releases[instanceId];
+    const instanceId = e && e.currentTarget ? e.currentTarget.dataset.instanceid : e;
+    let album = store.getState().releases.value[instanceId];
 
     // Method _extractYear()
     const _extractYear = (notes) => {

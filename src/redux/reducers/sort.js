@@ -19,7 +19,7 @@
 import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
-  value: 'added',
+  value: 'added_desc',
 };
 
 export const sortSlice = createSlice({

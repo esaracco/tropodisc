@@ -108,34 +108,33 @@ const Result = ({fromRuler, setFromRuler, searchStr, loading, progress, setDispl
     const sFormatsLen = selected.formats.length;
 
     // sort
-    switch (sort) {
+    const [sortField, sortDir] = sort.split('_');
+    const mul = sortDir === 'desc' ? -1 : 1;
+
+    switch (sortField) {
       case 'added':
         keys.sort((a, b) =>
-          releases[a].added > releases[b].added ?
-            -1 :
-            releases[a].added < releases[b].added ?
-            1 :
-            0,
+          (releases[a].added < releases[b].added ? -1 : releases[a].added > releases[b].added ? 1 : 0) * mul,
         );
         break;
       case 'rating':
-        keys.sort((a, b) => releases[b].rating - releases[a].rating);
+        keys.sort((a, b) => (releases[a].rating - releases[b].rating) * mul);
         break;
       case 'artist':
-        keys.sort((a, b) =>
-          releases[a].artist.localeCompare(releases[b].artist),
-        );
+        keys.sort((a, b) => releases[a].artist.localeCompare(releases[b].artist) * mul);
         break;
       case 'year':
-        keys.sort((a, b) => releases[a].year - releases[b].year);
+        keys.sort((a, b) => (releases[a].year - releases[b].year) * mul);
         break;
       case 'place':
-        keys.sort((a, b) => !releases[a].place || parseInt(releases[a].place) - parseInt(releases[b].place));
-        /*
-        keys.sort((a, b) =>
-          !releases[a].place || releases[a].place.localeCompare(releases[b].place),
-        );
-        */
+        keys.sort((a, b) => {
+          const pA = releases[a].place;
+          const pB = releases[b].place;
+          if (!pA && !pB) return 0;
+          if (!pA) return 1;
+          if (!pB) return -1;
+          return (parseInt(pA) - parseInt(pB)) * mul;
+        });
         break;
       default:
     }

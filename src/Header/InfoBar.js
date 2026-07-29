@@ -21,6 +21,9 @@ import PropTypes from 'prop-types';
 import {useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
+
 import './styles/InfoBar.css';
 
 // COMPONENT InfoBar
@@ -43,14 +46,22 @@ const InfoBar = ({loading, displayCount}) => {
     } else if (styles.length && displayCount) {
       // Method _getSortLabel()
       const _getSortLabel = (s) => {
-        switch (s) {
-          case 'added': return _('Date added');
-          case 'artist': return _('Artist');
-          case 'rating': return _('Note');
-          case 'year': return _('Year');
-          case 'place': return _('Location');
+        const [field, dir] = s.split('_');
+        let label = '';
+        switch (field) {
+          case 'added': label = _('Date added'); break;
+          case 'artist': label = _('Artist'); break;
+          case 'rating': label = _('Note'); break;
+          case 'year': label = _('Year'); break;
+          case 'place': label = _('Location'); break;
           default:
         }
+        return (
+          <>
+            <FontAwesomeIcon icon={dir === 'desc' ? faChevronDown : faChevronUp} style={{marginRight: '5px'}} />
+            {label}
+          </>
+        );
       };
 
       setInfo(

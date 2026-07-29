@@ -20,6 +20,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
+
 import {set as setSort} from '../redux/reducers/sort';
 
 import './styles/Radio.css';
@@ -30,23 +33,42 @@ const Radio = ({items}) => {
   const sort = useSelector((s) => s.sort.value);
 
   // METHOD onClick()
-  const onClick = (e) => dispatch(setSort(e.target.value));
+  const onClick = (val) => dispatch(setSort(val));
 
   // RENDER
   return (
     <div className="Radio">
       {Object.keys(items).map((item) =>
-        <div key={item}>
-          <label>
-            <input
-              type="radio"
-              name="sort"
-              defaultChecked={item === sort}
-              value={item}
-              onClick={onClick}
+        <div key={item} style={{marginBottom: '10px', display: 'flex', alignItems: 'center'}}>
+          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '15px', gap: '2px'}}>
+            <FontAwesomeIcon
+              icon={faChevronUp}
+              style={{
+                cursor: 'pointer',
+                opacity: sort === `${item}_asc` ? 1 : 0.3,
+                color: sort === `${item}_asc` ? 'var(--bs-warning)' : 'inherit',
+              }}
+              onClick={() => onClick(`${item}_asc`)}
             />
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              style={{
+                cursor: 'pointer',
+                opacity: sort === `${item}_desc` ? 1 : 0.3,
+                color: sort === `${item}_desc` ? 'var(--bs-warning)' : 'inherit',
+              }}
+              onClick={() => onClick(`${item}_desc`)}
+            />
+          </div>
+          <span
+            style={{
+              cursor: 'pointer',
+              fontWeight: sort.startsWith(item) ? 'bold' : 'normal',
+            }}
+            onClick={() => onClick(sort.startsWith(item) ? sort : `${item}_desc`)}
+          >
             {items[item]}
-          </label>
+          </span>
         </div>,
       )}
     </div>

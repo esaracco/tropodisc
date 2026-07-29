@@ -18,7 +18,7 @@
 
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {Button} from 'react-bootstrap';
 
@@ -26,13 +26,14 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCompactDisc} from '@fortawesome/free-solid-svg-icons';
 
 import {set as setSelected} from '../../redux/reducers/selected';
-import {normalize} from '../../utils/common.js';
+// normalize not needed anymore for DOM queries
 
 import './styles/AlbumButton.css';
 
 // COMPONENT AlbumButton
 const AlbumButton = ({artist, closeModal}) => {
   const dispatch = useDispatch();
+  const releases = useSelector((s) => s.releases.value);
   const [count, setCount] = useState(0);
   const [_] = useTranslation();
 
@@ -44,8 +45,16 @@ const AlbumButton = ({artist, closeModal}) => {
 
   // EFFECT
   useEffect(() => {
-    setCount(document.querySelectorAll(`.Album.${normalize(artist)}`).length);
-  }, [artist]);
+    let c = 0;
+    if (releases) {
+      for (const key in releases) {
+        if (releases[key].artist === artist) {
+          c++;
+        }
+      }
+    }
+    setCount(c);
+  }, [artist, releases]);
 
   // RENDER
   return (

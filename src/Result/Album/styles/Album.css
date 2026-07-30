@@ -1,20 +1,31 @@
 .Album {
   float: left;
-  border: dashed 1px #2d2d2d;
+  border-radius: 8px;
+  overflow: hidden;
   cursor: pointer;
+  background: #1b2024;
+  border: 2px solid #0d0e0f;
+  box-sizing: border-box;
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+.Album:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 }
 
 .Album .artist {
   font-size: .8em;
-  padding: 5px;
-  font-weight: bold;
+  padding: 8px;
+  font-weight: 500;
   background: #3d3737;
   color: #a7a4a4;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .Album .loader {
   position: absolute;
   font-size: 2rem;
   margin: -44px 0 0 4px;
-  color: #ffca2c;
 }

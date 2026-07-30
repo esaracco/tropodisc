@@ -39,7 +39,7 @@ const About = ({isOnline}) => {
   const [_] = useTranslation();
 
   const desc = <Trans i18nKey="keyAboutMessage">
-    TropoDisc helps you manage your audio library from your <a href="https://www.discogs.com" rel="noopener noreferrer" target="_blank">Discogs</a> collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
+    TropoDisc is a music collection manager powered by the <a href="https://www.discogs.com" rel="noopener noreferrer" target="_blank">Discogs</a> API. It was originally developed for the author&apos;s personal use and is now released as open-source software under the GPL license.
   </Trans>;
   const iconsCopy = <Trans i18nKey="keyAboutMessageIconsCopy">
     <p style={{color: 'grey', fontStyle: 'italic', fontSize: '.9rem', lineHeight: '1rem'}}>Default vinyl icons & logo picked from <a href="https://www.veryicon.com/icons/media/vinyl-record-icons/vinyl-orange-512.html" rel="noopener noreferrer" target="_blank">VeryIcon.com</a></p>

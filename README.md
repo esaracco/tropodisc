@@ -1,7 +1,7 @@
 > :warning: You must have a Discogs account to run this project.
 
-**TropoDisc** helps you manage your audio library from your  [Discogs](https://www.discogs.com) collection. It was developed mainly for the personal use of its author, and made available under the GPL license.
-> :information_source: It can also be used to highlight the location of albums via LED :bulb: strips... but that's another story :smiley:
+**TropoDisc** is a music collection manager powered by the [Discogs](https://www.discogs.com) API. It was originally developed for the author's personal use and is now released as open-source software under the GPL license.
+> :information_source: Bonus feature: TropoDisc can light up LED :bulb: strips to point you to the physical location of an album... but that's another story. :smiley:
 
 # Screenshots
 <img width="500" src="https://user-images.githubusercontent.com/4351162/156552334-916137d6-0d66-4131-bd23-a05de1468590.png">

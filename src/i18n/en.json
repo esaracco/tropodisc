@@ -1,4 +1,4 @@
 {
-  "keyAboutMessage": "TropoDisc is a music collection manager powered by the <1>Discogs</1> API. It was originally developed for the author's personal use and is now released as open-source software under the GPL license.",
+  "keyAboutMessage": "TropoDisc is an open-source music collection manager built on top of the <1>Discogs</1> API. Originally developed for personal use, it is now available under the GPL license.",
   "keyAboutMessageIconsCopy": "<0>Vinyl icons & logo: <1>VeryIcon.com</1></0>"
 }

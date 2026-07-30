@@ -1,71 +1,171 @@
-> :warning: You must have a Discogs account to run this project.
+[![GPL License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE) [![Discogs API](https://img.shields.io/badge/Powered%20by-Discogs-orange.svg)](https://www.discogs.com/developers/) [![Made with React](https://img.shields.io/badge/React-17-61DAFB.svg)](https://reactjs.org/) [![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](Dockerfile)
 
-**TropoDisc** is a music collection manager powered by the [Discogs](https://www.discogs.com) API. It was originally developed for the author's personal use and is now released as open-source software under the GPL license.
-> :information_source: Bonus feature: TropoDisc can light up LED :bulb: strips to point you to the physical location of an album... but that's another story. :smiley:
+# TropoDisc
 
-# Screenshots
+_Organize your collection, enrich it with your own metadata, and optionally locate albums instantly using LED strips._
+
+**TropoDisc** is an open-source music collection manager built on top of the [Discogs](https://www.discogs.com) API. Originally developed for personal use, it is now available under the GPL license.
+
+## Why TropoDisc?
+
+Discogs already provides an excellent way to catalog music collections, but browsing a large physical library can still be frustrating.
+
+TropoDisc aims to bridge the gap between your online Discogs collection and your shelves.
+
+With TropoDisc you can:
+
+- 🔎 Browse and search your collection quickly
+- 🏷️ Add your own metadata through Discogs custom fields
+- 📍 Store the exact physical location of every album
+- 💡 Instantly locate an album using ESP32-controlled LED strips *(optional)*
+- ❤️ Keep complete ownership of your collection data through Discogs
+
+Whether you simply want a cleaner interface for Discogs or enjoy building hardware around your music library, TropoDisc is designed to stay lightweight and easy to deploy.
+
+
+## Features
+
+- 🎵 Browse your entire Discogs collection
+- 🔍 Fast album search
+- 🏷️ Custom metadata (price, styles, storage location...)
+- 🔄 One-click synchronization with Discogs
+- 💡 Optional ESP32-powered LED location system
+- 🐳 Docker support
+- 🔓 100% open source (GPL)
+
+## Screenshots
+
 <img width="500" src="https://user-images.githubusercontent.com/4351162/156552334-916137d6-0d66-4131-bd23-a05de1468590.png">
 <img width="500" src="https://user-images.githubusercontent.com/4351162/156573837-3de1d156-c956-46a3-8435-6b9d2a7ff474.png">
 <img width="500" src="https://user-images.githubusercontent.com/4351162/156573943-f4630099-be1f-41c1-b56e-870cf2c00126.png">
 <img width="500" src="https://user-images.githubusercontent.com/4351162/156573962-93f8c532-9ed4-4b65-be56-c408317a7274.png">
 
-# Quick start 
+## Requirements
 
-TropoDisc can be used as **a simple wrapper for your Discogs collection**, or do a little more by communicating with your audio library Arduino server to **highlight the location of your albums using leds**. That's how I use it, but it needs more work. We will focus here on the simplest way:
+- A Discogs account
+- Node.js 18+ (or your minimum supported version)
+- Yarn
+
+## Quick Start
+
+TropoDisc works perfectly as a standalone interface for your Discogs collection. The LED integration is entirely optional and can be configured later.
+
+Clone the repository and install the dependencies:
+
 ```bash
-$ git clone https://github.com/esaracco/tropodisc.git
-$ cd tropodisc/
-$ yarn
-$ cp .env.sample .env
-$ vim .env
-..
-```
-There is a lot of settings constants, but only two are really required:
-- `REACT_APP_DISCOGS_USER`: your Discogs account user.
-- `REACT_APP_DISCOGS_TOKEN`: your Discogs token.
+git clone https://github.com/esaracco/tropodisc.git
+cd tropodisc
+yarn
 
-More details [here](https://www.discogs.com/developers#page:authentication).
+cp .env.sample .env
+vim .env
+```
+
+The `.env` file contains several configuration options, but only these two are required:
+
+- `REACT_APP_DISCOGS_USER` — your Discogs username
+- `REACT_APP_DISCOGS_TOKEN` — your personal Discogs API token
+
+You can generate your personal token here:
+
+https://www.discogs.com/developers#page:authentication
+
+Build and launch the application:
+
 ```bash
-..
-$ yarn build
-$ sudo yarn global add serve
-$ serve -s build
+yarn build
+
+sudo yarn global add serve
+serve -s build
 ```
-Thats it :smiley:
-TropoDisc will be available on http://localhost:3000
 
-# To take full advantage of it
-TropoDisc has been designed to handle three custom Discogs user fields:
-- `place` (*textarea, 1 line*):
-The physical position of your album in your audio library.
-- `price`  (*textarea, 1 line*):
-The purchase price of your album.
-- `styles`  (*textarea, 1 line*):
-This field is for your own albums styles, separated by comma. This makes it possible to have something simpler than the plethora of existing Discogs styles...
+That's it!
 
-First you have to create these fields from your Discogs account. More details [here](https://support.discogs.com/hc/en-us/articles/360007331674-Customizing-Your-Collection-Notes).
-Once these fields are created, edit the `.env` file to set the following constants:
+Open your browser at:
+
+```
+http://localhost:3000
+```
+
+## Using Discogs Custom Fields
+
+TropoDisc can take advantage of three optional custom fields in your Discogs collection:
+
+### `place`
+
+*Textarea (1 line)*
+
+Stores the physical location of an album in your collection.
+
+### `price`
+
+*Textarea (1 line)*
+
+Stores the purchase price of the album.
+
+### `styles`
+
+*Textarea (1 line)*
+
+Stores your own style tags, separated by commas. This provides a simpler alternative to Discogs' extensive list of predefined styles.
+
+First, create these custom fields in your Discogs account.
+
+More information is available here:
+
+https://support.discogs.com/hc/en-us/articles/360007331674-Customizing-Your-Collection-Notes
+
+Then update your `.env` file with the corresponding field identifiers:
+
 - `REACT_APP_DISCOGS_FIELD_PLACE`
 - `REACT_APP_DISCOGS_FIELD_PRICE`
 - `REACT_APP_DISCOGS_FIELD_STYLES`
 - `REACT_APP_DISCOGS_FIELDS_REQUIRED`
 
-Then restart the app server and re-sync your collection by clicking the `Synchronize` :arrows_counterclockwise: button from the TropoDisc menu.
+Restart the application, then click the **Synchronize** button in the TropoDisc menu to import the new fields.
 
-# Docker
+## Docker
 
-To build and run the Docker, do the following:
+Copy and customize the configuration:
+
 ```bash
-$ cp .env.sample .env
-$ vim .env
-..
+cp .env.sample .env
+vim .env
 ```
-Customize `.env` as explained above, then:
-```bash
-..
-$ docker build -t tropodisc:prod .
-$ docker run -it --rm -p [yourlocalport]:3000 tropodisc:prod
-```
-Finally, connect to http://localhost:[yourlocalport] to use it.
 
-:tada: Have fun!
+Build the Docker image:
+
+```bash
+docker build -t tropodisc:prod .
+```
+
+Run the container:
+
+```bash
+docker run --rm -it -p <local-port>:3000 tropodisc:prod
+```
+
+Then open:
+
+```
+http://localhost:<local-port>
+```
+
+in your browser.
+
+## Contributing
+
+Contributions, bug reports and feature requests are welcome.
+
+If you would like to improve TropoDisc, feel free to open an issue or submit a pull request.
+
+## License
+
+TropoDisc is released under the GNU GPL v3 License.
+
+See the [LICENSE](LICENSE) file for details.
+
+---
+
+Enjoy! 🎵
+

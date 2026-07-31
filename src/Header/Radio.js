@@ -20,9 +20,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faChevronDown, faChevronUp} from '@fortawesome/free-solid-svg-icons';
-
 import {set as setSort} from '../redux/reducers/sort';
 
 import './styles/Radio.css';
@@ -32,45 +29,50 @@ const Radio = ({items}) => {
   const dispatch = useDispatch();
   const sort = useSelector((s) => s.sort.value);
 
-  // METHOD onClick()
-  const onClick = (val) => dispatch(setSort(val));
+  const lastIndex = sort.lastIndexOf('_');
+  const sortBy = lastIndex !== -1 ? sort.substring(0, lastIndex) : Object.keys(items)[0];
+  const sortDirection = lastIndex !== -1 ? sort.substring(lastIndex + 1) : 'desc';
+
+  const onSortByChange = (newSortBy) => {
+    dispatch(setSort(`${newSortBy}_${sortDirection}`));
+  };
+
+  const toggleDirection = () => {
+    const newDir = sortDirection === 'asc' ? 'desc' : 'asc';
+    dispatch(setSort(`${sortBy}_${newDir}`));
+  };
 
   // RENDER
   return (
     <div className="Radio">
-      {Object.keys(items).map((item) =>
-        <div key={item} style={{marginBottom: '10px', display: 'flex', alignItems: 'center'}}>
-          <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '15px', gap: '2px'}}>
-            <FontAwesomeIcon
-              icon={faChevronUp}
-              style={{
-                cursor: 'pointer',
-                opacity: sort === `${item}_asc` ? 1 : 0.3,
-                color: sort === `${item}_asc` ? 'var(--bs-warning)' : 'inherit',
-              }}
-              onClick={() => onClick(`${item}_asc`)}
-            />
-            <FontAwesomeIcon
-              icon={faChevronDown}
-              style={{
-                cursor: 'pointer',
-                opacity: sort === `${item}_desc` ? 1 : 0.3,
-                color: sort === `${item}_desc` ? 'var(--bs-warning)' : 'inherit',
-              }}
-              onClick={() => onClick(`${item}_desc`)}
-            />
-          </div>
-          <span
-            style={{
-              cursor: 'pointer',
-              fontWeight: sort.startsWith(item) ? 'bold' : 'normal',
-            }}
-            onClick={() => onClick(sort.startsWith(item) ? sort : `${item}_desc`)}
+      <div className="radio-setting">
+        <div className="radio-sort-group">
+          <select
+            id="sort-select"
+            className="radio-select"
+            value={sortBy}
+            onChange={(e) => onSortByChange(e.target.value)}
           >
-            {items[item]}
-          </span>
-        </div>,
-      )}
+            {Object.keys(items).map((item) => (
+              <option key={item} value={item}>
+                {items[item]}
+              </option>
+            ))}
+          </select>
+          <button
+            className="radio-sort-dir"
+            onClick={toggleDirection}
+            aria-label={sortDirection === 'asc' ? 'Ordre décroissant' : 'Ordre croissant'}
+            title={sortDirection === 'asc' ? 'Ordre décroissant' : 'Ordre croissant'}
+          >
+            {sortDirection === 'asc' ? (
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+            ) : (
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>
+            )}
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

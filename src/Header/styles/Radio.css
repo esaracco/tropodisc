@@ -2,14 +2,44 @@
   padding: 10px;
 }
 
-.Radio div {
-  font-size: 1.2rem;
+.radio-setting {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 1rem;
 }
 
-.Radio label:hover {
+.radio-settings-label {
+  font-weight: bold;
+}
+
+.radio-sort-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio-select {
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid var(--bs-border-color, #ccc);
+  flex-grow: 1;
+  background-color: var(--bs-body-bg, #fff);
+  color: var(--bs-body-color, #000);
+}
+
+.radio-sort-dir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  background: var(--bs-body-bg, #fff);
+  color: var(--bs-body-color, #000);
+  border: 1px solid var(--bs-border-color, #ccc);
+  border-radius: 4px;
   cursor: pointer;
 }
 
-.Radio input {
-  margin-right: 10px;
+.radio-sort-dir:hover {
+  background: var(--bs-tertiary-bg, #f0f0f0);
 }

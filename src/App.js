@@ -46,7 +46,6 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [searchStr, setSearchStr] = useState('');
   const [fromRuler, setFromRuler] = useState(false);
-  const [ledsTracker, setLedsTracker] = useState(true);
   const [progress, setProgress] = useState(0);
   const [displayCount, setDisplayCount] = useState(0);
   const [, updateState] = useState();
@@ -130,8 +129,6 @@ const App = () => {
         setFromRuler={setFromRuler}
         searchStr={searchStr}
         setSearchStr={setSearchStr}
-        ledsTracker={ledsTracker}
-        setLedsTracker={setLedsTracker}
         loading={loading}
         displayCount={displayCount}
         isOnline={isOnline} />

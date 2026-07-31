@@ -41,16 +41,6 @@ export const setLeds = (props = {}) => {
   }).catch(handleError);
 };
 
-// FUNCTION setTracker()
-export const setTracker = (props = {}) => {
-  const {disable = true} = props;
-  get({
-    provider: '',
-    service: 'api/tracker',
-    args: `disable=${Number(disable)}`,
-  }).catch(handleError);
-};
-
 // FUNCTION setRuler()
 export const setRuler = (props = {}) => {
   const {show = true} = props;
@@ -63,7 +53,6 @@ export const setRuler = (props = {}) => {
 
 const leds = {
   setLeds,
-  setTracker,
   setRuler,
 };
 

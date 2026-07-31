@@ -87,7 +87,7 @@ const App = () => {
       // Update meta content tag
       meta.setAttribute('content', _(meta.getAttribute('content')));
       // Update document title
-      document.title = `TropoDisc - ${_('A Discogs audio library manager')}`;
+      document.title = `TropoDisc - ${_('An open-source music collection manager')}`;
     }
   }, [_]);
 

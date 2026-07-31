@@ -1,0 +1,132 @@
+/*
+  Copyright (C) 2022 Emmanuel Saracco
+  This file is part of TropoDisc <https://github.com/esaracco/tropodisc>.
+
+  TropoDisc is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  TropoDisc is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+import React from 'react';
+import removeAccents from 'remove-accents';
+import localforage from 'localforage';
+
+// FUNCTION setLargeItem()
+export const setLargeItem = async (name, value) => {
+  try {
+    await localforage.setItem(name, value);
+  } catch (err) {
+    console.error(`Error saving ${name} to IndexedDB:`, err);
+  }
+};
+
+// FUNCTION getLargeItem()
+export const getLargeItem = async (name) => {
+  try {
+    const value = await localforage.getItem(name);
+    return value;
+  } catch (err) {
+    console.error(`Error reading ${name} from IndexedDB:`, err);
+    return null;
+  }
+};
+
+// FUNCTION removeLargeItem()
+export const removeLargeItem = async (name) => {
+  try {
+    await localforage.removeItem(name);
+  } catch (err) {
+    console.error(`Error removing ${name} from IndexedDB:`, err);
+  }
+};
+
+// FUNCTION setItem()
+export const setItem = (name, value) =>
+  localStorage.setItem(name, JSON.stringify(value));
+
+// FUNCTION getItem()
+export const getItem = (name) =>
+  JSON.parse(localStorage.getItem(name));
+
+// FUNCTION removeItem()
+export const removeItem = (name) =>
+  localStorage.removeItem(name);
+
+// FUNCTION normalize()
+export const normalize = (str) =>
+  removeAccents(str)
+  //      .normalize('NFD')
+  //      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z]/ig, '')
+      .replace(/([a-z])\1+/ig, '$1')
+      .toLowerCase();
+
+// FUNCTION clearAllCaches()
+export const clearAllCaches = () => {
+  // Clear service worker caches
+  ['album-covers'].forEach((cname) => {
+    caches.open(cname).then((cache) => {
+      cache.keys().then((keys) => {
+        keys.forEach((request, index, array) => cache.delete(request));
+      });
+    });
+  });
+  // Clear local cache
+  localStorage.clear();
+  localforage.clear().catch((e) => console.error('Error clearing localforage', e));
+};
+
+// HOOK useScrollbarWidth()
+export const useScrollbarWidth = () => {
+  const didCompute = React.useRef(false);
+  const widthRef = React.useRef(0);
+
+  if (didCompute.current) {
+    return widthRef.current;
+  }
+
+  // Creating invisible container
+  const outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.overflow = 'scroll'; // forcing scrollbar to appear
+  outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+  document.body.appendChild(outer);
+
+  // Creating inner element and placing it in the container
+  const inner = document.createElement('div');
+  outer.appendChild(inner);
+
+  // Calculating difference between container's full width and the child width
+  const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+  // Removing temporary elements from the DOM
+  outer.parentNode.removeChild(outer);
+
+  didCompute.current = true;
+  widthRef.current = scrollbarWidth;
+
+  return scrollbarWidth;
+};
+
+const common = {
+  setItem,
+  getItem,
+  removeItem,
+  setLargeItem,
+  getLargeItem,
+  removeLargeItem,
+  normalize,
+  clearAllCaches,
+  useScrollbarWidth,
+};
+
+export default common;

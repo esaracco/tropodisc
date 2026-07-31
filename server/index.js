@@ -27,7 +27,7 @@ const front = express.static(path.resolve(__dirname+'/../build'));
 front.unless = unless;
 
 const app = express();
-const port = process.env.REACT_APP_LEDS_API_PORT || 10000;
+const port = process.env.VITE_LEDS_API_PORT || 10000;
 
 // Serve all files as static, except for for "/api/*"
 app.use('/', front.unless((req) => req.originalUrl.indexOf('/api/') > -1));
@@ -36,7 +36,7 @@ app.use('/', front.unless((req) => req.originalUrl.indexOf('/api/') > -1));
 app.get([
   '/api/leds',
   '/api/ruler'], (req, res) => {
-  const url = process.env.REACT_APP_AUDIOLIBRARY_URL +
+  const url = process.env.VITE_AUDIOLIBRARY_URL +
                 req.originalUrl.substr(4);
 
   (url.indexOf('https') > -1 ? https : http).get(url, () =>

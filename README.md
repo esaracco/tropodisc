@@ -63,8 +63,8 @@ vim .env
 
 The `.env` file contains several configuration options, but only these two are required:
 
-- `REACT_APP_DISCOGS_USER` — your Discogs username
-- `REACT_APP_DISCOGS_TOKEN` — your personal Discogs API token
+- `VITE_DISCOGS_USER` — your Discogs username
+- `VITE_DISCOGS_TOKEN` — your personal Discogs API token
 
 You can generate your personal token here:
 
@@ -117,10 +117,10 @@ https://support.discogs.com/hc/en-us/articles/360007331674-Customizing-Your-Coll
 
 Then update your `.env` file with the corresponding field identifiers:
 
-- `REACT_APP_DISCOGS_FIELD_PLACE`
-- `REACT_APP_DISCOGS_FIELD_PRICE`
-- `REACT_APP_DISCOGS_FIELD_STYLES`
-- `REACT_APP_DISCOGS_FIELDS_REQUIRED`
+- `VITE_DISCOGS_FIELD_PLACE`
+- `VITE_DISCOGS_FIELD_PRICE`
+- `VITE_DISCOGS_FIELD_STYLES`
+- `VITE_DISCOGS_FIELDS_REQUIRED`
 
 Restart the application, then click the **Synchronize** button in the TropoDisc menu to import the new fields.
 

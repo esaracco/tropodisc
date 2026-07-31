@@ -16,17 +16,25 @@
   along with TropoDisc.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-const {createProxyMiddleware} = require('http-proxy-middleware');
+import {createSlice} from '@reduxjs/toolkit';
 
-module.exports = (app) => {
-  if (process.env.REACT_APP_SET_LEDS === 'yes' ) {
-    app.use(
-        createProxyMiddleware({
-          pathFilter: '/api',
-          target:
-          `http://localhost:${process.env.REACT_APP_LEDS_API_PORT || 10000}`,
-          changeOrigin: true,
-        }),
-    );
-  }
+const initialState = {
+  value: [],
 };
+
+export const formatsSlice = createSlice({
+  name: 'formats',
+  initialState,
+  reducers: {
+    set: (state, action) => {
+      state.value = action.payload;
+    },
+    reset: (state) => {
+      state.value = [];
+    },
+  },
+});
+
+export const {set, reset} = formatsSlice.actions;
+
+export default formatsSlice.reducer;

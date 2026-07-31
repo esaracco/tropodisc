@@ -20,6 +20,8 @@ export default defineConfig(({ mode }) => {
         strategies: 'injectManifest',
         srcDir: 'src',
         filename: 'service-worker.js',
+        manifest: false,
+        injectRegister: null,
         injectManifest: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json}']
         }

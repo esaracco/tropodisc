@@ -1,3 +1,23 @@
+# ⚠️ This project has been archived
+
+**TropoDisc is no longer maintained.**
+
+Development has moved to **TropoAtlas**:
+
+https://github.com/esaracco/tropoatlas
+
+Please use TropoAtlas for new installations, bug reports and feature requests.
+
+This repository remains available for historical reference.
+
+## Why was this repository archived?
+
+TropoDisc has been superseded by TropoAtlas, which continues active development.
+
+No further releases, bug fixes or security updates will be published here.
+
+--------------------------
+
 [![GPL License](https://img.shields.io/badge/license-GPLv3-blue.svg)](LICENSE) [![Discogs API](https://img.shields.io/badge/Powered%20by-Discogs-orange.svg)](https://www.discogs.com/developers/) [![Made with React](https://img.shields.io/badge/React-17-61DAFB.svg)](https://reactjs.org/) [![Docker](https://img.shields.io/badge/docker-ready-2496ED.svg)](Dockerfile)
 
 # TropoDisc
